@@ -29,6 +29,7 @@ class ValidateColumns(CommonFunctions):
         CommonFunctions.close_db_connection(self, curs)
 
         for file in ced_files:
+            print("\nVALIDATING COLUMNS FOR CED FILE ::", file)
             ced_columns_from_file = CommonFunctions.get_headers_from_ced(self,file)
             CommonFunctions.write_headers_to_file(self,account_id, ced_columns_from_file,"ced_columns_from_file")
             CommonFunctions.validate_columns_and_save_result(self,self.account_name, file, ced_columns_from_file,

@@ -272,45 +272,38 @@ class CommonFunctions(Setup):
             for eventType in header_columns.keys():
                 writer.writerows([[eventType] + header_columns[eventType]])
         # writerow takes 1-dimensional data (one row), and writerows takes 2-dimensional data (multiple rows).
-        result_file = "\n***INFO : SAVED A FILE (", filename.upper(), ") WITH ALL EVENTS & THIER HEADERS*****"
+        result_file = "***INFO : SAVED A FILE ("+filename.upper()+") WITH ALL EVENTS & THIER HEADERS*****"
         return result_file
 
     def get_custom_properties(self,curs):
         query_for_email_columns = "SELECT COLUMN_ID, COLUMN_NAME FROM CUSTOM_EVENT_COLUMN"
         query_for_sms_columns = "SELECT COLUMN_ID, COLUMN_NAME FROM SMS_CUSTOM_EVENT_COLUMN"
-        queries= [query_for_email_columns,query_for_sms_columns]
+        # queries= [query_for_email_columns,query_for_sms_columns]
 
         email_custom_columns = defaultdict(list)
         sms_custom_columns = defaultdict(list)
 
         curs.execute(query_for_email_columns)
-        query_result = curs.fetchall()
-        column_id = [i[0] for i in query_result]
-        for i in range(len(query_result)):
-            email_custom_columns[int(column_id[i])].append(query_result[i][1]) # provided [1], to append column name with 'i'th ID & 'i'th value in 2nd column of query result.
-            # index of NAME column (from queryResult) is 1 i.e 2nd column,
-
-            email_columns_by_id = sorted(email_custom_columns)
-            # print("Sorted ID and Columns are :", emailColumnsByID[i], emailCustomColumns[emailColumnsByID[i]])
-            # print("Sorted ID and Columns for EMAIL are :", emailCustomColumns, "\n and for SMS are :", smsCustomColumns)
-
-        curs.execute(query_for_email_columns)
-        queryResult = curs.fetchall()
-        column_id = [i[0] for i in queryResult]
-
-        curs.execute(query_for_sms_columns)
-        query_result = curs.fetchall()
-        column_id = [i[0] for i in query_result]
-        for i in range(len(queryResult)):
-            # print("ID is",columnID[i])
-            sms_custom_columns[int(column_id[i])].append(query_result[i][
-                                                            1])  # provided [1], to append column name with 'i'th ID
+        email_queryResult = curs.fetchall()
+        column_id = [i[0] for i in email_queryResult]
+        for i in range(len(email_queryResult)):
+            email_custom_columns[int(column_id[i])].append(email_queryResult[i][1])
+            # provided [1], to append column name with 'i'th ID
             # & 'i'th value in 2nd column of query result.
             # index of NAME column (from queryResult) is 1 i.e 2nd column,
+            email_columns_by_id = sorted(email_custom_columns)
 
+        # curs.execute(query_for_email_columns)
+        # email_queryResult = curs.fetchall()
+        # column_id = [i[0] for i in email_queryResult]
+
+        curs.execute(query_for_sms_columns)
+        sms_query_result = curs.fetchall()
+        column_id = [i[0] for i in sms_query_result]
+        for i in range(len(sms_query_result)):
+            # print("ID is",columnID[i])
+            sms_custom_columns[int(column_id[i])].append(sms_query_result[i][1])
             sms_columns_by_id = sorted(sms_custom_columns)
-            # print("Sorted ID and Columns are :", smsColumnsByID[i], smsCustomColumns[smsColumnsByID[i]])
-        # print("Sorted ID and Columns for EMAIL are :", emailCustomColumns, "\n and for SMS are :", smsCustomColumns)
 
         return email_columns_by_id, email_custom_columns,sms_columns_by_id,sms_custom_columns
 
@@ -348,14 +341,18 @@ class CommonFunctions(Setup):
                 if index_of_db_column > index_Of_custom_properties: #if column present after the custom properties column, then compensate the index for rest of the columns
                     index_of_db_column = index_of_db_column + len(cust_column_ids)-1
 
-                if each_column_in_db in ced_columns_from_file[event_name]:
-                    column_presence_status = "Column " + each_column_in_db + " is present in CED"
-                    short_status = "Present"
-                else:
-                    column_presence_status = "Column " + each_column_in_db + " is missing"
-                    short_status = "Missing"
-
                 try:
+                    if each_column_in_db in ced_columns_from_file[event_name]:
+                        index_of_present_db_column = ced_columns_from_db[event_name].index(each_column_in_db)
+                        column_in_ced = ced_columns_from_file[event_name][index_of_present_db_column]
+                        column_presence_status = "Column " + each_column_in_db + " is present in CED"
+                        short_status = "Present"
+                    else:
+                        index_of_missing_db_column = ced_columns_from_db[event_name].index(each_column_in_db)
+                        column_in_ced = ced_columns_from_file[event_name][index_of_missing_db_column]
+                        column_presence_status = "Column " + each_column_in_db + " is missing"
+                        short_status = "Missing"
+
                     index_of_ced_column = ced_columns_from_file[event_name].index(each_column_in_db)
                     if index_of_db_column == index_of_ced_column:
                         column_order_status = "Column is in Order"
@@ -372,14 +369,21 @@ class CommonFunctions(Setup):
                     # keep increasing till for each of custom column
                     for i in cust_column_ids:     #loop through all the ids (sorted in asc order) of the columns
                         each_column_in_db = cust_column_names[i][0]  # get each column name using id
-                        if each_column_in_db in ced_columns_from_file[event_name]:
-                            column_presence_status = "Column " + each_column_in_db + " is present in CED"
-                            status = "Present"
-                        else:
-                            column_presence_status = "Column " + each_column_in_db + " is missing"
-                            status = "Missing"
-
                         try:
+                            if each_column_in_db in ced_columns_from_file[event_name]:
+                                index_of_present_custom_column = cust_column_names[i].index(each_column_in_db)
+                                index_of_present_custom_column += db_index
+                                custom_column_in_ced = ced_columns_from_file[event_name][index_of_present_custom_column]
+                                column_presence_status = "Column " + each_column_in_db + " is present in CED"
+                                status = "Present"
+                            else:
+                                index_of_missing_custom_column = cust_column_names[i].index(each_column_in_db)
+                                index_of_missing_custom_column += db_index
+                                custom_column_in_ced = ced_columns_from_file[event_name][index_of_missing_custom_column]
+                                column_presence_status = "Column " + each_column_in_db + " is missing"
+                                status = "Missing"
+
+
                             ced_index = ced_columns_from_file[event_name].index(each_column_in_db)
                             if db_index == ced_index:
                                 column_order = "Column is in Order"
@@ -390,22 +394,22 @@ class CommonFunctions(Setup):
                             column_order = e
                             print("***There is an Exception :(", e, "),Column", each_column_in_db,"is not present in file", file,"***")
 
-                        self.writeColumnCheckResult(event_name, file, each_column_in_db, column_presence_status,status,db_index, ced_index, column_order)
+                        self.writeColumnCheckResult(event_name, file, each_column_in_db, column_presence_status,custom_column_in_ced,status,db_index, ced_index, column_order)
                         # ced_index+=1  # to compensate for missing column
                         db_index += 1   # increasing index in for loop for next custom column
                     index_of_db_column = db_index
                     continue
-                self.writeColumnCheckResult(event_name, file, each_column_in_db, column_presence_status, short_status, index_of_db_column,
+                self.writeColumnCheckResult(event_name, file, each_column_in_db, column_presence_status,column_in_ced, short_status, index_of_db_column,
                                                        index_of_ced_column, column_order_status)
                     # self.htmlReport(event_name, cedFileName, each_column_in_db, column_presence_status, short_status, index_of_db_column,)
                 # self.testHTML(event_name, cedFileName, each_column_in_db, column_presence_status, short_status,index_of_db_column,index_of_ced_column, column_order_status)
         else:
             print("***INFO : Header Details for Event ", event_name ," is not available in DB")
-        print("\nRESULT FILE IS SAVED AT LOCATION :", self.resultFilePath)
+        # print("\nRESULT FILE IS SAVED AT LOCATION :", self.resultFilePath)
 
         return
 
-    def writeColumnCheckResult(self,event_name, file, each_column_in_db, column_presence_status, short_status, index_of_db_column,
+    def writeColumnCheckResult(self,event_name, file, each_column_in_db, column_presence_status,column_in_ced, short_status, index_of_db_column,
                                                        index_of_ced_column, column_order_status):
 
         filename = self.resultFilePath+"\\"+account_id+"_CEDHeaders_VerficationResult_"+self.runTime+".csv"
@@ -413,12 +417,12 @@ class CommonFunctions(Setup):
         writer = csv.writer(f, delimiter=',', lineterminator="\n", quoting=csv.QUOTE_ALL)
 
         prev_data = open(filename, "r").read()
-        header = ["Event Types", "File Name", "ColumnNames From FeedsSetting", "Present in CED or Not", "Result",
+        header = ["Event Types", "File Name", "ColumnNames From FeedsSetting", "Present in CED?","Column in CED", "Result",
                   "DB Column Index", "CED Column Index", "Column Order Result"]
         # Add a header only if the fname is empty
         if prev_data == '':
             writer.writerow(header)
-        writer.writerow([event_name, file, each_column_in_db, column_presence_status, short_status, index_of_db_column,
+        writer.writerow([event_name, file, each_column_in_db, column_presence_status,column_in_ced, short_status, index_of_db_column,
                                                        index_of_ced_column, column_order_status])
         f.close()
         return

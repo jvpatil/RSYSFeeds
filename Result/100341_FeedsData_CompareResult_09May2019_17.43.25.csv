@@ -1,8 +1,0 @@
-"EVENT_TYPE","FILE_NAME","KEY","ID","COUNT_FROM_CED","COUNT_FROM_DB","EventsToBeProcessed","EventsAlreadyProcessed","STATUS","Comments"
-"SKIPPED","100341_SKIPPED_20190507_051101.txt","LAUNCH_ID","19081","1","2","0","1","Fail","Count for the ID does not Match, Looks like 1 records are already processed and exported"
-"SMS_FAIL","100341_SMS_FAIL_20190507_050900.txt","LAUNCH_ID","66493201","1","1","0","0","Pass","Count for the ID Match"
-"SMS_FAIL","100341_SMS_FAIL_20190507_050900.txt","LAUNCH_ID","66493181","1","1","0","0","Pass","Count for the ID Match"
-"SMS_FAIL","100341_SMS_FAIL_20190507_050900.txt","LAUNCH_ID","66493221","1","1","0","0","Pass","Count for the ID Match"
-"SMS_FAIL","100341_SMS_FAIL_20190507_050900.txt","LAUNCH_ID","66493241","1","1","0","0","Pass","Count for the ID Match"
-"SMS_FAIL","100341_SMS_FAIL_20190507_050900.txt","LAUNCH_ID","19121","2","2","0","0","Pass","Count for the ID Match"
-"SMS_FAIL","100341_SMS_FAIL_20190507_050900.txt","LAUNCH_ID","66493161","1","1","0","0","Pass","Count for the ID Match"
