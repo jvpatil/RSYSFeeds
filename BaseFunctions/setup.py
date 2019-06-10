@@ -63,7 +63,9 @@ class Setup():
     def init_db_connection(self,accountName): #Make sure acccount details are provided in properties file.
         # account_id = self.prop[accountName+"AccID"]
         print("\nConnecting to ...",(self.prop[accountName+"User"]).upper() +"( Account ID :",self.prop[accountName+"AccID"],")")
-        self.dbcon = cx_Oracle.connect(self.prop[accountName+"User"] + "/" + self.prop[accountName+"Pass"] + "@" + self.prop[accountName+"URL"])
+        connection_details = self.prop[accountName + "User"] + "/" + self.prop[accountName + "Pass"] + "@" + self.prop[accountName + "URL"]
+        # self.dbcon = cx_Oracle.connect(self.prop[accountName+"User"] + "/" + self.prop[accountName+"Pass"] + "@" + self.prop[accountName+"URL"])
+        self.dbcon = cx_Oracle.connect(connection_details)
         # dbcon = cx_Oracle.connect(prop["progtmUser"] + "/" + prop["progtmPwd"] + "@" + prop["progtmUrl"])
         print("Connected to Oracle - ", (self.prop[accountName+"User"]).upper(), " account", "\n"," Oracle version is: " + self.dbcon.version)
         self.curs = self.dbcon.cursor()

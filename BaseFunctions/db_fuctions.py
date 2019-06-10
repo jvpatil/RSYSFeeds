@@ -12,120 +12,119 @@ from BaseFunctions.setup import Setup
 
 
 class DBFunctions():
-    inputFilesPath = Setup.testfilespath
-    resultFilePath = Setup.resultFilePath
-    runTime = datetime.now().strftime("%d%b%Y_%H.%M.%S")  # current time in ddmmyyyy_hh24mmss
-    report = "Result_" + str(runTime) + ""
+    input_files_path = Setup.testfilespath
+    result_files_path = Setup.resultFilePath
+    run_time = datetime.now().strftime("%d%b%Y_%H.%M.%S")  # current time in ddmmyyyy_hh24mmss
+    report = "Result_" + str(run_time) + ""
 
-    def get_count_from_db(self, curs, accountName, schema, eventType, searchColumn, list_unique_id,
+    def get_count_from_db(self, curs, accountName, schema, event_type, searchColumn, list_unique_id,
             dEventStoredDate):
-        dCountFromDB = defaultdict(list)
-        dEventDatesFromDB = defaultdict(list)
+        d_count_from_db = defaultdict(list)
+        d_event_dates_from_db = defaultdict(list)
 
         try:
             # for id in uniqueIDs:
-            #     query = self.getQuery(eventType,searchColumn,id)
+            #     query = self.getQuery(event_type,searchColumn,id)
             #     # print("Query for Count is :", query)
             #     curs.execute(query)
             #     resultCount = [i[0] for i in curs.fetchall()]
             #     dCountForIDs[id].extend(resultCount)
-            query = self.get_query(eventType, searchColumn, list_unique_id)
+            query = self.get_query(event_type, searchColumn, list_unique_id)
             curs.execute(query)
-            queryResult = curs.fetchall()  # if the event table has 0 records for the particular launch_id,
+            query_result = curs.fetchall()  # if the event table has 0 records for the particular launch_id,
             # then it is not in
 
-            for row in range(len(queryResult)):
-                launchID = queryResult[row][0]
-                cnt = queryResult[row][1]
-                minEventDate = queryResult[row][2]
-                maxEventDate = queryResult[row][3]
-                dCountFromDB[launchID].append(cnt)
-                dEventDatesFromDB[launchID].append(minEventDate)
-                dEventDatesFromDB[launchID].append(maxEventDate)
+            for row in range(len(query_result)):
+                launch_id = query_result[row][0]
+                cnt = query_result[row][1]
+                min_event_date = query_result[row][2]
+                max_event_date = query_result[row][3]
+                d_count_from_db[launch_id].append(cnt)
+                d_event_dates_from_db[launch_id].append(min_event_date)
+                d_event_dates_from_db[launch_id].append(max_event_date)
 
         except Exception as e:
             print('\n*****ERROR ON LINE {}'.format(sys.exc_info()[-1].tb_lineno), ",", type(e).__name__, ":", e,
                   "*****\n")
             print(traceback.format_exc())
 
-        return dCountFromDB, dEventDatesFromDB
+        return d_count_from_db, d_event_dates_from_db
 
-    def get_missing_events(self, curs, searchColumn, eventType, dEventStoredDate, dEventDatesFromDB, dCountFromDB):
-        dEventsToProcess = defaultdict(list)
-        dEventsProcessed = defaultdict(list)
-        eventTable = self.get_event_table(eventType)
+    def get_missing_events(self, curs, searchColumn, event_type, dEventStoredDate, d_event_dates_from_db, d_count_from_db):
+        d_events_to_process = defaultdict(list)
+        d_events_processed = defaultdict(list)
+        event_table = self.get_event_table(event_type)
 
         try:
-            for launchID in dCountFromDB:
-                firstEventDate = min(dEventStoredDate[str(launchID)])
-                CEDFirstEventDate = datetime.strptime(firstEventDate, '%d-%b-%Y %H:%M:%S')
-                CEDFirstEventDate = CEDFirstEventDate.strftime("%d-%b-%Y %I:%M:%S %p")
+            for launch_id in d_count_from_db:
+                first_event_date = min(dEventStoredDate[str(launch_id)])
+                ced_first_event_date = datetime.strptime(first_event_date, '%d-%b-%Y %H:%M:%S')
+                ced_first_event_date = ced_first_event_date.strftime("%d-%b-%Y %I:%M:%S %p")
 
-                lastEventDate = max(dEventStoredDate[str(launchID)])
-                CEDLastEventDate = datetime.strptime(lastEventDate, '%d-%b-%Y %H:%M:%S')
-                CEDLastEventDate = CEDLastEventDate + timedelta(
+                last_event_date = max(dEventStoredDate[str(launch_id)])
+                ced_last_event_date = datetime.strptime(last_event_date, '%d-%b-%Y %H:%M:%S')
+                ced_last_event_date = ced_last_event_date + timedelta(
                     seconds=60)  # increasing a minute coz, db LAST_EVENT_DATE in db contains milisecond and that record
                 # also included when query is run
-                CEDLastEventDate = CEDLastEventDate.replace(second=0, )  # again offsetting seconds to 0
-                CEDLastEventDate = CEDLastEventDate.strftime("%d-%b-%Y %I:%M:%S %p")
+                ced_last_event_date = ced_last_event_date.replace(second=0, )  # again offsetting seconds to 0
+                ced_last_event_date = ced_last_event_date.strftime("%d-%b-%Y %I:%M:%S %p")
 
-                dbFirstEventDate = min(dEventDatesFromDB[launchID]).strftime("%d-%b-%Y %I:%M:%S %p")
-                dbLastEventDate = max(dEventDatesFromDB[launchID]).strftime("%d-%b-%Y %I:%M:%S.%f %p")
+                db_first_event_date = min(d_event_dates_from_db[launch_id]).strftime("%d-%b-%Y %I:%M:%S %p")
+                db_last_event_date = max(d_event_dates_from_db[launch_id]).strftime("%d-%b-%Y %I:%M:%S.%f %p")
 
-                eventsToBeProcessedQuery = "SELECT count(*) from " + eventTable + " WHERE " + searchColumn + "=" + str(
-                    launchID) + " AND EVENT_STORED_DT > '" + CEDLastEventDate + "' AND EVENT_STORED_DT <= '" + \
-                                           dbLastEventDate + "'"
+                events_to_be_processed_query = "SELECT count(*) from " + event_table + " WHERE " + searchColumn + "=" + str(
+                    launch_id) + " AND EVENT_STORED_DT > '" + ced_last_event_date + "' AND EVENT_STORED_DT <= '" + \
+                                           db_last_event_date + "'"
 
-                eventsAlreadyProcessedQuery = "SELECT count(*) from " + eventTable + " WHERE " + searchColumn + "=" + \
+                events_already_processed_query = "SELECT count(*) from " + event_table + " WHERE " + searchColumn + "=" + \
                                               str(
-                                                  launchID) + " AND EVENT_STORED_DT < '" + CEDFirstEventDate + "' AND " \
+                                                  launch_id) + " AND EVENT_STORED_DT < '" + ced_first_event_date + "' AND " \
                                                                                                                "" \
                                                                                                                "EVENT_STORED_DT >= '" + \
-                                              dbFirstEventDate + "'"
+                                              db_first_event_date + "'"
 
-                curs.execute(eventsToBeProcessedQuery)
-                recordsNotProcessed = [i[0] for i in curs.fetchall()]
-                dEventsToProcess[launchID].extend(recordsNotProcessed)
+                curs.execute(events_to_be_processed_query)
+                records_not_processed = [i[0] for i in curs.fetchall()]
+                d_events_to_process[launch_id].extend(records_not_processed)
 
-                curs.execute(eventsAlreadyProcessedQuery)
-                recordsAlreadyProcessed = [i[0] for i in curs.fetchall()]
-                dEventsProcessed[launchID].extend(recordsAlreadyProcessed)
+                curs.execute(events_already_processed_query)
+                records_already_processed = [i[0] for i in curs.fetchall()]
+                d_events_processed[launch_id].extend(records_already_processed)
         except Exception as e:
             print('\n*****ERROR ON LINE {}'.format(sys.exc_info()[-1].tb_lineno), ",", type(e).__name__, ":", e,
                   "*****\n")
             print(traceback.format_exc())
 
-        return dEventsProcessed, dEventsToProcess
+        return d_events_processed, d_events_to_process
 
-    def get_query(self, eventType, searchColumn, uniqueIDs):
-        eventTable = self.get_event_table(eventType)
-        # eventTable = eventTableNames[eventType]
-        # # eventTable = DBFunctions.eventTableNames[eventType]
-        # query = "SELECT COUNT(*) FROM " + str(eventTable) + " WHERE " + searchColumn + " = " + ID +""
+    def get_query(self, event_type, searchColumn, uniqueIDs):
+        event_table = self.get_event_table(event_type)
+        # event_table = event_table_names[event_type]
+        # # event_table = DBFunctions.event_table_names[event_type]
+        # query = "SELECT COUNT(*) FROM " + str(event_table) + " WHERE " + searchColumn + " = " + ID +""
 
-        allIds = (",".join(uniqueIDs))
-        totalIds = len(allIds)
-        groupQueryForCount = "select " + searchColumn + ", count(*),MIN(EVENT_STORED_DT),MAX(EVENT_STORED_DT) from " + \
-                             eventTable + " WHERE " + searchColumn + " in (" + str(
-            allIds) + ") GROUP BY " + searchColumn
+        all_IDs = (",".join(uniqueIDs))
+        totalIds = len(all_IDs)
+        group_query_for_count = "select " + searchColumn + ", count(*),MIN(EVENT_STORED_DT),MAX(EVENT_STORED_DT) from " + \
+                             event_table + " WHERE " + searchColumn + " in (" + str(
+            all_IDs) + ") GROUP BY " + searchColumn
 
-        # eventsToBeProcessedQuery = "SELECT count(*) from " + eventTable + " WHERE " + searchColumn + "=" + str(
-        #     id) + " AND EVENT_STORED_DT > '" + CEDLastEventDate + "' AND EVENT_STORED_DT <= "'" dbLastEventDate + "'
+        # events_to_be_processed_query = "SELECT count(*) from " + event_table + " WHERE " + searchColumn + "=" + str(
+        #     id) + " AND EVENT_STORED_DT > '" + ced_last_event_date + "' AND EVENT_STORED_DT <= "'" db_last_event_date + "'
         #
-        # eventsAlreadyProcessedQuery = "SELECT count(*) from " + eventTable + " WHERE " + searchColumn + "=" + str(
-        #     id) + " AND EVENT_STORED_DT < '" + CEDFirstEventDate + "' AND EVENT_STORED_DT" >= '" dbFirstEventDate + "'
+        # events_already_processed_query = "SELECT count(*) from " + event_table + " WHERE " + searchColumn + "=" + str(
+        #     id) + " AND EVENT_STORED_DT < '" + ced_first_event_date + "' AND EVENT_STORED_DT" >= '" db_first_event_date + "'
 
-        return groupQueryForCount
+        return group_query_for_count
 
-    def get_event_table(self, eventType):
-        eventTableNames = {
+    def get_event_table(self, event_type):
+        event_table_names = {
             'SENT': 'E_RECIPIENT_SENT',
             'SKIPPED': 'E_RECIPIENT_SKIPPED',
             'BOUNCE': 'E_RECIPIENT_BOUNCED',
             'OPEN': 'E_RECIPIENT_OPENED',
             'CLICK': 'E_RECIPIENT_CLICKED',
             'CONVERT': 'E_RECIPIENT_CONVERSION',
-            'FAIL': 'E_RECIPIENT_FAILED',
             'OPT_IN': 'E_RECIPIENT_OPTIN',
             'OPT_OUT': 'E_RECIPIENT_OPTOUT',
             'FAIL': 'E_RECIPIENT_FAILED',
@@ -169,8 +168,8 @@ class DBFunctions():
             'APPCLOUD_FAILED': 'E_RECIPIENT_APPCLOUD_FAILED',
             'APPCLOUD_SKIPPED': 'E_RECIPIENT_APPCLOUD_SKIPPED'
         }
-        eventTable = eventTableNames[eventType]
-        return eventTable
+        event_table = event_table_names[event_type]
+        return event_table
 
     def get_headers_from_db(self, curs, account_name):
         global account_id
@@ -186,6 +185,7 @@ class DBFunctions():
             print("\n ************NO RESULT, PLEASE CHECK IF ACCOUNT", account_id,
                   "HAS ITS SETTINGS IN DB OR NOT**************")
         ced_headers_from_db = defaultdict(list)
+        built_in_headers_from_db = defaultdict(list)
         events = []
         for each_header in query_result_all_headers:
             # print("Header From CED is : ",eachHeader)
@@ -196,11 +196,15 @@ class DBFunctions():
                 col_names = each_header[1].split(",")
 
                 for i in range(len(col_names)):
+                    if "$" in col_names[i]:
+                        split_built_in_column = col_names[i].split(":")
+                        column_name = split_built_in_column[1]
+                        built_in_headers_from_db[event_type].append(column_name)
                     ced_headers_from_db[event_type].append(col_names[i])
 
-        return ced_headers_from_db
+        return ced_headers_from_db,built_in_headers_from_db
 
-    # def compareCountForIDs(self,dCountFromCED,dCountFromDB,deventsToProcess,deventsProcessed):
+    # def compareCountForIDs(self,dCountFromCED,d_count_from_db,d_events_to_process,d_events_processed):
     #
     #     dStatus = defaultdict(list)
     #     dStatus = defaultdict(list)
@@ -208,9 +212,9 @@ class DBFunctions():
     #     try:
     #         for id in dCountFromCED:
     #             cedCount = dCountFromCED[id][0]
-    #             dbCount = dCountFromDB[int(id)][0]
-    #             toBeProcessed = deventsToProcess[int(id)][0]
-    #             alreadyProcessed = deventsProcessed[int(id)][0]
+    #             dbCount = d_count_from_db[int(id)][0]
+    #             toBeProcessed = d_events_to_process[int(id)][0]
+    #             alreadyProcessed = d_events_processed[int(id)][0]
     #             if cedCount == dbCount:
     #                 status = "Pass"
     #                 result = "Count for the ID Match"
@@ -224,18 +228,18 @@ class DBFunctions():
     #         print(traceback.format_exc())
     #      return
 
-    # def compareCountForIDs(self,cedFileName, searchID, dCountFromCED , dCountFromDB,deventsToProcess,
-    # deventsProcessed):
+    # def compareCountForIDs(self,cedFileName, searchID, dCountFromCED , d_count_from_db,d_events_to_process,
+    # d_events_processed):
     #     AccountID = re.split(r"_", cedFileName)  # Extract Account ID from the filename
     #     AccountID = AccountID[0].strip('_')
-    #     resultFile = DBFunctions.resultFilePath + "\\" + AccountID + "_FeedsData_CompareResult_" +
-    #     DBFunctions.runTime + ".csv"
+    #     resultFile = DBFunctions.result_files_path + "\\" + AccountID + "_FeedsData_CompareResult_" +
+    #     DBFunctions.run_time + ".csv"
     #
     #     header = ["EVENT_TYPE", "FILE_NAME", "KEY", "ID", "COUNT_FROM_CED", "COUNT_FROM_DB","EventsToBeProcessed",
     #     "EventsAlreadyProcessed","STATUS","Comments"]
     #
     #     name = re.split(r"\d+", cedFileName)  # Extract only event name from the filename
-    #     eventType = name[1].strip('_')
+    #     event_type = name[1].strip('_')
     #
     #     openFile = open(resultFile, "a+")
     #     writer = csv.writer(openFile, lineterminator="\n", quoting=csv.QUOTE_ALL)
@@ -245,16 +249,16 @@ class DBFunctions():
     #     try:
     #         for id in dCountFromCED:
     #             cedCount = dCountFromCED[id][0]
-    #             dbCount = dCountFromDB[int(id)][0]
-    #             NotProcessed = deventsToProcess[int(id)][0]
-    #             alreadyProcessed = deventsProcessed[int(id)][0]
+    #             dbCount = d_count_from_db[int(id)][0]
+    #             NotProcessed = d_events_to_process[int(id)][0]
+    #             alreadyProcessed = d_events_processed[int(id)][0]
     #
     #             if dbCount == cedCount:
     #                 result = "Count for the ID Match"
     #                 status = "Pass"
     #             elif dbCount != cedCount and NotProcessed != 0:
     #                 if type(NotProcessed) == str:
-    #                     result = "No Data found in " + eventType + " table for " + searchID + " : " + id
+    #                     result = "No Data found in " + event_type + " table for " + searchID + " : " + id
     #                     status = "Fail"
     #                 else:
     #                     actualCount = dbCount - NotProcessed
@@ -263,12 +267,12 @@ class DBFunctions():
     #                             NotProcessed) + " to be processed yet"
     #                         status = "Pass"
     #                     else:
-    #                         result = "Count for the ID does not Match, Seems Records are Purged for " + eventType +
+    #                         result = "Count for the ID does not Match, Seems Records are Purged for " + event_type +
     #                         " table"
     #                         status = "Fail"
     #             elif dbCount != cedCount and alreadyProcessed != 0:
     #                 if type(alreadyProcessed) == str:
-    #                     result = "No Data found in " + eventType + " table for " + searchID + " : " + id
+    #                     result = "No Data found in " + event_type + " table for " + searchID + " : " + id
     #                     status = "Fail"
     #                 else:
     #                     actCount = dbCount - alreadyProcessed
@@ -277,14 +281,14 @@ class DBFunctions():
     #                             alreadyProcessed) + " records are already processed and exported"
     #                         status = "Fail"
     #                     else:
-    #                         result = "Count for the ID does not Match, Seems Records are Purged for " + eventType +
+    #                         result = "Count for the ID does not Match, Seems Records are Purged for " + event_type +
     #                         " table"
     #                         status = "Fail"
     #             else:
     #                 result = "Count for the ID does not Match"
     #                 status = "Fail"
     #
-    #             writer.writerow([eventType, cedFileName, searchID, id, cedCount,dbCount,NotProcessed,
+    #             writer.writerow([event_type, cedFileName, searchID, id, cedCount,dbCount,NotProcessed,
     #             alreadyProcessed, status, result ])
     #     except Exception as e:
     #         print('\n*****ERROR ON LINE {}'.format(sys.exc_info()[-1].tb_lineno), ",", type(e).__name__, ":", e,
@@ -294,7 +298,7 @@ class DBFunctions():
     #     openFile.close()
     #     return resultFile
 
-    def write_from_db_to_file(self, writer, eventType, cedFileName, searchID, id, cedCount, dbCount, NotProcessed,
+    def write_from_db_to_file(self, writer, event_type, cedFileName, searchID, id, cedCount, dbCount, NotProcessed,
             alreadyProcessed, status, result):
         # writer = csv.writer(openFile, lineterminator="\n", quoting=csv.QUOTE_ALL)
         # checkHeader = open(resultFile, "r").read()
@@ -303,7 +307,7 @@ class DBFunctions():
         # if checkHeader == '':
         #     writer.writerow(header)
         writer.writerow(
-            [eventType, cedFileName, searchID, id, cedCount, dbCount, NotProcessed, alreadyProcessed, status, result])
+            [event_type, cedFileName, searchID, id, cedCount, dbCount, NotProcessed, alreadyProcessed, status, result])
 
     def extract_custom_properties_data(self,curs):
 

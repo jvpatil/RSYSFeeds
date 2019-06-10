@@ -1,0 +1,4 @@
+"EVENT_TYPE_ID","ACCOUNT_ID","LIST_ID","RIID","CUSTOMER_ID","EVENT_CAPTURED_DT","EVENT_STORED_DT","CAMPAIGN_ID","LAUNCH_ID","EMAIL_FORMAT","SOURCE","REASON","EMAIL","FIRST_NAME","LAST_NAME","DISPATCHABLE_CREATED_USER_ID"
+"21","100341","3001","11001501","AQ1","31-May-2019 07:14:16","31-May-2019 07:14:31","0","0","N","UI - Data Viewer","DV:MERGE","shailaja.kalluri@oracle.com","","",""
+"21","100341","3001","11001501","AQ1","31-May-2019 07:22:17","31-May-2019 07:22:32","0","0","N","UI - Data Viewer","DV:MERGE","shailaja.kalluri@oracle.com","","",""
+"21","100341","3001","11001501","AQ1","31-May-2019 07:26:34","31-May-2019 07:26:49","0","0","N","UI - Data Viewer","DV:MERGE","shailaja.kalluri@oracle.com","","",""

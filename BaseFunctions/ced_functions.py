@@ -13,8 +13,8 @@ import logging
 
 class CEDFunctions(CommonFunctions):
     # log = CommonFunctions.log
-    inputFilesPath = Setup.testfilespath
-    resultFilePath = Setup.resultFilePath
+    input_files_path = Setup.testfilespath
+    result_files_path = Setup.resultFilePath
     runTime = datetime.now().strftime("%d%b%Y_%H.%M.%S")  # current time in ddmmyyyy_hh24mmss
     report = "Result_" + str(runTime) + ""
 
@@ -61,7 +61,7 @@ class CEDFunctions(CommonFunctions):
     # def findFiles(self):
     #     count = 0
     #     try:
-    #         files = os.listdir(self.inputFilesPath)
+    #         files = os.listdir(self.input_files_path)
     #         for fname in range(len(files)):
     #             count += 1
     #         print("\nThere are total", count, "files to processed:")
@@ -76,7 +76,7 @@ class CEDFunctions(CommonFunctions):
     def get_ids_from_ced(self, ced_file):
 
         try:
-            with open(os.path.join(self.inputFilesPath, ced_file), 'r') as f:
+            with open(os.path.join(CEDFunctions.input_file_path, ced_file), 'r') as f:
                 content = f.readlines()
 
             header_row = content[:1]
@@ -111,25 +111,25 @@ class CEDFunctions(CommonFunctions):
         return IDs, unique_IDs, event_stored_date, search_column, event_type
 
     def get_count_from_ced(self, IDs, uniqueIDs):
-        dCountFromCED = defaultdict(list)
+        d_count_from_ced = defaultdict(list)
         try:
             for id in uniqueIDs:
                 count = IDs.count(id)
-                dCountFromCED[id].append(count)
+                d_count_from_ced[id].append(count)
                 print("Count for the ID ", id, "is :", count)
         except Exception as e:
             print('\n*****ERROR ON LINE {}'.format(sys.exc_info()[-1].tb_lineno), ",", type(e).__name__, ":", e,
                   "*****\n")
             print(traceback.format_exc())
 
-        return dCountFromCED
+        return d_count_from_ced
 
     def read_data_from_ced(self,file, unique_IDs, search_column):
         print("Reading Data From File:", file)
         ced_data = defaultdict(list)
 
         for id in unique_IDs:
-            with open(os.path.join(CEDFunctions.inputFilesPath, file), 'r') as f:
+            with open(os.path.join(CEDFunctions.input_files_path, file), 'r') as f:
                 content = f.readlines()
 
             for row in content[:1]:
