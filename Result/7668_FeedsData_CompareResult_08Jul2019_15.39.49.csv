@@ -1,0 +1,2 @@
+"EVENT_TYPE","FILE_NAME","KEY","ID","COUNT_FROM_CED","COUNT_FROM_DB","EventsToBeProcessed","Eventsalready_processed","STATUS","Comments"
+"FORM","7668_FORM_20190708_084300.txt","FORM_ID","33059561","2","54","18","34","Fail","Count for the ID does not Match, Seems Records are Purged for FORM table"

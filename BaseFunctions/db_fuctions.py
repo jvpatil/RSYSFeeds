@@ -6,6 +6,7 @@ import traceback
 from datetime import datetime, date, time, timedelta
 from xml.etree import ElementTree as ET
 
+import pytz
 from lxml.etree import ElementTree
 
 from BaseFunctions.setup import Setup
@@ -21,7 +22,7 @@ class DBFunctions():
             dEventStoredDate):
         d_count_from_db = defaultdict(list)
         d_event_dates_from_db = defaultdict(list)
-
+        print("*** Getting count from DB, for  ::", event_type)
         try:
             # for id in uniqueIDs:
             #     query = self.getQuery(event_type,searchColumn,id)
@@ -29,7 +30,7 @@ class DBFunctions():
             #     curs.execute(query)
             #     resultCount = [i[0] for i in curs.fetchall()]
             #     dCountForIDs[id].extend(resultCount)
-            query = self.get_query(event_type, searchColumn, list_unique_id)
+            query = self.get_query(accountName,schema,event_type, searchColumn, list_unique_id)
             curs.execute(query)
             query_result = curs.fetchall()  # if the event table has 0 records for the particular launch_id,
             # then it is not in
@@ -50,23 +51,31 @@ class DBFunctions():
 
         return d_count_from_db, d_event_dates_from_db
 
-    def get_missing_events(self, curs, searchColumn, event_type, dEventStoredDate, d_event_dates_from_db, d_count_from_db):
+    def get_missing_events(self, curs,accountName,eventSchema, searchColumn, event_type, dEvent_stored_date_from_ced, d_event_dates_from_db, d_count_from_db,CEDDatesInAccountTZ):
         d_events_to_process = defaultdict(list)
         d_events_processed = defaultdict(list)
         event_table = self.get_event_table(event_type)
+        event_table = accountName + "_" + eventSchema + "." + event_table
 
         try:
             for launch_id in d_count_from_db:
-                first_event_date = min(dEventStoredDate[str(launch_id)])
+                first_event_date = min(dEvent_stored_date_from_ced[str(launch_id)])
                 ced_first_event_date = datetime.strptime(first_event_date, '%d-%b-%Y %H:%M:%S')
+                if CEDDatesInAccountTZ:
+                    formatTimeInPST = pytz.timezone('Asia/Calcutta').localize(ced_first_event_date)
+                    # formatTimeInPST = pytz.timezone('US/Pacific').localize(ced_first_event_date)  # localizing adds timezone info to the timestamp
+                    # TZ info is required for astimezone()function. Here both CAPTURED & STORED date are converted to PST & appended TZ info(-08:00)
+                    ced_first_event_date = formatTimeInPST.astimezone(pytz.timezone('UTC'))  # converts both Captured & Stored date from PSt to UTC
                 ced_first_event_date = ced_first_event_date.strftime("%d-%b-%Y %I:%M:%S %p")
 
-                last_event_date = max(dEventStoredDate[str(launch_id)])
+                last_event_date = max(dEvent_stored_date_from_ced[str(launch_id)])
                 ced_last_event_date = datetime.strptime(last_event_date, '%d-%b-%Y %H:%M:%S')
-                ced_last_event_date = ced_last_event_date + timedelta(
-                    seconds=60)  # increasing a minute coz, db LAST_EVENT_DATE in db contains milisecond and that record
+                ced_last_event_date = ced_last_event_date + timedelta(seconds=60)  # increasing a minute coz, db LAST_EVENT_DATE in db contains milisecond and that record
                 # also included when query is run
                 ced_last_event_date = ced_last_event_date.replace(second=0, )  # again offsetting seconds to 0
+                if CEDDatesInAccountTZ:
+                    formatTimeInPST = pytz.timezone('Asia/Calcutta').localize(ced_last_event_date)
+                    ced_last_event_date = formatTimeInPST.astimezone(pytz.timezone('UTC'))  # converts both Captured & Stored date from PSt to UTC
                 ced_last_event_date = ced_last_event_date.strftime("%d-%b-%Y %I:%M:%S %p")
 
                 db_first_event_date = min(d_event_dates_from_db[launch_id]).strftime("%d-%b-%Y %I:%M:%S %p")
@@ -97,8 +106,9 @@ class DBFunctions():
 
         return d_events_processed, d_events_to_process
 
-    def get_query(self, event_type, searchColumn, uniqueIDs):
+    def get_query(self, accountName,schema,event_type, searchColumn, uniqueIDs):
         event_table = self.get_event_table(event_type)
+        event_table = accountName+"_"+schema+"."+event_table
         # event_table = event_table_names[event_type]
         # # event_table = DBFunctions.event_table_names[event_type]
         # query = "SELECT COUNT(*) FROM " + str(event_table) + " WHERE " + searchColumn + " = " + ID +""
@@ -131,7 +141,7 @@ class DBFunctions():
             'COMPLAINT': 'E_RECIPIENT_COMPLAINT',
             'FORM': 'E_RECIPIENT_FORM',
             'FORM_STATE': 'E_STATE_FORM',
-            'PROGRAM_': 'E_RECIPIENT_PROGRAM',
+            'PROGRAM': 'E_RECIPIENT_PROGRAM',
             'PROGRAM_STATE': 'E_STATE_PROGRAM',
             'HOLDOUT_GROUP': 'E_RECIPIENT_PROGRAM_HOLDOUT',
             'LAUNCH_STATE': 'E_STATE_LAUNCH',
@@ -147,7 +157,7 @@ class DBFunctions():
             'SMS_OPT_OUT': 'E_RECIPIENT_SMS_OPTOUT',
             'SMS_MO_FW_SENT': 'E_RECIPIENT_SMS_MO_FW_SENT',
             'SMS_MO_FW_FAILED': 'E_RECIPIENT_SMS_MO_FW_FAILED',
-            'SMS_DIVERED': 'E_RECIPIENT_SMS_RECEIPT',
+            'SMS_DELIVERED': 'E_RECIPIENT_SMS_RECEIPT',
             'PUSH_SENT': 'E_RECIPIENT_PUSH_SENT',
             'PUSH_OPENED': 'E_RECIPIENT_PUSH_OPENED',
             'PUSH_CLICKED': 'E_RECIPIENT_PUSH_CLICKED',
@@ -166,7 +176,10 @@ class DBFunctions():
             'MMS_SKIPPED': 'E_RECIPIENT_MMS_SKIPPED',
             'APPCLOUD_SENT': 'E_RECIPIENT_APPCLOUD_SENT',
             'APPCLOUD_FAILED': 'E_RECIPIENT_APPCLOUD_FAILED',
-            'APPCLOUD_SKIPPED': 'E_RECIPIENT_APPCLOUD_SKIPPED'
+            'APPCLOUD_SKIPPED': 'E_RECIPIENT_APPCLOUD_SKIPPED',
+            'CUSTOM_CHANNEL_SKIPPED' : 'E_RECIPIENT_CUSTOM_SKIPPED',
+            'CUSTOM_CHANNEL_SENT' : 'E_RECIPIENT_CUSTOM_SENT',
+            'CUSTOM_CHANNEL_FAILED' : 'E_RECIPIENT_CUSTOM_FAILED'
         }
         event_table = event_table_names[event_type]
         return event_table
@@ -309,10 +322,7 @@ class DBFunctions():
         writer.writerow(
             [event_type, cedFileName, searchID, id, cedCount, dbCount, NotProcessed, alreadyProcessed, status, result])
 
-    def extract_custom_properties_data(self,curs):
-
-
-
+    def extract_custom_properties_data_from_eventdb(self,curs):
         query = "SELECT CUSTOM_PROPERTIES FROM E_RECIPIENT_SKIPPED WHERE LAUNCH_ID=19081 ORDER BY EVENT_STORED_DT"
         curs.execute(query)
         custom_properties = curs.fetchall()

@@ -20,7 +20,7 @@ class Setup():
     def __init__(self):
         self.curs = None
         self.update_os()
-        self.delete_files()
+        # self.delete_files()
         # logging.basicConfig(filename='Feeds.log', filemode='w', format='%(process)d-%(levelname)s-%(message)s',level=logging.DEBUG)
         logging.basicConfig(format='%(funcName)s.%(levelname)s : %(message)s',level=logging.INFO)
         # logging.basicConfig(format='%(process)d-%(levelname)s-%(message)s')
@@ -80,7 +80,7 @@ class Setup():
     finish = datetime.now()
     timeTaken = (finish - start).total_seconds()
 
-    def get_run_time(self,timeTaken):
+    def get_run_time(self,timeTaken=timeTaken):
         # timeTaken+=60
         if timeTaken > 3600:
             Hour, R = divmod(int(timeTaken), 3600)  # Qoutient is stored in Hour and Remainder in R

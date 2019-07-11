@@ -52,6 +52,8 @@ class CommonFunctions(Setup):
             search_column = 'RIID'
         elif re.match(r'[0-9]+_' + 'SMS_OPT', cedFile):
             search_column = 'RIID'
+        elif re.match(r'[0-9]+_' + 'PUSH_OPT', cedFile):
+            search_column = 'RIID'
         elif re.match(r'[0-9]+_' + 'FORM', cedFile):
             search_column = 'FORM_ID'
         elif re.match(r'[0-9]+_' + 'FORM_STATE', cedFile):
@@ -87,6 +89,7 @@ class CommonFunctions(Setup):
     def compare_counts(self, cedFileName, searchID, dCountFromCED, dCountFromDB, deventsToProcess,
             deventsProcessed):
         # global account_id
+        print("*** Validating count for file :: ",cedFileName , " ***")
         account_id = re.split(r"_", cedFileName)  # Extract Account ID from the filename
         account_id = account_id[0].strip('_')
         resultFile = self.result_file_path + "\\" + account_id + "_FeedsData_CompareResult_" + \
@@ -123,6 +126,10 @@ class CommonFunctions(Setup):
                             result = "Count for the ID Match, But there are " + str(
                                 not_processed) + " to be processed yet"
                             status = "Pass"
+                        # elif ced_count == (db_count-not_processed-already_processed):
+                        elif already_processed != 0:
+                            result = "Count for the ID does not Match, Seems Few Records are already processed & few are to be processed yet for " + event_type + " table"
+                            status = "Fail"
                         else:
                             result = "Count for the ID does not Match, Seems Records are Purged for " + event_type + " table"
                             status = "Fail"
@@ -203,7 +210,7 @@ class CommonFunctions(Setup):
             except:
                 pass
         data[u'UserName'] = "SYSDM"
-        data[u'Password'] = "Welcome1234%"
+        data[u'Password'] = "Welcome1234!"
 
         '''submit post request with username / password and other needed info'''
         post_resp = session.post('https://interact-a.qa1.responsys.net/authentication/login/LoginAction', data=data)
@@ -275,9 +282,9 @@ class CommonFunctions(Setup):
         result_file = "***INFO : SAVED A FILE ("+filename.upper()+") WITH ALL EVENTS & THIER HEADERS*****"
         return result_file
 
-    def get_custom_properties(self,curs):
-        query_for_email_columns = "SELECT COLUMN_ID, COLUMN_NAME FROM CUSTOM_EVENT_COLUMN"
-        query_for_sms_columns = "SELECT COLUMN_ID, COLUMN_NAME FROM SMS_CUSTOM_EVENT_COLUMN"
+    def get_custom_properties(self,curs,account_name):
+        query_for_email_columns = "SELECT COLUMN_ID, COLUMN_NAME FROM "+account_name+"_CUST.CUSTOM_EVENT_COLUMN"
+        query_for_sms_columns = "SELECT COLUMN_ID, COLUMN_NAME FROM "+account_name+"_CUST.SMS_CUSTOM_EVENT_COLUMN"
         # queries= [query_for_email_columns,query_for_sms_columns]
 
         email_custom_columns = defaultdict(list)
@@ -373,6 +380,9 @@ class CommonFunctions(Setup):
                 except Exception as e:
                     index_of_ced_column = "N/A"
                     column_order_status = e
+                    column_presence_status = "Column " + each_column_in_db + " is missing"
+                    short_status = "Missing"
+                    column_in_ced = "N/A"
                     print("***There is an Exception :(", e, "),Column", each_column_in_db, "is not present in file", file_name,"***")
 
                 if each_column_in_db == "CUSTOM_PROPERTIES":
@@ -402,6 +412,9 @@ class CommonFunctions(Setup):
                         except Exception as e:
                             ced_index = "N/A"
                             column_order = e
+                            column_presence_status = "Column " + each_column_in_db + " (from CUSTOM_PROPERTIES) is missing"
+                            status = "Missing"
+                            custom_column_in_ced = "N/A"
                             print("***There is an Exception :(", e, "),Column", each_column_in_db,"is not present in file", file_name,"***")
 
                         self.writeColumnCheckResult(event_name, file_name, each_column_in_db, column_presence_status,custom_column_in_ced,status,db_index, ced_index, column_order)
@@ -603,8 +616,6 @@ class CommonFunctions(Setup):
             curs.execute(query)
             query_result_for_id = curs.fetchall()
             row_num = 0;  # for rows in query result
-
-
             number_of_columns_for_id = len(ced_data[id])
             k = 0
             row_num_for_ced = 0

@@ -5,7 +5,7 @@ from BaseFunctions.common_functions import CommonFunctions
 
 
 class ValidateColumns(CommonFunctions):
-    account_name = "progtm"
+    account_name = "ipush"
 
     def verifyColumns(self):
         ced_files = CEDFunctions.find_files(self)
@@ -22,9 +22,10 @@ class ValidateColumns(CommonFunctions):
 
         CommonFunctions.close_db_connection(self, curs)
 
-        curs = Setup.init_db_connection(self, self.account_name + "Cust")
+        # curs = Setup.init_db_connection(self, self.account_name + "Cust")
+        curs = Setup.init_db_connection(self, "syslocalCust")
         email_columns_by_id, email_custom_columns, smsemail_columns_by_id, sms_custom_columns = \
-            CommonFunctions.get_custom_properties(self, curs)
+            CommonFunctions.get_custom_properties(self, curs,self.account_name)
 
         CommonFunctions.close_db_connection(self, curs)
 
@@ -35,6 +36,7 @@ class ValidateColumns(CommonFunctions):
             CommonFunctions.validate_columns_and_save_result(self,self.account_name, file, ced_columns_from_file,
                                                              ced_columns_from_db,built_in_headers_from_db, ced_columns_from_podconfig, email_custom_columns,
                                                              sms_custom_columns)
+        CEDFunctions.get_run_time(self)
         return
 
 ValidateColumns().verifyColumns()
