@@ -184,9 +184,10 @@ class DBFunctions():
         event_table = event_table_names[event_type]
         return event_table
 
-    def get_headers_from_db(self, curs, account_name):
-        global account_id
-        account_id = self.prop[account_name + "CustAccID"]
+    def get_headers_from_db(self, curs, account_id):
+    # def get_headers_from_db(self, curs, account_name):
+    #     global account_id
+    #     account_id = self.prop[account_name + "CustAccID"]
         feedHeadersFromDB = {}
         header_query = "SELECT S.SECTION_KEY ,A.SECTION_KEY_VALUE_STRING FROM ACCOUNT_SETTINGS A LEFT OUTER JOIN " \
                        "SECTION_KEY S ON A.SECTION_KEY_ID=S.SECTION_KEY_ID WHERE S.SECTION_NAME LIKE '%EventConnect%' " \

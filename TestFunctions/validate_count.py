@@ -4,7 +4,7 @@ from BaseFunctions.db_fuctions import *
 
 
 class ValidateCount(CEDFunctions, CommonFunctions, DBFunctions):
-    accountName = 'ipush'
+    accountName = 'qa1cloudc001'
     eventSchema = "Event"
     custSchema = "Cust"
     CEDDatesInAccountTZ = "True"

@@ -15,7 +15,6 @@ from bs4 import BeautifulSoup
 import lxml
 
 
-
 class CommonFunctions(Setup):
     input_file_path = Setup.testfilespath
     result_file_path = Setup.resultFilePath
@@ -23,6 +22,7 @@ class CommonFunctions(Setup):
     report = "Result_" + str(run_time) + ""
 
     def get_index(self, search_column, ced_file):
+        index_of_search_column, index_of_event_stored_dt = None, None
         try:
             with open(os.path.join(self.input_file_path, ced_file), 'r') as f:
                 content = f.readlines()
@@ -30,17 +30,16 @@ class CommonFunctions(Setup):
                 column = column.strip().replace('\"', '')
                 list_of_columns = re.split(',', column)
             index_of_search_column = list_of_columns.index(search_column)
-            index_of_event_stored_dt = list_of_columns.index("EVENT_STORED_DT")
-            # print("Index of Search COlumn is :", index_of_search_column, "and Index of Event Stored Date is :",
+            index_of_event_stored_dt = list_of_columns.index(
+                "EVENT_STORED_DT")  # print("Index of Search COlumn is :", index_of_search_column, "and Index of Event Stored Date is :",
             # index_of_event_stored_dt)
         except Exception as e:
-            print('\n*****ERROR ON LINE {}'.format(sys.exc_info()[-1].tb_lineno), ",", type(e).__name__, ":", e,
-                  "*****\n")
+            print('\n*****ERROR ON LINE {}'.format(sys.exc_info()[-1].tb_lineno), ",", type(e).__name__, ":", e, "*****\n")
             print(traceback.format_exc())
 
         return index_of_search_column, index_of_event_stored_dt
 
-    def get_account_id(self,ced_file):
+    def get_account_id(self, ced_file):
         account_id = re.split(r"_", ced_file)  # Extract Account ID from the filename
         account_id = account_id[0].strip('_')
         return account_id
@@ -73,6 +72,7 @@ class CommonFunctions(Setup):
 
     def find_files(self):
         count = 0
+        files = None
         try:
             files = os.listdir(self.input_file_path)
             for fname in range(len(files)):
@@ -80,23 +80,20 @@ class CommonFunctions(Setup):
             print("\nThere are total", count, "files to processed:")
             print(*files, sep="\n")
         except Exception as e:
-            print('\n*****ERROR ON LINE {}'.format(sys.exc_info()[-1].tb_lineno), ",", type(e).__name__, ":", e,
-                  "*****\n")
+            print('\n*****ERROR ON LINE {}'.format(sys.exc_info()[-1].tb_lineno), ",", type(e).__name__, ":", e, "*****\n")
             print(traceback.format_exc())
 
         return files
 
-    def compare_counts(self, cedFileName, searchID, dCountFromCED, dCountFromDB, deventsToProcess,
-            deventsProcessed):
+    def compare_counts(self, cedFileName, searchID, dCountFromCED, dCountFromDB, deventsToProcess, deventsProcessed):
         # global account_id
-        print("*** Validating count for file :: ",cedFileName , " ***")
+        print("*** Validating count for file :: ", cedFileName, " ***")
         account_id = re.split(r"_", cedFileName)  # Extract Account ID from the filename
         account_id = account_id[0].strip('_')
-        resultFile = self.result_file_path + "\\" + account_id + "_FeedsData_CompareResult_" + \
-                     self.run_time + ".csv"
+        resultFile = self.result_file_path + "\\" + account_id + "_FeedsData_CompareResult_" + self.run_time + ".csv"
 
-        header = ["EVENT_TYPE", "FILE_NAME", "KEY", "ID", "COUNT_FROM_CED", "COUNT_FROM_DB", "EventsToBeProcessed",
-                  "Eventsalready_processed", "STATUS", "Comments"]
+        header = ["EVENT_TYPE", "FILE_NAME", "KEY", "ID", "COUNT_FROM_CED", "COUNT_FROM_DB", "EventsToBeProcessed", "Eventsalready_processed",
+                  "STATUS", "Comments"]
 
         name = re.split(r"\d+", cedFileName)  # Extract only event name from the filename
         event_type = name[1].strip('_')
@@ -123,12 +120,12 @@ class CommonFunctions(Setup):
                     else:
                         actual_count = db_count - not_processed
                         if ced_count == actual_count:
-                            result = "Count for the ID Match, But there are " + str(
-                                not_processed) + " to be processed yet"
+                            result = "Count for the ID Match, But there are " + str(not_processed) + " to be processed yet"
                             status = "Pass"
                         # elif ced_count == (db_count-not_processed-already_processed):
                         elif already_processed != 0:
-                            result = "Count for the ID does not Match, Seems Few Records are already processed & few are to be processed yet for " + event_type + " table"
+                            result = "Count for the ID does not Match, Seems Few Records are already processed & few are to be processed yet for " \
+                                     + event_type + " table"
                             status = "Fail"
                         else:
                             result = "Count for the ID does not Match, Seems Records are Purged for " + event_type + " table"
@@ -150,18 +147,15 @@ class CommonFunctions(Setup):
                     result = "Count for the ID does not Match"
                     status = "Fail"
 
-                writer.writerow(
-                    [event_type, cedFileName, searchID, id, ced_count, db_count, not_processed, already_processed, status,
-                     result])
+                writer.writerow([event_type, cedFileName, searchID, id, ced_count, db_count, not_processed, already_processed, status, result])
         except Exception as e:
-            print('\n*****ERROR ON LINE {}'.format(sys.exc_info()[-1].tb_lineno), ",", type(e).__name__, ":", e,
-                  "*****\n")
+            print('\n*****ERROR ON LINE {}'.format(sys.exc_info()[-1].tb_lineno), ",", type(e).__name__, ":", e, "*****\n")
             print(traceback.format_exc())
 
         open_file.close()
         return resultFile
 
-    def get_headers_from_ced(self,ced_file):
+    def get_headers_from_ced(self, ced_file):
         input_file_path = self.testfilespath
         ced_headers_from_file = defaultdict(list)
         event_type = re.split(r"\d+", ced_file)
@@ -187,13 +181,10 @@ class CommonFunctions(Setup):
 
         '''initiate session'''
         session = requests.Session()
-        session.headers = {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) '
-                          'Chrome/44.0.2403.61 Safari/537.36',
-            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-            'Accept-Language': 'en-US,en;q=0.5',
-            'Referer': site
-        }
+        session.headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) '
+                                         'Chrome/44.0.2403.61 Safari/537.36',
+                           'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8', 'Accept-Language': 'en-US,en;q=0.5',
+                           'Referer': site}
         '''get login page'''
         resp = session.get(site)
         html = resp.text
@@ -236,26 +227,36 @@ class CommonFunctions(Setup):
                             for i in range(len(col_names)):
                                 col_name = col_names[i]
                                 header_columns_from_podconfig[event_name].append(col_name)
-
-                    if ".AddOn" in row.text:  # reading and appending event's add on columns.
-                        if "." not in cell.text:
-                            col_names = cell.text.split(',')
-                            for i in range(len(col_names)):
-                                col_name = col_names[i]
-                                header_addon_columns[event_name].append(col_name)
-
-            for event in header_addon_columns:  # appending add on columns (at the end of standard columns) for the
-                for j in range(len(header_addon_columns[event])):
-                    header_columns_from_podconfig[event].append(header_addon_columns[event][j])
-            # write_headers_podconfig(header_columns_from_podconfig)
             session.close()
             return header_columns_from_podconfig
         else:
             print('\n***LOGIN TO SYSADMIN FAILED - UNABLE TO READ HEADERS FROM THE PodConfig.ini*** ')
             exit()
 
-    def write_headers_to_file(self,account_id, header_columns,passed_param_name):
-        
+    """ ADD ON COLUMNS ARE NOT REQUIRED TO APPEND TO PODCONFIG DEFAULT COLUMNS.IF ADD-ON COLUMNS ARE SELECTED IN ACCOUNTS FEED SETTING, IT WILL BE REFLECTING IN SETTINS.INI. 
+    While validating columns, we either have to check settings.ini or podconfig.
+    first check in settings.ini, if EVENT TYPE present then the columns mentioned in there are the final columns, else podconfig default 
+    columns (without addons) are final columns for ced file
+    An Entry for for event will be created in settings.ini if atleast 1 add on is selected through SYSADMIN-Manage Event Data (Feeds 
+    setting page)"""
+
+            #         if ".AddOn" in row.text:  # reading and appending event's add on columns.
+            #             if "." not in cell.text:
+            #                 col_names = cell.text.split(',')
+            #                 for i in range(len(col_names)):
+            #                     col_name = col_names[i]
+            #                     header_addon_columns[event_name].append(col_name)
+            #
+            # for event in header_addon_columns:  # appending add on columns (at the end of standard columns) for the
+            #     for j in range(len(header_addon_columns[event])):
+            #         header_columns_from_podconfig[event].append(header_addon_columns[event][j])
+            # session.close()
+            # return header_columns_from_podconfig
+        # else:
+        #     print('\n***LOGIN TO SYSADMIN FAILED - UNABLE TO READ HEADERS FROM THE PodConfig.ini*** ')
+        #     exit()
+
+    def write_headers_to_file(self, account_id, header_columns, passed_param_name):
         if "ced_columns_from_podconfig" == passed_param_name:
             filename = "CEDHeaders_FromPodConfig_" + self.run_time + ".csv"
         elif "ced_columns_from_db" == passed_param_name:
@@ -279,12 +280,14 @@ class CommonFunctions(Setup):
             for event_type in header_columns.keys():
                 writer.writerows([[event_type] + header_columns[event_type]])
         # writerow takes 1-dimensional data (one row), and writerows takes 2-dimensional data (multiple rows).
-        result_file = "***INFO : SAVED A FILE ("+filename.upper()+") WITH ALL EVENTS & THIER HEADERS*****"
+        result_file = "***INFO : SAVED A FILE (" + filename.upper() + ") WITH ALL EVENTS & THIER HEADERS*****"
         return result_file
 
-    def get_custom_properties(self,curs,account_name):
-        query_for_email_columns = "SELECT COLUMN_ID, COLUMN_NAME FROM "+account_name+"_CUST.CUSTOM_EVENT_COLUMN"
-        query_for_sms_columns = "SELECT COLUMN_ID, COLUMN_NAME FROM "+account_name+"_CUST.SMS_CUSTOM_EVENT_COLUMN"
+    def get_custom_properties(self, curs, account_name):
+        email_columns_by_id = None
+        sms_columns_by_id = None
+        query_for_email_columns = "SELECT COLUMN_ID, COLUMN_NAME FROM " + account_name + "_CUST.CUSTOM_EVENT_COLUMN"
+        query_for_sms_columns = "SELECT COLUMN_ID, COLUMN_NAME FROM " + account_name + "_CUST.SMS_CUSTOM_EVENT_COLUMN"
         # queries= [query_for_email_columns,query_for_sms_columns]
 
         email_custom_columns = defaultdict(list)
@@ -312,13 +315,13 @@ class CommonFunctions(Setup):
             sms_custom_columns[int(column_id[i])].append(sms_query_result[i][1])
             sms_columns_by_id = sorted(sms_custom_columns)
 
-        return email_columns_by_id, email_custom_columns,sms_columns_by_id,sms_custom_columns
+        return email_columns_by_id, email_custom_columns, sms_columns_by_id, sms_custom_columns
 
-    def validate_columns_and_save_result(self,account_name, file_name, ced_columns_from_file,
-                                                         ced_columns_from_db,built_in_headers_from_db, ced_columns_from_podconfig, email_custom_columns,
-                                                         sms_custom_columns):
+    def validate_columns_and_save_result(self, account_name, acc_id, file_name, ced_columns_from_file, ced_columns_from_db, built_in_headers_from_db,
+                                         ced_columns_from_podconfig, email_custom_columns, sms_custom_columns):
         global account_id, column_presence_status, custom_column_in_ced, status, column_in_ced, short_status, built_in_column_name
-        account_id = self.prop[account_name + "CustAccID"]
+        # account_id = self.prop[account_name + "CustAccID"]
+        account_id = acc_id
         event_name = re.split(r"\d+", file_name)
         event_name = event_name[1].strip('_')
 
@@ -340,11 +343,12 @@ class CommonFunctions(Setup):
                 custom_column_names = email_custom_columns
 
             for each_column_in_db in ced_headers_from_db[event_name]:
-                index_of_db_column = ced_headers_from_db[event_name].index(each_column_in_db) #get index of column configured in setting
+                index_of_db_column = ced_headers_from_db[event_name].index(each_column_in_db)  # get index of column configured in setting
                 # index_of_ced_column = ced_columns_from_file[event_name].index(each_column_in_db)
 
-                if index_of_db_column > index_Of_custom_properties: #if column present after the custom properties column, then compensate the index for rest of the columns
-                    index_of_db_column = index_of_db_column + len(custom_column_ids)-1
+                if index_of_db_column > index_Of_custom_properties:  # if column present after the custom properties column, then compensate the
+                    # index for rest of the columns
+                    index_of_db_column = index_of_db_column + len(custom_column_ids) - 1
 
                 try:
                     if each_column_in_db in ced_columns_from_file[event_name]:
@@ -359,7 +363,8 @@ class CommonFunctions(Setup):
                         if built_in_column_name in ced_columns_from_file[event_name]:
                             index_of_present_db_column = ced_headers_from_db[event_name].index(each_column_in_db)
                             column_in_ced = ced_columns_from_file[event_name][index_of_present_db_column]
-                            column_presence_status = "Column " + built_in_column_name + " (which is configured in headers using built-in "+each_column_in_db+ ") is present in CED"
+                            column_presence_status = "Column " + built_in_column_name + " (which is configured in headers using built-in " + \
+                                                     each_column_in_db + ") is present in CED"
                             short_status = "Present"
                     else:
                         index_of_missing_db_column = ced_headers_from_db[event_name].index(each_column_in_db)
@@ -383,12 +388,13 @@ class CommonFunctions(Setup):
                     column_presence_status = "Column " + each_column_in_db + " is missing"
                     short_status = "Missing"
                     column_in_ced = "N/A"
-                    print("***There is an Exception :(", e, "),Column", each_column_in_db, "is not present in file", file_name,"***")
+                    if not "CUSTOM_PROPERTIES" in str(e):
+                        print("***There is an Exception :(", e, "),Column", each_column_in_db, "is not present in file", file_name, "***")
 
                 if each_column_in_db == "CUSTOM_PROPERTIES":
-                    db_index = ced_headers_from_db[event_name].index("CUSTOM_PROPERTIES")  #capture index of custom properties and
+                    db_index = ced_headers_from_db[event_name].index("CUSTOM_PROPERTIES")  # capture index of custom properties and
                     # keep increasing till for each of custom column
-                    for i in custom_column_ids:     #loop through all the ids (sorted in asc order) of the columns
+                    for i in custom_column_ids:  # loop through all the ids (sorted in asc order) of the columns
                         each_column_in_db = custom_column_names[i][0]  # get each column name using id
                         try:
                             if each_column_in_db in ced_columns_from_file[event_name]:
@@ -415,42 +421,46 @@ class CommonFunctions(Setup):
                             column_presence_status = "Column " + each_column_in_db + " (from CUSTOM_PROPERTIES) is missing"
                             status = "Missing"
                             custom_column_in_ced = "N/A"
-                            print("***There is an Exception :(", e, "),Column", each_column_in_db,"is not present in file", file_name,"***")
+                            print("***There is an Exception :(", e, "),Column", each_column_in_db, "is not present in file", file_name, "***")
 
-                        self.writeColumnCheckResult(event_name, file_name, each_column_in_db, column_presence_status,custom_column_in_ced,status,db_index, ced_index, column_order)
+                        self.writeColumnCheckResult(event_name, file_name, each_column_in_db, column_presence_status, custom_column_in_ced, status,
+                                                    db_index, ced_index, column_order)
                         # ced_index+=1  # to compensate for missing column
-                        db_index += 1   # increasing index in for loop for next custom column
+                        db_index += 1  # increasing index in for loop for next custom column
                     index_of_db_column = db_index
                     continue
-                self.writeColumnCheckResult(event_name, file_name, each_column_in_db, column_presence_status,column_in_ced, short_status, index_of_db_column,
-                                                       index_of_ced_column, column_order_status)
-                    # self.htmlReport(event_name, cedFileName, each_column_in_db, column_presence_status, short_status, index_of_db_column,)
-                # self.testHTML(event_name, cedFileName, each_column_in_db, column_presence_status, short_status,index_of_db_column,index_of_ced_column, column_order_status)
+                self.writeColumnCheckResult(event_name, file_name, each_column_in_db, column_presence_status, column_in_ced, short_status,
+                                            index_of_db_column, index_of_ced_column,
+                                            column_order_status)  # self.htmlReport(event_name, cedFileName, each_column_in_db,
+                # column_presence_status, short_status, index_of_db_column,)  # self.testHTML(event_name, cedFileName, each_column_in_db,
+                # column_presence_status, short_status,index_of_db_column,index_of_ced_column, column_order_status)
         else:
-            print("***INFO : Header Details for Event ", event_name ," is not available in DB")
+            print("***INFO : Header Details for Event ", event_name, " is not available in DB")
         # print("\nRESULT FILE IS SAVED AT LOCATION :", self.result_file_path)
 
         return
 
-    def writeColumnCheckResult(self,event_name, file, each_column_in_db, column_presence_status,column_in_ced, short_status, index_of_db_column,
-                                                       index_of_ced_column, column_order_status):
+    def writeColumnCheckResult(self, event_name, file, each_column_in_db, column_presence_status, column_in_ced, short_status, index_of_db_column,
+                               index_of_ced_column, column_order_status):
 
-        filename = self.result_file_path+"\\"+account_id+"_CEDHeaders_VerficationResult_"+self.run_time+".csv"
+        filename = self.result_file_path + "\\" + account_id + "_CEDHeaders_VerficationResult_" + self.run_time + ".csv"
         f = open(filename, "a+")
         writer = csv.writer(f, delimiter=',', lineterminator="\n", quoting=csv.QUOTE_ALL)
 
         prev_data = open(filename, "r").read()
-        header = ["Event Types", "File Name", "ColumnNames From FeedsSetting", "Present in CED?","Column in CED", "Result",
-                  "DB Column Index", "CED Column Index", "Column Order Result"]
+        header = ["Event Types", "File Name", "ColumnNames From FeedsSetting", "Present in CED?", "Column in CED", "Result", "DB Column Index",
+                  "CED Column Index", "Column Order Result"]
         # Add a header only if the fname is empty
         if prev_data == '':
             writer.writerow(header)
-        writer.writerow([event_name, file, each_column_in_db, column_presence_status,column_in_ced, short_status, index_of_db_column,
-                                                       index_of_ced_column, column_order_status])
+        writer.writerow(
+            [event_name, file, each_column_in_db, column_presence_status, column_in_ced, short_status, index_of_db_column, index_of_ced_column,
+             column_order_status])
         f.close()
         return
 
-    def validate_data_from_ced_bkp(self,curs,file,search_column, ced_data, index_Of_stored_date, ced_columns_from_file, event_stored_date,event_type):
+    def validate_data_from_ced_bkp(self, curs, file, search_column, ced_data, index_Of_stored_date, ced_columns_from_file, event_stored_date,
+                                   event_type):
         # global eventName
         # eventName = "Test"
         # htmlfile = CommonFunctions.result_file_path + "\\DataValidationReport_" + CommonFunctions.run_time + ".html"
@@ -460,7 +470,7 @@ class CommonFunctions(Setup):
         for id in ced_data:
             # index_Of_date = event_stored_date[id]
             index_Of_date = index_Of_stored_date
-            eventTable = DBFunctions.get_event_table(self,event_type)
+            eventTable = DBFunctions.get_event_table(self, event_type)
 
             queryCOlNames = "SELECT * from " + eventTable + " WHERE rownum=0"  # + searchCol + "='" + str(id) + "'"
             curs.execute(queryCOlNames)
@@ -504,8 +514,7 @@ class CommonFunctions(Setup):
                     numberOfColumnsFromDB = range(len(uniqueColumnsFromCED))
                     for j in numberOfColumnsFromDB:  # index for number of columns in a query result
 
-                        print("\nValidating row_from_db", rowNum, "In file ", file, " for ", str(search_column), ":",
-                              id)
+                        print("\nValidating row_from_db", rowNum, "In file ", file, " for ", str(search_column), ":", id)
                         if int(id) in row_from_db and sDate == storedDateFromDB:
                             if k < trowsForID:
                                 try:
@@ -518,20 +527,19 @@ class CommonFunctions(Setup):
                                         timeFromDB = dbValue
                                         formatTimeInPST = pytz.timezone('US/Pacific').localize(
                                             timeFromDB)  # localizing adds timezone info to the timestamp
-                                        # TZ info is required for astimezone()function. Here both CAPTURED & STORED date are converted to PST & appended TZ info(-08:00)
-                                        convertedToUTC = formatTimeInPST.astimezone(pytz.timezone(
-                                            'UTC'))  # converts both Captured & Stored date from PSt to UTC
+                                        # TZ info is required for astimezone()function. Here both CAPTURED & STORED date are converted to PST &
+                                        # appended TZ info(-08:00)
+                                        convertedToUTC = formatTimeInPST.astimezone(
+                                            pytz.timezone('UTC'))  # converts both Captured & Stored date from PSt to UTC
 
                                         if uniqueColumnsFromCED[j] != 'EVENT_STORED_DT':
-                                            if cedValue == str(convertedToUTC.strftime(
-                                                    format)):  # for event_captured_Dt is which is in PST,
+                                            if cedValue == str(convertedToUTC.strftime(format)):  # for event_captured_Dt is which is in PST,
                                                 # convertedToUTC date is used to compare as CED file has UTC for both Captured & Stored Date
-                                                # Status="Data for column "+uniqueColumnsFromCED[j]+" is matching for ID:"+id+".@rowCol:",rowNum,j,"Data_In_CED:"+colData[j]+" & Data_in_DB:"+str(convertedToUTC.strftime(format))
-                                                Status = uniqueColumnsFromCED[j] + "= Pass"
-                                                # print(Status)
+                                                # Status="Data for column "+uniqueColumnsFromCED[j]+" is matching for ID:"+id+".@rowCol:",rowNum,j,
+                                                # "Data_In_CED:"+colData[j]+" & Data_in_DB:"+str(convertedToUTC.strftime(format))
+                                                Status = uniqueColumnsFromCED[j] + "= Pass"  # print(Status)
                                             else:
-                                                Status = "row_from_db=" + str(rowNum) + ",col=" + str(
-                                                    j) + ": Data for column " + \
+                                                Status = "row_from_db=" + str(rowNum) + ",col=" + str(j) + ": Data for column " + \
                                                          uniqueColumnsFromCED[
                                                              j] + " is NOT matching. Data_In_CED:" + cedValue + " & Data_in_DB:" + str(
                                                     convertedToUTC.strftime(format))
@@ -540,42 +548,36 @@ class CommonFunctions(Setup):
                                                 CommonFunctions.write_results(file, id, cedValue, dbValue, Status)
 
                                         elif cedValue == str(timeFromDB.strftime(format)):
-                                            # Status= "Data for column "+uniqueColumnsFromCED[j]+" is matching for ID:"+id+".@ rowCol:",rowNum,j," Data_In_CED:"+colData[j]+" & Data_in_DB:"+str(timeFromDB.strftime(format))
-                                            Status = uniqueColumnsFromCED[j] + "= Pass"
-                                            # print(Status)
+                                            # Status= "Data for column "+uniqueColumnsFromCED[j]+" is matching for ID:"+id+".@ rowCol:",rowNum,j,
+                                            # " Data_In_CED:"+colData[j]+" & Data_in_DB:"+str(timeFromDB.strftime(format))
+                                            Status = uniqueColumnsFromCED[j] + "= Pass"  # print(Status)
                                         else:
-                                            Status = "row_from_db=" + str(rowNum) + ",col=" + str(
-                                                j) + ": Data for column " + \
-                                                     uniqueColumnsFromCED[
-                                                         j] + " is NOT matching. Data_In_CED:" + cedValue + " & Data_in_DB:" + str(
-                                                timeFromDB.strftime(format))
+                                            Status = "row_from_db=" + str(rowNum) + ",col=" + str(j) + ": Data for column " + uniqueColumnsFromCED[
+                                                j] + " is NOT matching. Data_In_CED:" + cedValue + " & Data_in_DB:" + str(timeFromDB.strftime(format))
                                             print(Status)
                                             # writeHTMLNew(hs, file, file, id, cedValue, dbValue, Status)
                                             CommonFunctions.write_results(file, id, cedValue, dbValue, Status)
 
                                     elif cedValue == str(dbValue):
-                                        # Status= "Data for column "+uniqueColumnsFromCED[j]+" is matching for ID:"+id+".@rowCol:",rowNum,j,"Data_In_CED:"+colData[j]+" & Data_in_DB:"+str(dbValue)
+                                        # Status= "Data for column "+uniqueColumnsFromCED[j]+" is matching for ID:"+id+".@rowCol:",rowNum,j,
+                                        # "Data_In_CED:"+colData[j]+" & Data_in_DB:"+str(dbValue)
                                         Status = uniqueColumnsFromCED[j] + "= Pass"
                                         print(Status)
 
                                     else:
-                                        Status = "row_from_db=" + str(rowNum) + ",col=" + str(j) + ": Data for column " + \
-                                                 uniqueColumnsFromCED[
-                                                     j] + " is NOT matching. Data_In_CED:" + cedValue + " & Data_in_DB:" + str(
-                                            dbValue)
+                                        Status = "row_from_db=" + str(rowNum) + ",col=" + str(j) + ": Data for column " + uniqueColumnsFromCED[
+                                            j] + " is NOT matching. Data_In_CED:" + cedValue + " & Data_in_DB:" + str(dbValue)
                                         print(Status)
                                         # writeHTMLNew(hs, file, file, id, cedValue, dbValue, Status)
                                         CommonFunctions.write_results(file, id, cedValue, dbValue, Status)
 
                                 # writeHTMLNew(hs, file, file, colData[j], dbValue, Status)
                                 except Exception as e:
-                                    print('\n*****ERROR ON LINE {}'.format(sys.exc_info()[-1].tb_lineno), ",",
-                                          type(e).__name__, ":", e, "*****\n")
+                                    print('\n*****ERROR ON LINE {}'.format(sys.exc_info()[-1].tb_lineno), ",", type(e).__name__, ":", e, "*****\n")
                                     print(traceback.format_exc())
                             else:
                                 print("No Match")
-                        if j == max(
-                                numberOfColumnsFromDB):  # data from ced is stored in sequence, ex if there are
+                        if j == max(numberOfColumnsFromDB):  # data from ced is stored in sequence, ex if there are
                             # 15 columns in ced, 2nd row from ced will start from 16th column in dictionary
                             totalCEDColumns = len(uniqueCEDColumns)
                             totalDBColumns = len(uniqueColumnsFromCED)
@@ -586,9 +588,9 @@ class CommonFunctions(Setup):
                             k += 1
                     rowNum += 1
 
-    def validate_data_from_ced(self,curs,file,search_column, ced_data, index_Of_stored_date, ced_columns_from_file, event_stored_date,event_type):
+    def validate_data_from_ced(self, curs, file, search_column, ced_data, index_Of_stored_date, ced_columns_from_file, event_stored_date, event_type):
 
-        event_table = DBFunctions.get_event_table(self,event_type)
+        event_table = DBFunctions.get_event_table(self, event_type)
 
         column_name_query = "SELECT * from " + event_table + " WHERE rownum=0"  # + searchCol + "='" + str(id) + "'"
         curs.execute(column_name_query)
@@ -600,10 +602,11 @@ class CommonFunctions(Setup):
         i = 0
         while (i < number_of_columns):
             if ced_columns_from_file[event_type][i] in db_column_names:
-                filtered_columns.append(ced_columns_from_file[event_type][i])  # removes custom columns (in CED file)
+                filtered_columns.append(ced_columns_from_file[event_type][i])  # To remove custom columns (in CED file)
             i += 1
-
-        unique_filtered_columns_from_ced = [] # when there multiple files of same event, all the columns from all files are populated.so removing duplicates.
+        #filtering unique columns when multiple files are given may not be required as file is being sent 1 after other.
+        unique_filtered_columns_from_ced = []  # when there multiple files of same event, all the columns from all files are populated.so removing
+        # duplicates.
         [unique_filtered_columns_from_ced.append(item) for item in filtered_columns if
          item not in unique_filtered_columns_from_ced]  # including columns which are common in CED & DB
         [unique_ced_columns.append(item) for item in ced_columns_from_file[event_type] if item not in unique_ced_columns]
@@ -627,8 +630,7 @@ class CommonFunctions(Setup):
 
                 if int(id) in row_from_db and event_date_for_record_from_ced == event_date_for_record_from_db:
                     for j in number_Of_columns_from_db:  # index for number of columns in a query result
-                        print("\nValidating row", row_num_for_ced, "(DB row:", row_num, ")In file ", file, " for ", str(search_column), ":",
-                              id)
+                        print("\nValidating row", row_num_for_ced, "(DB row:", row_num, ")In file ", file, " for ", str(search_column), ":", id)
                         if k < number_of_columns_for_id:
                             try:
                                 ced_value = ced_data[id][k]
@@ -640,64 +642,59 @@ class CommonFunctions(Setup):
                                     timeFromDB = db_value
                                     formatTimeInPST = pytz.timezone('US/Pacific').localize(
                                         timeFromDB)  # localizing adds timezone info to the timestamp
-                                    # TZ info is required for astimezone()function. Here both CAPTURED & STORED date are converted to PST & appended TZ info(-08:00)
-                                    convertedToUTC = formatTimeInPST.astimezone(pytz.timezone(
-                                        'UTC'))  # converts both Captured & Stored date from PSt to UTC
+                                    # TZ info is required for astimezone()function. Here both CAPTURED & STORED date are converted to PST &
+                                    # appended TZ info(-08:00)
+                                    convertedToUTC = formatTimeInPST.astimezone(
+                                        pytz.timezone('UTC'))  # converts both Captured & Stored date from PSt to UTC
 
                                     if unique_filtered_columns_from_ced[j] != 'EVENT_STORED_DT':
-                                        if ced_value == str(convertedToUTC.strftime(
-                                                format)):  # for event_captured_Dt is which is in PST,
+                                        if ced_value == str(convertedToUTC.strftime(format)):  # for event_captured_Dt is which is in PST,
                                             # convertedToUTC date is used to compare as CED file has UTC for both Captured & Stored Date
-                                            # Status="Data for column "+unique_filtered_columns_from_ced[j]+" is matching for ID:"+id+".@rowCol:",row_num,j,"Data_In_CED:"+colData[j]+" & Data_in_DB:"+str(convertedToUTC.strftime(format))
+                                            # Status="Data for column "+unique_filtered_columns_from_ced[j]+" is matching for ID:"+id+".@rowCol:",
+                                            # row_num,j,"Data_In_CED:"+colData[j]+" & Data_in_DB:"+str(convertedToUTC.strftime(format))
                                             Status = unique_filtered_columns_from_ced[j] + "= Pass"
                                             print(Status)
                                         else:
-                                            Status = "row=" + str(row_num) + ",col=" + str(
-                                                j) + ": Data for column " + \
+                                            Status = "row=" + str(row_num) + ",col=" + str(j) + ": Data for column " + \
                                                      unique_filtered_columns_from_ced[
                                                          j] + " is NOT matching. Data_In_CED:" + ced_value + " & Data_in_DB:" + str(
                                                 convertedToUTC.strftime(format))
                                             # print(Status)
                                             # writeHTMLNew(hs, file, file, id, ced_value, db_value, Status)
-                                            CommonFunctions.write_results(self,file, id, ced_value, db_value, Status)
+                                            CommonFunctions.write_results(self, file, id, ced_value, db_value, Status)
 
                                     elif ced_value == str(timeFromDB.strftime(format)):
-                                        # Status= "Data for column "+unique_filtered_columns_from_ced[j]+" is matching for ID:"+id+".@ rowCol:",row_num,j," Data_In_CED:"+colData[j]+" & Data_in_DB:"+str(timeFromDB.strftime(format))
+                                        # Status= "Data for column "+unique_filtered_columns_from_ced[j]+" is matching for ID:"+id+".@ rowCol:",
+                                        # row_num,j," Data_In_CED:"+colData[j]+" & Data_in_DB:"+str(timeFromDB.strftime(format))
                                         Status = unique_filtered_columns_from_ced[j] + "= Pass"
                                         print(Status)
                                     else:
-                                        Status = "row=" + str(row_num) + ",col=" + str(
-                                            j) + ": Data for column " + \
-                                                 unique_filtered_columns_from_ced[
-                                                     j] + " is NOT matching. Data_In_CED:" + ced_value + " & Data_in_DB:" + str(
-                                            timeFromDB.strftime(format))
+                                        Status = "row=" + str(row_num) + ",col=" + str(j) + ": Data for column " + unique_filtered_columns_from_ced[
+                                            j] + " is NOT matching. Data_In_CED:" + ced_value + " & Data_in_DB:" + str(timeFromDB.strftime(format))
                                         # print(Status)
                                         # writeHTMLNew(hs, file, file, id, ced_value, db_value, Status)
-                                        CommonFunctions.write_results(self,file, id, ced_value, db_value, Status)
+                                        CommonFunctions.write_results(self, file, id, ced_value, db_value, Status)
 
                                 elif ced_value == str(db_value):
-                                    # Status= "Data for column "+unique_filtered_columns_from_ced[j]+" is matching for ID:"+id+".@rowCol:",row_num,j,"Data_In_CED:"+colData[j]+" & Data_in_DB:"+str(db_value)
+                                    # Status= "Data for column "+unique_filtered_columns_from_ced[j]+" is matching for ID:"+id+".@rowCol:",row_num,
+                                    # j,"Data_In_CED:"+colData[j]+" & Data_in_DB:"+str(db_value)
                                     Status = unique_filtered_columns_from_ced[j] + "= Pass"
                                     print(Status)
 
                                 else:
-                                    Status = "row=" + str(row_num) + ",col=" + str(j) + ": Data for column " + \
-                                             unique_filtered_columns_from_ced[
-                                                 j] + " is NOT matching. Data_In_CED:" + ced_value + " & Data_in_DB:" + str(
-                                        db_value)
+                                    Status = "row=" + str(row_num) + ",col=" + str(j) + ": Data for column " + unique_filtered_columns_from_ced[
+                                        j] + " is NOT matching. Data_In_CED:" + ced_value + " & Data_in_DB:" + str(db_value)
                                     print(Status)
                                     # writeHTMLNew(hs, file, file, id, ced_value, db_value, Status)
-                                    CommonFunctions.write_results(self,file, id, ced_value, db_value, Status)
+                                    CommonFunctions.write_results(self, file, id, ced_value, db_value, Status)
 
                             # writeHTMLNew(hs, file, file, colData[j], db_value, Status)
                             except Exception as e:
-                                print('\n*****ERROR ON LINE {}'.format(sys.exc_info()[-1].tb_lineno), ",",
-                                      type(e).__name__, ":", e, "*****\n")
+                                print('\n*****ERROR ON LINE {}'.format(sys.exc_info()[-1].tb_lineno), ",", type(e).__name__, ":", e, "*****\n")
                                 print(traceback.format_exc())
                         else:
                             print("No Match")
-                        if j == max(
-                                number_Of_columns_from_db):  # data from ced is stored in sequence, ex if there are
+                        if j == max(number_Of_columns_from_db):  # data from ced is stored in sequence, ex if there are
                             # 15 columns in ced, 2nd row from ced will start from 16th column in dictionary
                             number_of_ced_columns = len(unique_ced_columns)
                             number_of_db_columns = len(unique_filtered_columns_from_ced)
@@ -732,5 +729,3 @@ class CommonFunctions(Setup):
 
         f.close()
         return
-
-

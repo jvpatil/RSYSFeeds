@@ -72,7 +72,6 @@ class Setup():
         return self.curs
 
     def close_db_connection(self,curs):
-        # status = curs.close()
         if  not curs.close():
             print("\nClosed the connection to ",curs)
         return
