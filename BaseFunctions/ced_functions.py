@@ -99,8 +99,8 @@ class CEDFunctions(CommonFunctions):
                 event_stored_date[id_value].append(event_stored_time)
 
             unique_IDs = set(IDs)
-            print("\nThere are", len(IDs), "records in file ", ced_file, " & the Unique", search_column, "are : ",
-                  len(unique_IDs), "\n", unique_IDs)
+            print("*** There are", len(IDs), "records in file ", ced_file, " & the Unique", search_column, "are :: ",
+                  len(unique_IDs)," :: ", unique_IDs)
             # logging.info("There are {}, records in file {} and the Unique {} are {}, {}".format(len(IDs), cedFile,
             # searchColumn, len(lUniqueIDs), lUniqueIDs))
         except Exception as e:
@@ -125,7 +125,7 @@ class CEDFunctions(CommonFunctions):
         return d_count_from_ced
 
     def read_data_from_ced(self,file, unique_IDs, search_column):
-        print("Reading Data From File:", file)
+        print("*** Reading Data From File :: ", file , " for each ID's ***")
         ced_data = defaultdict(list)
 
         for id in unique_IDs:

@@ -4,6 +4,7 @@ import pytz
 
 from BaseFunctions.setup import Setup
 from BaseFunctions.db_fuctions import DBFunctions
+from BaseFunctions.get_device_details import DeviceDetails
 from datetime import datetime
 import sys
 import os
@@ -12,6 +13,7 @@ import traceback
 from collections import defaultdict
 import requests
 from bs4 import BeautifulSoup
+
 import lxml
 
 
@@ -321,6 +323,7 @@ class CommonFunctions(Setup):
                                          ced_columns_from_podconfig, email_custom_columns, sms_custom_columns):
         global account_id, column_presence_status, custom_column_in_ced, status, column_in_ced, short_status, built_in_column_name
         # account_id = self.prop[account_name + "CustAccID"]
+        check_for_duplicate_column_index,index_of_present_custom_column=0,0
         account_id = acc_id
         event_name = re.split(r"\d+", file_name)
         event_name = event_name[1].strip('_')
@@ -400,9 +403,14 @@ class CommonFunctions(Setup):
                             if each_column_in_db in ced_columns_from_file[event_name]:
                                 index_of_present_custom_column = custom_column_names[i].index(each_column_in_db)
                                 index_of_present_custom_column += db_index
-                                custom_column_in_ced = ced_columns_from_file[event_name][index_of_present_custom_column]
-                                column_presence_status = "Column " + each_column_in_db + " (from CUSTOM_PROPERTIES) is present in CED"
-                                status = "Present"
+                                check_for_duplicate_column_index = ced_columns_from_file[event_name].index(each_column_in_db)
+                                if check_for_duplicate_column_index < index_of_present_custom_column:
+                                    status = "Present"
+                                    column_presence_status = "Column " + each_column_in_db + " (from CUSTOM_PROPERTIES) is duplicated and is already present in CED as DEFAULT column"
+                                else:
+                                    custom_column_in_ced = ced_columns_from_file[event_name][index_of_present_custom_column]
+                                    column_presence_status = "Column " + each_column_in_db + " (from CUSTOM_PROPERTIES) is present in CED"
+                                    status = "Present"
                             else:
                                 index_of_missing_custom_column = custom_column_names[i].index(each_column_in_db)
                                 index_of_missing_custom_column += db_index
@@ -413,6 +421,8 @@ class CommonFunctions(Setup):
                             ced_index = ced_columns_from_file[event_name].index(each_column_in_db)
                             if db_index == ced_index:
                                 column_order = "Column is in Order"
+                            elif check_for_duplicate_column_index < index_of_present_custom_column:
+                                column_order = "Column is NOT in Order Coz, there is already a SYSTEM column with same name"
                             else:
                                 column_order = "Column is NOT in Order"
                         except Exception as e:
@@ -588,11 +598,12 @@ class CommonFunctions(Setup):
                             k += 1
                     rowNum += 1
 
-    def validate_data_from_ced(self, curs, file, search_column, ced_data, index_Of_stored_date, ced_columns_from_file, event_stored_date, event_type):
+    def validate_data_from_ced(self, curs, file, search_column, ced_data, index_Of_stored_date, ced_columns_from_file, event_stored_date, event_type,account_name):
 
         event_table = DBFunctions.get_event_table(self, event_type)
 
-        column_name_query = "SELECT * from " + event_table + " WHERE rownum=0"  # + searchCol + "='" + str(id) + "'"
+        # column_name_query = "SELECT * from " + event_table + " WHERE rownum=0"  # + searchCol + "='" + str(id) + "'"
+        column_name_query = "SELECT * from " +account_name+"_EVENT."+ event_table + " WHERE rownum=0"  # + searchCol + "='" + str(id) + "'"
         curs.execute(column_name_query)
 
         db_column_names = [row[0] for row in curs.description]
@@ -611,10 +622,20 @@ class CommonFunctions(Setup):
          item not in unique_filtered_columns_from_ced]  # including columns which are common in CED & DB
         [unique_ced_columns.append(item) for item in ced_columns_from_file[event_type] if item not in unique_ced_columns]
 
+        if "USER_AGENT_STRING" in unique_filtered_columns_from_ced:
+            index_of_user_agent = unique_filtered_columns_from_ced.index("USER_AGENT_STRING")
+            index_of_riid = unique_filtered_columns_from_ced.index("RIID")
+            device_ids, device_data = DeviceDetails.get_device_attributes(self, account_name)
+        #     total_number_of_columns = unique_ced_columns
+        # else:
+        #     total_number_of_columns = unique_filtered_columns_from_ced
+
         for id in ced_data:
             # print("Event Data for ID", id, "is ", event_stored_date[id][0])
-            query = "SELECT " + str(",".join(unique_filtered_columns_from_ced)) + " FROM " + event_table + " WHERE " + search_column + "='" + str(
+            query = "SELECT " + str(",".join(unique_filtered_columns_from_ced)) + " FROM " +account_name+"_EVENT."+ event_table + " WHERE " + search_column + "='" + str(
                 id) + "' ORDER BY EVENT_STORED_DT"
+            # query = "SELECT " + str(",".join(unique_filtered_columns_from_ced)) + " FROM " + event_table + " WHERE " + search_column + "='" + str(
+            #     id) + "' ORDER BY EVENT_STORED_DT"
             # print("Query is :", query)
             curs.execute(query)
             query_result_for_id = curs.fetchall()
@@ -626,11 +647,14 @@ class CommonFunctions(Setup):
             for row_from_db in query_result_for_id:
                 event_date_for_record_from_ced = ced_data[id][k + index_Of_stored_date]
                 event_date_for_record_from_db = datetime.strftime(row_from_db[index_Of_stored_date], '%d-%b-%Y %H:%M:%S')
-                number_Of_columns_from_db = range(len(unique_filtered_columns_from_ced))
+                number_Of_columns_from_db = len(unique_filtered_columns_from_ced)
+                # number_Of_columns_from_db = range(len(unique_filtered_columns_from_ced))
 
                 if int(id) in row_from_db and event_date_for_record_from_ced == event_date_for_record_from_db:
-                    for j in number_Of_columns_from_db:  # index for number of columns in a query result
-                        print("\nValidating row", row_num_for_ced, "(DB row:", row_num, ")In file ", file, " for ", str(search_column), ":", id)
+                    print("\nValidating row", row_num_for_ced, "(DB row:", row_num, ")In file ", file, " for ", str(search_column), ":", id)
+                    j=0
+                    # for j in range(number_Of_columns_from_db):  # index for number of columns in a query result
+                    while(j < number_Of_columns_from_db):  # index for number of columns in a query result
                         if k < number_of_columns_for_id:
                             try:
                                 ced_value = ced_data[id][k]
@@ -681,6 +705,34 @@ class CommonFunctions(Setup):
                                     Status = unique_filtered_columns_from_ced[j] + "= Pass"
                                     print(Status)
 
+                                elif type(db_value) != str and ced_value.isdigit():
+                                    if float(ced_value) == float(db_value):  #handling numeric data coz sometimes 10 == 10.0 fails..
+                                        Status = unique_filtered_columns_from_ced[j] + "= Pass"
+                                        print(Status)
+
+                                elif unique_ced_columns[k] in ["BROWSER_TYPE_INFO","BROWSER_INFO","OS_VENDOR_INFO","OPERATING_SYSTEM_INFO","DEVICE_TYPE_INFO"]:
+                                    # user_agent_string = row_from_db[index_of_user_agent]
+                                    riid = row_from_db[index_of_riid]
+                                    browser_type, os_vendor, operating_system, device_type, browser = DeviceDetails.get_data(self,device_ids,device_data,riid,event_type)
+                                    if unique_ced_columns[k]=="BROWSER_TYPE_INFO":
+                                        Status = CommonFunctions.check_if_data_matches(self,row_num,j,file,unique_ced_columns[k],id,ced_value,browser_type)
+                                        j -= 1
+                                    elif unique_ced_columns[k] == "BROWSER_INFO":
+                                        Status = CommonFunctions.check_if_data_matches(self, row_num, j+1, file, unique_ced_columns[k],
+                                                                                       id, ced_value, browser)
+                                        j -= 1
+                                    elif unique_ced_columns[k] == "OS_VENDOR_INFO":
+                                        Status = CommonFunctions.check_if_data_matches(self, row_num, j+1, file, unique_ced_columns[k],
+                                                                                       id, ced_value, os_vendor)
+                                        j -= 1
+                                    elif unique_ced_columns[k] == "OPERATING_SYSTEM_INFO":
+                                        Status = CommonFunctions.check_if_data_matches(self, row_num, j+1, file, unique_ced_columns[k],
+                                                                                       id, ced_value, operating_system)
+                                        j -= 1
+                                    elif unique_ced_columns[k] == "DEVICE_TYPE_INFO":
+                                        Status = CommonFunctions.check_if_data_matches(self, row_num, j+1, file, unique_ced_columns[k],
+                                                                                       id, ced_value, device_type)
+                                        j -= 1
                                 else:
                                     Status = "row=" + str(row_num) + ",col=" + str(j) + ": Data for column " + unique_filtered_columns_from_ced[
                                         j] + " is NOT matching. Data_In_CED:" + ced_value + " & Data_in_DB:" + str(db_value)
@@ -694,7 +746,7 @@ class CommonFunctions(Setup):
                                 print(traceback.format_exc())
                         else:
                             print("No Match")
-                        if j == max(number_Of_columns_from_db):  # data from ced is stored in sequence, ex if there are
+                        if j == max(range(number_Of_columns_from_db)):  # data from ced is stored in sequence, ex if there are
                             # 15 columns in ced, 2nd row from ced will start from 16th column in dictionary
                             number_of_ced_columns = len(unique_ced_columns)
                             number_of_db_columns = len(unique_filtered_columns_from_ced)
@@ -704,6 +756,7 @@ class CommonFunctions(Setup):
                             row_num_for_ced += 1
                         else:
                             k += 1
+                        j += 1
                 row_num += 1
 
     def write_results(self, cedFileName, id, colData, query_result_for_id, Status):
@@ -729,3 +782,13 @@ class CommonFunctions(Setup):
 
         f.close()
         return
+
+    def check_if_data_matches(self, row_num,col_num, file,column_name,id, ced_value, db_value):
+        if ced_value == str(db_value):
+            Status = column_name + "= Pass"
+            print(Status)
+        else:
+            Status = "row=" + str(row_num) + ",col=" + str(col_num) + ": Data for column " + str(column_name) + " is NOT matching. Data_In_CED:" + ced_value + " & Data_in_DB:" + str(db_value)
+            print(Status)
+            CommonFunctions.write_results(self, file, id, ced_value, db_value, Status)
+        return Status

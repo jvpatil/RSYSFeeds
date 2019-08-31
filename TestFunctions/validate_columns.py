@@ -5,7 +5,9 @@ from BaseFunctions.common_functions import CommonFunctions
 
 
 class ValidateColumns(CommonFunctions):
-    account_name = "vinaycamp"
+    # def __init__(self, *args):
+    #     self.account_name = args
+    account_name = "dataqa1"
     # account_id = ""
 
     def verifyColumns(self):
