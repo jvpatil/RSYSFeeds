@@ -1,6 +1,6 @@
-from BaseFunctions.setup import *
-from BaseFunctions.ced_functions import *
-from BaseFunctions.db_fuctions import *
+from Implementations.setup import *
+from Implementations.ced_functions import *
+from Implementations.db_fuctions import *
 
 class OmnitureFunctions(CEDFunctions, CommonFunctions, DBFunctions):
 

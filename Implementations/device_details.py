@@ -1,7 +1,7 @@
 #https://github.com/thinkwelltwd/device_detector
 from collections import defaultdict
 
-from BaseFunctions.setup import Setup
+from Implementations.setup import Setup
 from device_detector import DeviceDetector
 
 class DeviceDetails(Setup):
@@ -58,7 +58,7 @@ class DeviceDetails(Setup):
 
     def get_device_attributes(self,account_schema):
         # if event_type.lower() == 'open':
-        print("***Getting device attributes details******")
+        print("*** Getting device attributes details******")
         query_for_device_id = "SELECT RIID_,NEW_DEVICE_ID,LAST_CLICK_DATE,LAST_OPEN_DATE FROM " + str(account_schema)+ "_CUST.PROFILE_DEVICE_SUMMARY"
         # if event_type.lower() == 'click' or event_type.lower() == 'convert':
         #     query_for_device_id = "SELECT NEW_DEVICE_ID FROM " + str(account_schema)+ "_CUST.PROFILE_DEVICE_SUMMARY where RIID_ = " +str(riid)+ " and LAST_CLICK_DATE is not null"

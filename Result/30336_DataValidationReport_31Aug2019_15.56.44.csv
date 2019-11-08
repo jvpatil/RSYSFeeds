@@ -1,4 +1,0 @@
-"FileName","ID","DataFromCED","DataFromDB","Status"
-"30336_CLICK_20190827_051102.txt","2061","Firefox","2019-08-21 02:54:56.867251","row=0,col=16: Data for column PERSONALIZATION_DT is NOT matching. Data_In_CED:Firefox & Data_in_DB:21-Aug-2019 09:54:56"
-"30336_CLICK_20190827_051102.txt","1901","Firefox","2019-08-21 02:56:12.756167","row=0,col=16: Data for column PERSONALIZATION_DT is NOT matching. Data_In_CED:Firefox & Data_in_DB:21-Aug-2019 09:56:12"
-"30336_CLICK_20190827_051102.txt","2221","Firefox","2019-08-22 03:53:54.169000","row=0,col=16: Data for column PERSONALIZATION_DT is NOT matching. Data_In_CED:Firefox & Data_in_DB:22-Aug-2019 10:53:54"

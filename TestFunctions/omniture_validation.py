@@ -1,8 +1,8 @@
-from BaseFunctions.setup import Setup
-from BaseFunctions.ced_functions import CEDFunctions
-from BaseFunctions.db_fuctions import DBFunctions
-from BaseFunctions.common_functions import CommonFunctions
-from BaseFunctions.omniture import OmnitureFunctions
+from Implementations.setup import Setup
+from Implementations.ced_functions import CEDFunctions
+from Implementations.db_fuctions import DBFunctions
+from Implementations.common_functions import CommonFunctions
+from Implementations.omniture import OmnitureFunctions
 
 class Omniture(CommonFunctions):
     accountName = "ipush"

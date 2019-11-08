@@ -1,6 +1,6 @@
 from __future__ import print_function
-from BaseFunctions.setup import Setup
-from BaseFunctions.common_functions import CommonFunctions
+from Implementations.setup import Setup
+from Implementations.common_functions import CommonFunctions
 
 import sys
 import os
@@ -143,16 +143,51 @@ class CEDFunctions(CommonFunctions):
 
             for row in content[1:]:
                 if id in row:
-                    strippedRow = row.strip().replace('\"', '')
+                    row = row.strip()
+                    split_columns = re.split(',(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)',row)
+                    # strippedRow = row.strip().replace('\"', '')
+                    # strippedRow = row.strip()
                     pattern = ',|\t|""'
-                    all_columns_Of_row = re.split(pattern, strippedRow)
-                    for eachColumn in all_columns_Of_row:
+                    # all_columns_Of_row = re.split(pattern, strippedRow)
+                    # all_columns_Of_row = (lambda col : col.strip('"') ,split_columns)
+                    for eachColumn in split_columns:
+                        eachColumn = eachColumn.strip('"')
                         ced_data[id].append(eachColumn)
             # all_data[id].append(event_data)
 
             # print("Data for ID ", id, " is:", allData)
             # print("Data for file ", cedFile," is:",allData[cedFile])
         # print("\nData is :\n",ced_data)
+        return ced_data, index_Of_stored_date
+
+    def read_ced_data_for_validation(self,file, unique_IDs, search_column):
+        print("*** Reading Data From File :: ", file , " ***")
+        ced_data = defaultdict(lambda: defaultdict(list))
+        index_Of_stored_date = None
+
+        with open(os.path.join(CEDFunctions.input_files_path, file), 'r') as f:
+            content = f.readlines()
+
+            for row in content[:1]:
+                stripped_row = row.strip().replace('\"', '')
+                all_columns = re.split(';|,|\t|""', stripped_row)
+                for i in all_columns:
+                    if i == 'EVENT_STORED_DT':
+                        index_Of_stored_date = all_columns.index(i)
+                        break
+                # index_Of_stored_date[file].append(stored_date_index)
+
+            for id in unique_IDs:
+                rownum = 0
+                for rowData in content[1:]:
+                    if id in rowData:
+                        rowData = rowData.strip()
+                        split_columns = re.split(',(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)',rowData)
+                        for eachColumn in split_columns:
+                            eachColumn = eachColumn.strip('"')
+                            ced_data[id][rownum].append(eachColumn)
+                        rownum +=1
+                        # rownum = 0
         return ced_data, index_Of_stored_date
 
 # cedFiles = CEDFunctions().findFiles()

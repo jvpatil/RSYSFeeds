@@ -9,7 +9,7 @@ from xml.etree import ElementTree as ET
 import pytz
 from lxml.etree import ElementTree
 
-from BaseFunctions.setup import Setup
+from Implementations.setup import Setup
 
 
 class DBFunctions():
@@ -193,7 +193,7 @@ class DBFunctions():
                        "SECTION_KEY S ON A.SECTION_KEY_ID=S.SECTION_KEY_ID WHERE S.SECTION_NAME LIKE '%EventConnect%' " \
                        "AND A.ACCOUNT_ID=" + str(account_id) + ""
         curs.execute(header_query)
-
+        print("\n*** Reading CEDs Column headers from account's setting ***")
         query_result_all_headers = curs.fetchall()
         if curs.rowcount == 0:
             print("\n ************NO RESULT, PLEASE CHECK IF ACCOUNT", account_id,
