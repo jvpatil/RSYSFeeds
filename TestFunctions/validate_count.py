@@ -23,21 +23,21 @@ class ValidateCount(CEDFunctions, CommonFunctions, DBFunctions):
         curs = CEDFunctions.init_db_connection(self, "syslocalEvent")
 
         for cedFile in cedFiles:
-            print("\n")
-            logging.info("Started processing file %s", cedFile)
-            IDs, luniqueIDs, dEventStoredDateFromCED, searchColumn, eventType = CEDFunctions.get_ids_from_ced(self, cedFile)
-            dCountFromCED = CEDFunctions.get_count_from_ced(self, IDs, luniqueIDs)
-            dCountFromDB, dEventDatesFromDB = DBFunctions.get_count_from_db(self, curs, accountName,
-                                                                                  self.eventSchema,
-                                                                                  eventType, searchColumn, luniqueIDs,
-                                                                                  dEventStoredDateFromCED)
-            dEventsProcessed, dEventsToProcess = DBFunctions.get_missing_events(self, curs, accountName,
-                                                                                  self.eventSchema,searchColumn, eventType,
-                                                                              dEventStoredDateFromCED, dEventDatesFromDB,
-                                                                              dCountFromDB, self.CEDDatesInAccountTZ)
-            resultFile = CommonFunctions.compare_counts(self, cedFile, searchColumn, dCountFromCED, dCountFromDB,
-                                                            dEventsToProcess, dEventsProcessed)
-            print("Validation of count completed")
+            if not CommonFunctions.is_file_empty(self, cedFile):
+                logging.info("Started processing file %s", cedFile)
+                IDs, luniqueIDs, dEventStoredDateFromCED, searchColumn, eventType = CEDFunctions.get_ids_from_ced(self, cedFile)
+                dCountFromCED = CEDFunctions.get_count_from_ced(self, IDs, luniqueIDs)
+                dCountFromDB, dEventDatesFromDB = DBFunctions.get_count_from_db(self, curs, accountName,
+                                                                                      self.eventSchema,
+                                                                                      eventType, searchColumn, luniqueIDs,
+                                                                                      dEventStoredDateFromCED)
+                dEventsProcessed, dEventsToProcess = DBFunctions.get_missing_events(self, curs, accountName,
+                                                                                      self.eventSchema,searchColumn, eventType,
+                                                                                  dEventStoredDateFromCED, dEventDatesFromDB,
+                                                                                  dCountFromDB, self.CEDDatesInAccountTZ)
+                resultFile = CommonFunctions.compare_counts(self, cedFile, searchColumn, dCountFromCED, dCountFromDB,
+                                                                dEventsToProcess, dEventsProcessed)
+                print("Validation of count completed")
         print("\n***Result in File :", resultFile, "***")
         if not curs.close():
             print("\nClosed the connection to ", curs)

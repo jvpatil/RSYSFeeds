@@ -93,20 +93,25 @@ class DeviceDetails(Setup):
         return device_ids, device_data
 
     def get_data(self,device_ids, device_data, riid,event_type):
-        device_id = None
-        if event_type.lower() == "open":
-            for i in range(len(device_ids[riid])):
-                if device_ids[riid][i][1] is None:  #last_click_date is null
-                    device_id = device_ids[riid][i][0]
-                    # print(device_id)
-        elif event_type.lower() == "click":
-            for i in range(len(device_ids[riid])):
-                if device_ids[riid][i][1] is not None:  # last_click_date is null
-                    device_id = device_ids[riid][i][0]
+        browser_type, os_vendor, operating_system, device_type, browser = None,None,None,None,None
+        try:
+            device_id = None
+            if event_type.lower() == "open":
+                for i in range(len(device_ids[riid])):
+                    if device_ids[riid][i][1] is None:  #last_click_date is null
+                        device_id = device_ids[riid][i][0]
+                        # print(device_id)
+            elif event_type.lower() == "click":
+                for i in range(len(device_ids[riid])):
+                    if device_ids[riid][i][1] is not None:  # last_click_date is null
+                        device_id = device_ids[riid][i][0]
 
-        browser_type, os_vendor,operating_system,device_type,browser = [row for row in device_data[device_id][0]]
+            browser_type, os_vendor,operating_system,device_type,browser = [row for row in device_data[device_id][0]]
+        except IndexError as e:
+            # print("--- SKIPPING AS THERE ARE NO DEVICE DETAILS AVAILABLE FOR RIID : ", riid)
+            pass
         # print(browser_type, os_vendor,operating_system,device_type,browser)
-        return browser_type, os_vendor,operating_system,device_type,browser
+        return browser_type, os_vendor, operating_system, device_type, browser
 
 # ua = "Mozilla/5.0 (Linux; Android 4.3; C5502 Build/10.4.1.B.0.101) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/33.0.1750.136 Mobile Safari/537.36"
 if __name__ == '__main__':

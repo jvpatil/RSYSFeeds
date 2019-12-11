@@ -8,12 +8,18 @@ import re
 import traceback
 from collections import defaultdict
 from datetime import datetime
+from paths import *
 import logging
 
 
 class CEDFunctions(CommonFunctions):
     # log = CommonFunctions.log
-    input_files_path = Setup.testfilespath
+    if input_files_path is not None:
+        input_file_path = input_files_path
+    else:
+        input_file_path = Setup.testfilespath
+
+    # input_files_path = Setup.testfilespath
     result_files_path = Setup.resultFilePath
     runTime = datetime.now().strftime("%d%b%Y_%H.%M.%S")  # current time in ddmmyyyy_hh24mmss
     report = "Result_" + str(runTime) + ""
@@ -61,7 +67,7 @@ class CEDFunctions(CommonFunctions):
     # def findFiles(self):
     #     count = 0
     #     try:
-    #         files = os.listdir(self.input_files_path)
+    #         files = os.listdir(self.input_file_path)
     #         for fname in range(len(files)):
     #             count += 1
     #         print("\nThere are total", count, "files to processed:")
@@ -129,7 +135,7 @@ class CEDFunctions(CommonFunctions):
         ced_data = defaultdict(list)
 
         for id in unique_IDs:
-            with open(os.path.join(CEDFunctions.input_files_path, file), 'r') as f:
+            with open(os.path.join(CEDFunctions.input_file_path, file), 'r') as f:
                 content = f.readlines()
 
             for row in content[:1]:
@@ -165,7 +171,7 @@ class CEDFunctions(CommonFunctions):
         ced_data = defaultdict(lambda: defaultdict(list))
         index_Of_stored_date = None
 
-        with open(os.path.join(CEDFunctions.input_files_path, file), 'r') as f:
+        with open(os.path.join(CEDFunctions.input_file_path, file), 'r') as f:
             content = f.readlines()
 
             for row in content[:1]:

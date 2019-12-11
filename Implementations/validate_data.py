@@ -13,7 +13,7 @@ import requests
 from bs4 import BeautifulSoup
 
 def validate_data_from_ced(self, curs, file, search_column, ced_data, index_Of_stored_date, ced_columns_from_file, event_stored_date, event_type,
-                           account_name, email_custom_columns, sms_custom_columns, CEDDatesInAccountTZ):
+                           account_name, email_custom_columns, sms_custom_columns, CEDDatesInAccountTZ,acc_timezone):
     event_table = DBFunctions.get_event_table(self, event_type)
     column_name_query = "SELECT * from " + account_name + "_EVENT." + event_table + " WHERE rownum=0"
     curs.execute(column_name_query)
@@ -29,8 +29,19 @@ def validate_data_from_ced(self, curs, file, search_column, ced_data, index_Of_s
 
     device_attributes = ["BROWSER_TYPE_INFO", "BROWSER_INFO", "OS_VENDOR_INFO", "OPERATING_SYSTEM_INFO", "DEVICE_TYPE_INFO"]
     device_ids, device_data,index_of_riid = None, None,None
-    if "USER_AGENT_STRING" in all_columns_from_ced:
+
+    if event_type=="DYNAMIC_CONTENT":
+        index_of_riid = all_columns_from_ced.index("EVENT_UUID")
+    elif event_type == "FORM_STATE":
+        index_of_riid = all_columns_from_ced.index("FORM_ID")
+    elif event_type == "LAUNCH_STATE":
+        index_of_riid = all_columns_from_ced.index("LAUNCH_ID")
+    elif event_type == "PROGRAM_STATE":
+        index_of_riid = all_columns_from_ced.index("PROGRAM_ID")
+    else:
         index_of_riid = all_columns_from_ced.index("RIID")
+
+    if "USER_AGENT_STRING" in all_columns_from_ced:
         device_ids, device_data = DeviceDetails.get_device_attributes(self, account_name)
         add_remove_column_for_query(self,all_columns_from_ced,device_attributes)
 
@@ -50,12 +61,15 @@ def validate_data_from_ced(self, curs, file, search_column, ced_data, index_Of_s
         while (ced_row_num < len(ced_data[id])):
             db_row_num = 0
             Status = None
+            error_rows_in_file = defaultdict(list)
             for row_from_db in query_result_for_id:
                 event_date_for_record_from_db = datetime.strftime(row_from_db[index_Of_stored_date], '%d-%b-%Y %H:%M:%S')
                 event_date_for_record_from_ced = ced_data[id][ced_row_num][index_Of_stored_date]
+                riid_from_ced = ced_data[id][ced_row_num][index_of_riid]
+                riid_from_db = row_from_db[index_of_riid]
                 if CEDDatesInAccountTZ:
                     event_date_for_record_from_ced = datetime.strptime(event_date_for_record_from_ced, '%d-%b-%Y %H:%M:%S')
-                    event_date_for_record_from_ced = self.covert_acc_tz_to_utc(event_date_for_record_from_ced)
+                    event_date_for_record_from_ced = self.covert_acc_tz_to_utc(event_date_for_record_from_ced, acc_timezone)
 
                 if 'SMS' in event_type or 'MMS' in event_type or 'PUSH' in event_type:
                     index_of_uuid = ced_columns_from_file[event_type].index('EVENT_UUID')
@@ -63,8 +77,9 @@ def validate_data_from_ced(self, curs, file, search_column, ced_data, index_Of_s
                     uuid_from_ced = ced_data[id][ced_row_num][index_of_uuid]
                     ced_db_match = check_for_match(self,uuid_from_ced,uuid_from_db,event_date_for_record_from_ced, event_date_for_record_from_db)
                 else:
-                    ced_db_match = check_for_match(self, event_date_for_record_from_ced, event_date_for_record_from_db)
+                    ced_db_match = check_for_match(self, riid_from_ced,riid_from_db,event_date_for_record_from_ced, event_date_for_record_from_db)
                 if int(id) in row_from_db and ced_db_match:
+                    # row_error = False
                 # if int(id) in row_from_db and event_date_for_record_from_ced == event_date_for_record_from_db:
                     print("\nValidating row", ced_row_num, "(DB row:", db_row_num, ")In file ", file, " for ", str(search_column), ":", id)
                     for col_index, col_value in enumerate(row_from_db):
@@ -92,7 +107,7 @@ def validate_data_from_ced(self, curs, file, search_column, ced_data, index_Of_s
                                 if CEDDatesInAccountTZ:
                                     if ced_value != None:
                                         ced_value = datetime.strptime(ced_value, '%d-%b-%Y %H:%M:%S')
-                                        ced_value = self.covert_acc_tz_to_utc(ced_value)
+                                        ced_value = self.covert_acc_tz_to_utc(ced_value,acc_timezone)
                                 if columns_to_be_queried_from_db[col_index] != 'EVENT_STORED_DT':
                                     if ced_value == str(convertedToUTC.strftime(date_format)):  # for event_captured_Dt is which is in PST,
                                         Status = columns_to_be_queried_from_db[col_index] + "= Pass"
@@ -130,16 +145,20 @@ def validate_data_from_ced(self, curs, file, search_column, ced_data, index_Of_s
                         except Exception as e:
                             print('\n*****ERROR ON LINE {}'.format(sys.exc_info()[-1].tb_lineno), ",", type(e).__name__, ":", e, "*****\n")
                             print(traceback.format_exc())
+                        # if Status != "Pass":
+                        #     row_error = True
 
                 else:
                     pass
                 db_row_num += 1
+                # error_rows_in_file[ced_row_num].append(row_error)
             if Status == None:
                 print("\nNO MATCHING RECORD FOUND IN DB FOR THE ROW ",ced_row_num ," OF ID ",id, " IN FILE ", file)
             ced_row_num += 1
 
 def validate_device_data(self,device_ids, device_data, riid, event_type,db_row_num, col_index, col_name, file,ced_value):
     browser_type, os_vendor, operating_system, device_type, browser = DeviceDetails.get_data(self, device_ids, device_data, riid, event_type)
+
     if col_name == "BROWSER_TYPE_INFO":
         check_if_data_matches(self, db_row_num, col_index, file, col_name, id, ced_value, browser_type)
 
@@ -154,6 +173,7 @@ def validate_device_data(self,device_ids, device_data, riid, event_type,db_row_n
 
     elif col_name == "DEVICE_TYPE_INFO":
         check_if_data_matches(self, db_row_num, col_index, file, col_name, id, ced_value, device_type)
+
 
 def check_if_data_matches(self, row_num,col_num, file,column_name,id, ced_value, db_value):
     if ced_value == str(db_value):
@@ -178,8 +198,13 @@ def add_remove_column_for_query(self, all_columns_from_ced,column_to_be_inserted
 
             if duplicate_column:
                 if duplicate_column == all_columns_from_ced[column_to_be_removed_index]:
-                    deleted_column = column_to_be_inserted.pop(key, duplicate_column +" Not in custom columns")
-                    continue
+                    if type(column_to_be_inserted) == defaultdict or type(column_to_be_inserted) == dict:
+                        deleted_column = column_to_be_inserted.pop(key, duplicate_column +" Not in custom columns")
+                        continue
+                    else:
+                        # deleted_column = column_to_be_inserted.pop(column_to_be_inserted.index(duplicate_column))
+                        # continue
+                        pass
             all_columns_from_ced.insert(column_to_be_removed_index, "null as "+ str(col))
             all_columns_from_ced.pop(column_to_be_removed_index+1)
 
@@ -208,17 +233,19 @@ def check_for_duplicate_custom_column(self,all_columns_from_ced,custom_columns):
                             duplicate_col = all_columns_from_ced[duplicate_col_index]
                             return
                         else:
-                            duplicate_col_index = all_columns_from_ced[index_of_current_col]
+                            # duplicate_col_index = all_columns_from_ced.index(index_of_current_col)
+                            duplicate_col_index = index_of_current_col
                             duplicate_col = all_columns_from_ced[duplicate_col_index]
                             return duplicate_col
             except Exception as e:
-                print("Error in identifying duplicate custom columns " + str(e))
+                print("Error in identifying duplicate custom columns. Error :: " + str(e))
+                print('*****ERROR ON LINE {}'.format(sys.exc_info()[-1].tb_lineno), ",", type(e).__name__, ":", e, "*****\n")
         else:
             pass
     return duplicate_col
 
 def check_for_match(self, ced_value, db_value,ced_stored_dt=None, db_stored_dt=None):
-    if ced_value==db_value and ced_stored_dt==db_stored_dt:
+    if str(ced_value)==str(db_value) and ced_stored_dt==db_stored_dt:
         return True
     else:
         return False

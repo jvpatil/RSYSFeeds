@@ -8,13 +8,16 @@ from Implementations.common_functions import CommonFunctions
 # import Implementations.ssh as SSH
 # import Implementations.ssh_tunnel as SSH
 from Implementations.validate_data import validate_data_from_ced
-
+from paths import *
 import pytz
 import logging
 
 
 class ValidateData(CommonFunctions):
-    CEDDatesInAccountTZ = True
+    if ExportInAccountTimeZone:
+        CEDDatesInAccountTZ = ExportInAccountTimeZone
+    else:
+        CEDDatesInAccountTZ = False
 
     def validate_data(self):
         acc_name = "ipush"
@@ -26,6 +29,13 @@ class ValidateData(CommonFunctions):
             account_name = input("\n***PLEASE PROVIDE THE ACCOUNT NAME  :: ")
         # curs = CommonFunctions.init_db_connection(self, account_name + "Event")
         # SSH.getSSHConnection()
+        if self.CEDDatesInAccountTZ:
+            curs = CommonFunctions.init_db_connection(self, "sysAdmin")
+            acc_timezone = self.get_account_timezone_info(curs, account_name)
+            CommonFunctions.close_db_connection(self, curs)
+        else:
+            acc_timezone = accountTimeZone
+
         curs = CommonFunctions.init_db_connection(self, "syslocalCust")
         email_columns_by_id, email_custom_columns, sms_columns_by_id, sms_custom_columns = CommonFunctions.get_custom_properties(self, curs,account_name)
         CommonFunctions.close_db_connection(self, curs)
@@ -42,7 +52,7 @@ class ValidateData(CommonFunctions):
                 # ced_data, index_Of_stored_date = CEDFunctions.read_data_from_ced(self, file, unique_IDs, search_column)
                 ced_data, index_Of_stored_date = CEDFunctions.read_ced_data_for_validation(self, file, unique_IDs, search_column)
                 validate_data_from_ced(self, curs, file, search_column, ced_data, index_Of_stored_date,
-                                                       ced_columns_from_file, event_stored_date, event_type,account_name,email_custom_columns,sms_custom_columns,self.CEDDatesInAccountTZ)
+                                                       ced_columns_from_file, event_stored_date, event_type,account_name,email_custom_columns,sms_custom_columns,self.CEDDatesInAccountTZ,acc_timezone)
                 # DBFunctions.extract_custom_properties_data(self,curs)
         if not curs.close():
             print("\nClosed the connection to ", curs)

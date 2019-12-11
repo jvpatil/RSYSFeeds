@@ -65,10 +65,16 @@ class Setup():
         # print("\nConnecting to ...",(self.prop[accountName+"User"]).upper() +"( Account ID :",self.prop[accountName+"AccID"],") --- " + accountName )
         connection_details = self.prop[accountName + "User"] + "/" + self.prop[accountName + "Pass"] + "@" + self.prop[accountName + "URL"]
         # self.dbcon = cx_Oracle.connect(self.prop[accountName+"User"] + "/" + self.prop[accountName+"Pass"] + "@" + self.prop[accountName+"URL"])
-        self.dbcon = cx_Oracle.connect(connection_details)
+        try:
+            self.dbcon = cx_Oracle.connect(connection_details)
         # dbcon = cx_Oracle.connect(prop["progtmUser"] + "/" + prop["progtmPwd"] + "@" + prop["progtmUrl"])
         # print("Connected to Oracle - ", (self.prop[accountName+"User"]).upper(), " account", "\n"," Oracle version is: " + self.dbcon.version)
-        self.curs = self.dbcon.cursor()
+            self.curs = self.dbcon.cursor()
+        except Exception as e:
+            print("\nError in Connecting to DB using ",self.prop[accountName + "User"].upper())
+            print("Error Type : " ,type(e).__name__)
+            print("Error : " ,e , "\nExiting the execution")
+            exit(1)
         return self.curs
 
     def close_db_connection(self,curs):

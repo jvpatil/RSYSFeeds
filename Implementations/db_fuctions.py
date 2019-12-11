@@ -181,7 +181,10 @@ class DBFunctions():
             'CUSTOM_CHANNEL_SENT' : 'E_RECIPIENT_CUSTOM_SENT',
             'CUSTOM_CHANNEL_FAILED' : 'E_RECIPIENT_CUSTOM_FAILED'
         }
-        event_table = event_table_names[event_type]
+        try:
+            event_table = event_table_names[event_type]
+        except KeyError as e:
+            print("Skipping Test for ", e)
         return event_table
 
     def get_headers_from_db(self, curs, account_id):
@@ -192,6 +195,11 @@ class DBFunctions():
         header_query = "SELECT S.SECTION_KEY ,A.SECTION_KEY_VALUE_STRING FROM ACCOUNT_SETTINGS A LEFT OUTER JOIN " \
                        "SECTION_KEY S ON A.SECTION_KEY_ID=S.SECTION_KEY_ID WHERE S.SECTION_NAME LIKE '%EventConnect%' " \
                        "AND A.ACCOUNT_ID=" + str(account_id) + ""
+        # if curs != None:
+        #     curs.execute(header_query)
+        # else:
+        #     exit(1)
+
         curs.execute(header_query)
         print("\n*** Reading CEDs Column headers from account's setting ***")
         query_result_all_headers = curs.fetchall()

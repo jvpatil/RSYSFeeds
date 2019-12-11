@@ -106,7 +106,8 @@ from datetime import time
 from paramiko import SSHClient, SSHConfig, SSHException
 import getpass
 import paramiko
-
+from stat import S_ISDIR
+global sftp
 
 def getSSHConnection(hostName="dc1-c-rsp-bastion-01.responsys.net"):
     config = SSHConfig()
@@ -140,24 +141,98 @@ def getSSHConnection(hostName="dc1-c-rsp-bastion-01.responsys.net"):
             client.connect(host['hostname'],22, username=host['user'], password=passwd, sock=proxy)
     except SSHException as ex:
         print(ex)
+    if client:
+        print("Connection to ", hostName, " is successful")
 
     return client
 
+def get_ssh():
+    ssh_client = getSSHConnection('dc1-c-rsp-bastion-01.responsys.net')
 
-# ssh_client = getSSHConnection('dc1-c-rsp-bastion-01.responsys.net')
-#
-# # run a command
-# print("\nRun a command")
-# cmd = 'ls'
-# stdin, stdout, stderr = ssh_client.exec_command(cmd)
-#
-# print(stdout.read())
+    ls = 'ls'
+    pwd = 'pwd'
+    print("\nRunning command :", ls)
+    stdin, stdout, stderr = ssh_client.exec_command(ls)
+    for i in stdout.readlines():
+        print(i.strip())
 
-# ssh_client = getSSHConnection('dc1-c-rsp-bastion-01.responsys.net')
-#
-# # run a command
-# print("\nRun a command")
-# cmd = 'ps aux'
-# stdin, stdout, stderr = ssh_client.exec_command(cmd)
-#
-# print(stdout.read())
+
+def get_sftp():
+    global sftp
+    ssh_client = getSSHConnection()
+    # ssh_client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+
+    sftp = create_sftp_client('files-nonprod.dc2.responsys.net', 22, 'qa15_scp', 'D:\\Responsys\\qatestkey.pem', 'RSA')
+    # print(sftp.listdir('.'))
+    download_dir('/home/cli/qa15_scp/Jagan/Feeds/qa2connect', 'C:\\Users\\jaganpat.ORADEV\\PycharmProjects\\RSYSFeeds\\InputFIles')
+    # sftp.get('/home/cli/qa15_scp/Jagan/Filter&DM_TestList_CommaNDoubleQoute.csv', 'C:\\Users\\jaganpat.ORADEV\\PycharmProjects\\RSYSFeeds\\InputFIles\\')
+    sftp.close()
+    # admin_server = ssh_client.connect('admin01-qa1.qa1.responsys.com', username='jpatil', password='patil@910')
+    # if admin_server:
+    #     print("Connected to admin server")
+    # else:
+    #     print("Connection to admin server failed")
+    #
+    # admin_server.connect('files-nonprod.dc2.responsys.net', username='qa15_scp', password='D:\\Responsys\\qatestkey.pem')
+    # sftp = ssh_client.open_sftp()
+    # print(sftp.getcwd())
+
+def connect_to_sftp_ssh():
+    return
+
+def download_dir(remote_dir, local_dir):
+    import os
+    os.path.exists(local_dir) or os.makedirs(local_dir)
+    dir_items = sftp.listdir_attr(remote_dir)
+    # dir_items = sftp.listdir(remote_dir)
+    print("Copying ", len(dir_items), "files from ",remote_dir, "to local")
+    for item in dir_items:
+        # assuming the local system is Windows and the remote system is Linux
+        # os.path.join won't help here, so construct remote_path manually
+        remote_path = remote_dir + '/' + item.filename
+        local_path = os.path.join(local_dir, item.filename)
+        if S_ISDIR(item.st_mode):
+            download_dir(remote_path, local_path)
+        else:
+            print("Copying file : ", item.filename)
+            sftp.get(remote_path, local_path)
+def create_sftp_client(host, port, username,  keyfilepath, keyfiletype,password=None):
+    """
+    create_sftp_client(host, port, username, password, keyfilepath, keyfiletype) -> SFTPClient
+
+    Creates a SFTP client connected to the supplied host on the supplied port authenticating as the user with
+    supplied username and supplied password or with the private key in a file with the supplied path.
+    If a private key is used for authentication, the type of the keyfile needs to be specified as DSA or RSA.
+    :rtype: SFTPClient object.
+    """
+    sftp = None
+    key = None
+    transport = None
+    try:
+        if keyfilepath is not None:
+            # Get private key used to authenticate user.
+            if keyfiletype == 'DSA':
+                # The private key is a DSA type key.
+                key = paramiko.DSSKey.from_private_key_file(keyfilepath)
+            else:
+                # The private key is a RSA type key.
+                key = paramiko.RSAKey.from_private_key(open(keyfilepath))
+
+        # Create Transport object using supplied method of authentication.
+        transport = paramiko.Transport((host, port))
+        transport.connect(None, username, password, key)
+
+        sftp = paramiko.SFTPClient.from_transport(transport)
+        if sftp:
+            print("Connection to ", host, " is successful")
+
+        return sftp
+    except Exception as e:
+        print('An error occurred creating SFTP client: %s: %s' % (e.__class__, e))
+        if sftp is not None:
+            sftp.close()
+        if transport is not None:
+            transport.close()
+        pass
+get_sftp()
+# getSSHConnection()

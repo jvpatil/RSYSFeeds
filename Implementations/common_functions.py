@@ -13,12 +13,17 @@ import traceback
 from collections import defaultdict
 import requests
 from bs4 import BeautifulSoup
+from paths import *
 
 import lxml
 
 
 class CommonFunctions(Setup):
-    input_file_path = Setup.testfilespath
+    if input_files_path is not None:
+        input_file_path = input_files_path
+    else:
+        input_file_path = Setup.testfilespath
+
     result_file_path = Setup.resultFilePath
     run_time = datetime.now().strftime("%d%b%Y_%H.%M.%S")  # current time in ddmmyyyy_hh24mmss
     report = "Result_" + str(run_time) + ""
@@ -75,6 +80,11 @@ class CommonFunctions(Setup):
     def find_files(self):
         count = 0
         files = None
+        # if input_files_path is not None:
+        #     in_file_path = input_files_path
+        # else:
+        #     in_file_path = self.input_file_path
+
         try:
             files = os.listdir(self.input_file_path)
             for fname in range(len(files)):
@@ -159,23 +169,23 @@ class CommonFunctions(Setup):
         return resultFile
 
     def is_file_empty(self, ced_file):
-        input_file_path = self.testfilespath
-        with open(os.path.join(input_file_path, ced_file), 'r') as f:
+        # input_file_path = self.testfilespath
+        with open(os.path.join(self.input_file_path, ced_file), 'r') as f:
             content = f.readlines()
         if len(content) != 0:
             return False
         else:
-            print("\File ", ced_file, " is empty")
+            print("\t--File ", ced_file, " is empty. Hence Skipping the file")
             return True
 
 
     def get_headers_from_ced(self, ced_file):
-        input_file_path = self.testfilespath
+        # input_file_path = self.testfilespath
         ced_headers_from_file = defaultdict(list)
         event_type = re.split(r"\d+", ced_file)
         event_type = event_type[1].strip('_')
 
-        with open(os.path.join(input_file_path, ced_file), 'r') as f:
+        with open(os.path.join(self.input_file_path, ced_file), 'r') as f:
             content = f.readlines()
         if len(content) != 0:
             for header_row in content[:1]:
@@ -619,8 +629,9 @@ class CommonFunctions(Setup):
                             k += 1
                     rowNum += 1
 
-    def covert_acc_tz_to_utc(self, timestamp):
-        formatTimeInPST = pytz.timezone('Asia/Calcutta').localize(timestamp)
+    def covert_acc_tz_to_utc(self, timestamp,acc_timezone):
+        formatTimeInPST = pytz.timezone(acc_timezone).localize(timestamp)
+        # formatTimeInPST = pytz.timezone('Asia/Calcutta').localize(timestamp)
         # formatTimeInPST = pytz.timezone('US/Pacific').localize(ced_first_event_date)  # localizing adds timezone info to the timestamp
         # TZ info is required for astimezone()function. Here both CAPTURED & STORED date are converted to PST & appended TZ info(-08:00)
         converted_date = formatTimeInPST.astimezone(pytz.timezone('UTC'))  # converts both Captured & Stored date from PSt to UTC
@@ -827,5 +838,12 @@ class CommonFunctions(Setup):
 
         f.close()
         return
+
+    def get_account_timezone_info(self,curs, account_name):
+        sql = "select TIME_ZONE_ID from account where accountname= '" + str(account_name) +"'"
+        curs.execute(sql)
+        acc_tz_info = [i[0] for i in curs.fetchall()]
+        print("Account Timezone is : " , acc_tz_info)
+        return acc_tz_info[0]
 
 
