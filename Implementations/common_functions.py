@@ -13,9 +13,7 @@ import traceback
 from collections import defaultdict
 import requests
 from bs4 import BeautifulSoup
-from paths import *
-
-import lxml
+from ConfigFiles.paths import *
 
 
 class CommonFunctions(Setup):
@@ -175,7 +173,7 @@ class CommonFunctions(Setup):
         if len(content) != 0:
             return False
         else:
-            print("\t--File ", ced_file, " is empty. Hence Skipping the file")
+            # print("\t--File ", ced_file, " is empty. Hence Skipping the file")
             return True
 
 
@@ -197,6 +195,7 @@ class CommonFunctions(Setup):
             # print("\nColumns from CED are",CEDHeadersFromFile)
         else:
             print("\File ", ced_file, " is empty")
+            pass
         return ced_headers_from_file
 
     def get_headers_from_podconfig(self):
@@ -475,6 +474,7 @@ class CommonFunctions(Setup):
                                             column_order_status)  # self.htmlReport(event_name, cedFileName, each_column_in_db,
                 # column_presence_status, short_status, index_of_db_column,)  # self.testHTML(event_name, cedFileName, each_column_in_db,
                 # column_presence_status, short_status,index_of_db_column,index_of_ced_column, column_order_status)
+
         else:
             print("***INFO : Header Details for Event ", event_name, " is not available in DB")
         # print("\nRESULT FILE IS SAVED AT LOCATION :", self.result_file_path)
@@ -845,5 +845,60 @@ class CommonFunctions(Setup):
         acc_tz_info = [i[0] for i in curs.fetchall()]
         print("Account Timezone is : " , acc_tz_info)
         return acc_tz_info[0]
+
+    def printProgressBar(iteration, total, ced_file,prefix='Overall Progress :', suffix='Complete', decimals=1, length=50, fill='█', printEnd="\r"):
+        percent = ("{0:." + str(decimals) + "f}").format(100 * (iteration / float(total)))
+        filledLength = int(length * iteration // total)
+        bar = fill * filledLength + '-' * (length - filledLength)
+        sys.stdout.write("\n")
+        sys.stdout.write("\r%s |%s| %s%% %s " % (prefix, bar, percent, suffix))
+        sys.stdout.write("\n")
+        sys.stdout.write("%s " % ("Current File Progress : " + str(ced_file)))
+        sys.stdout.write("\n")
+        sys.stdout.flush()
+        if iteration == total:
+            print()
+
+    def print_status(barStatus, fileStatus=""):
+        sys.stdout.write("\n")
+        sys.stdout.write(barStatus)
+        sys.stdout.write("\n\n")
+        sys.stdout.write(fileStatus)
+        sys.stdout.write("\n")
+
+
+    def status_progress(iteration, total_count, ced_file,prefix='Overall Progress :', suffix='Complete', decimals=1, length=50, fill='█', printEnd="\r"):
+        global start_time
+        if iteration == 1:
+            start_time = datetime.now()
+        elapsed_time, eta_time = CommonFunctions.calculate_time(total_count, iteration, start_time)
+        percent = ("{0:." + str(decimals) + "f}").format(100 * (iteration / float(total_count)))
+        filledLength = int(length * iteration // total_count)
+        bar = fill * filledLength + '-' * (length - filledLength)
+        # sys.stdout.write('\r%s |%s| [%s%% %s] [Time elapsed %s] [ETA %s] %s' % (prefix, bar, percent, suffix, elapsed_time, eta_time, ''))
+        bar_status = "\r%s |%s| %s%% %s [Time elapsed %s] [ETA %s] %s" % (prefix, bar, percent, suffix,elapsed_time, eta_time, '')
+        file_status = "%s " % ("Current File Progress : " + str(ced_file))
+
+        return bar_status, file_status
+
+    def calculate_time(total_count, iteration, start_time):
+        end_time = datetime.now()
+        time_in_seconds = end_time - start_time
+        time_elapsed = str(time_in_seconds)[:7]
+        # time_elapsed = '{}'.format(time_in_seconds)[:7]
+
+        remaining_time = (time_in_seconds * float((total_count / iteration))) - time_in_seconds
+        remaining_time = str(remaining_time)[:7]
+        # return time_elapsed, "..."
+        return time_elapsed, remaining_time
+
+    def clear(self):
+        # for windows
+        if os.name == 'nt':
+            _ = os.system('cls')
+
+            # for mac and linux(here, os.name is 'posix')
+        else:
+            _ = os.system('clear')
 
 

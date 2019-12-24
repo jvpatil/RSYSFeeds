@@ -8,21 +8,26 @@ from xml.etree import ElementTree as ET
 
 import pytz
 from lxml.etree import ElementTree
-
+from ConfigFiles import tables
+from ConfigFiles import logger_util
 from Implementations.setup import Setup
 
 
-class DBFunctions():
+class DBFunctions:
+    def __init__(self,test_class_name):
+        super().__init__(test_class_name)
+        self.db_func_log = logger_util.get_logger(test_class_name +" :: " +__name__)  #create a seperate handler for each module with base test & package.module name
+
+
     input_files_path = Setup.testfilespath
     result_files_path = Setup.resultFilePath
     run_time = datetime.now().strftime("%d%b%Y_%H.%M.%S")  # current time in ddmmyyyy_hh24mmss
     report = "Result_" + str(run_time) + ""
 
-    def get_count_from_db(self, curs, accountName, schema, event_type, searchColumn, list_unique_id,
-            dEventStoredDate):
+    def get_count_from_db(self, curs, accountName, schema, event_type, searchColumn, set_unique_ids, dEventStoredDate):
         d_count_from_db = defaultdict(list)
         d_event_dates_from_db = defaultdict(list)
-        print("*** Getting count from DB, for  ::", event_type)
+        self.db_func_log.info("Getting count from DB.")
         try:
             # for id in uniqueIDs:
             #     query = self.getQuery(event_type,searchColumn,id)
@@ -30,84 +35,103 @@ class DBFunctions():
             #     curs.execute(query)
             #     resultCount = [i[0] for i in curs.fetchall()]
             #     dCountForIDs[id].extend(resultCount)
-            query = self.get_query(accountName,schema,event_type, searchColumn, list_unique_id)
+            query = self.get_query(accountName,schema,event_type, searchColumn, set_unique_ids)
             curs.execute(query)
             query_result = curs.fetchall()  # if the event table has 0 records for the particular launch_id,
             # then it is not in
+            if len(query_result) != 0:
+                for row in range(len(query_result)):
+                    launch_id = query_result[row][0]
+                    cnt = query_result[row][1]
+                    min_event_date = query_result[row][2]
+                    max_event_date = query_result[row][3]
+                    d_count_from_db[launch_id] = cnt
+                    d_event_dates_from_db[launch_id].append(min_event_date)
+                    d_event_dates_from_db[launch_id].append(max_event_date)
+                    # d_count_from_db[launch_id].append(cnt)
 
-            for row in range(len(query_result)):
-                launch_id = query_result[row][0]
-                cnt = query_result[row][1]
-                min_event_date = query_result[row][2]
-                max_event_date = query_result[row][3]
+            else:
+                self.db_func_log.error('Query returned null. No records in DB for ID : ' +str(set_unique_ids))
+                launch_id = list(set_unique_ids)[0]
+                cnt = 0
+                min_event_date = datetime.now()
+                max_event_date = datetime.now()
                 d_count_from_db[launch_id].append(cnt)
                 d_event_dates_from_db[launch_id].append(min_event_date)
                 d_event_dates_from_db[launch_id].append(max_event_date)
 
+            missing_ids = [int(id) for id in set_unique_ids if int(id) not in d_count_from_db]
+            if len(missing_ids) != 0:
+                for ids_with_zero_rec_in_db in missing_ids:
+                    d_count_from_db[ids_with_zero_rec_in_db] = 0
+
         except Exception as e:
-            print('\n*****ERROR ON LINE {}'.format(sys.exc_info()[-1].tb_lineno), ",", type(e).__name__, ":", e,
-                  "*****\n")
-            print(traceback.format_exc())
+            self.db_func_log.error('*** ERROR ON LINE %s , %s : %s ***' % (format(sys.exc_info()[-1].tb_lineno), type(e).__name__, e))
 
         return d_count_from_db, d_event_dates_from_db
 
     def get_missing_events(self, curs,accountName,eventSchema, searchColumn, event_type, dEvent_stored_date_from_ced, d_event_dates_from_db, d_count_from_db,CEDDatesInAccountTZ):
         d_events_to_process = defaultdict(list)
         d_events_processed = defaultdict(list)
-        event_table = self.get_event_table(event_type)
+        # event_table = self.get_event_table(event_type)
+        event_table = tables.event_table_names[event_type]
         event_table = accountName + "_" + eventSchema + "." + event_table
 
         try:
             for launch_id in d_count_from_db:
-                first_event_date = min(dEvent_stored_date_from_ced[str(launch_id)])
-                ced_first_event_date = datetime.strptime(first_event_date, '%d-%b-%Y %H:%M:%S')
-                if CEDDatesInAccountTZ:
-                    formatTimeInPST = pytz.timezone('Asia/Calcutta').localize(ced_first_event_date)
-                    # formatTimeInPST = pytz.timezone('US/Pacific').localize(ced_first_event_date)  # localizing adds timezone info to the timestamp
-                    # TZ info is required for astimezone()function. Here both CAPTURED & STORED date are converted to PST & appended TZ info(-08:00)
-                    ced_first_event_date = formatTimeInPST.astimezone(pytz.timezone('UTC'))  # converts both Captured & Stored date from PSt to UTC
-                ced_first_event_date = ced_first_event_date.strftime("%d-%b-%Y %I:%M:%S %p")
+                if d_count_from_db[launch_id]!= 0:
+                    first_event_date = min(dEvent_stored_date_from_ced[str(launch_id)])
+                    ced_first_event_date = datetime.strptime(first_event_date, '%d-%b-%Y %H:%M:%S')
+                    if CEDDatesInAccountTZ:
+                        formatTimeInPST = pytz.timezone('Asia/Calcutta').localize(ced_first_event_date)
+                        # formatTimeInPST = pytz.timezone('US/Pacific').localize(ced_first_event_date)  # localizing adds timezone info to the timestamp
+                        # TZ info is required for astimezone()function. Here both CAPTURED & STORED date are converted to PST & appended TZ info(-08:00)
+                        ced_first_event_date = formatTimeInPST.astimezone(pytz.timezone('UTC'))  # converts both Captured & Stored date from PSt to UTC
+                    ced_first_event_date = ced_first_event_date.strftime("%d-%b-%Y %I:%M:%S %p")
 
-                last_event_date = max(dEvent_stored_date_from_ced[str(launch_id)])
-                ced_last_event_date = datetime.strptime(last_event_date, '%d-%b-%Y %H:%M:%S')
-                ced_last_event_date = ced_last_event_date + timedelta(seconds=60)  # increasing a minute coz, db LAST_EVENT_DATE in db contains milisecond and that record
-                # also included when query is run
-                ced_last_event_date = ced_last_event_date.replace(second=0, )  # again offsetting seconds to 0
-                if CEDDatesInAccountTZ:
-                    formatTimeInPST = pytz.timezone('Asia/Calcutta').localize(ced_last_event_date)
-                    ced_last_event_date = formatTimeInPST.astimezone(pytz.timezone('UTC'))  # converts both Captured & Stored date from PSt to UTC
-                ced_last_event_date = ced_last_event_date.strftime("%d-%b-%Y %I:%M:%S %p")
+                    last_event_date = max(dEvent_stored_date_from_ced[str(launch_id)])
+                    ced_last_event_date = datetime.strptime(last_event_date, '%d-%b-%Y %H:%M:%S')
+                    ced_last_event_date = ced_last_event_date + timedelta(seconds=60)  # increasing a minute coz, db LAST_EVENT_DATE in db contains milisecond and that record
+                    # also included when query is run
+                    ced_last_event_date = ced_last_event_date.replace(second=0, )  # again offsetting seconds to 0
+                    if CEDDatesInAccountTZ:
+                        formatTimeInPST = pytz.timezone('Asia/Calcutta').localize(ced_last_event_date)
+                        ced_last_event_date = formatTimeInPST.astimezone(pytz.timezone('UTC'))  # converts both Captured & Stored date from PSt to UTC
+                    ced_last_event_date = ced_last_event_date.strftime("%d-%b-%Y %I:%M:%S %p")
 
-                db_first_event_date = min(d_event_dates_from_db[launch_id]).strftime("%d-%b-%Y %I:%M:%S %p")
-                db_last_event_date = max(d_event_dates_from_db[launch_id]).strftime("%d-%b-%Y %I:%M:%S.%f %p")
+                    db_first_event_date = min(d_event_dates_from_db[launch_id]).strftime("%d-%b-%Y %I:%M:%S %p")
+                    db_last_event_date = max(d_event_dates_from_db[launch_id]).strftime("%d-%b-%Y %I:%M:%S.%f %p")
 
-                events_to_be_processed_query = "SELECT count(*) from " + event_table + " WHERE " + searchColumn + "=" + str(
-                    launch_id) + " AND EVENT_STORED_DT > '" + ced_last_event_date + "' AND EVENT_STORED_DT <= '" + \
-                                           db_last_event_date + "'"
+                    events_to_be_processed_query = "SELECT count(*) from " + event_table + " WHERE " + searchColumn + "=" + str(
+                        launch_id) + " AND EVENT_STORED_DT > '" + ced_last_event_date + "' AND EVENT_STORED_DT <= '" + \
+                                               db_last_event_date + "'"
 
-                events_already_processed_query = "SELECT count(*) from " + event_table + " WHERE " + searchColumn + "=" + \
-                                              str(
-                                                  launch_id) + " AND EVENT_STORED_DT < '" + ced_first_event_date + "' AND " \
-                                                                                                               "" \
-                                                                                                               "EVENT_STORED_DT >= '" + \
-                                              db_first_event_date + "'"
+                    events_already_processed_query = "SELECT count(*) from " + event_table + " WHERE " + searchColumn + "=" + \
+                                                  str(
+                                                      launch_id) + " AND EVENT_STORED_DT < '" + ced_first_event_date + "' AND " \
+                                                                                                                   "" \
+                                                                                                                   "EVENT_STORED_DT >= '" + \
+                                                  db_first_event_date + "'"
 
-                curs.execute(events_to_be_processed_query)
-                records_not_processed = [i[0] for i in curs.fetchall()]
-                d_events_to_process[launch_id].extend(records_not_processed)
+                    curs.execute(events_to_be_processed_query)
+                    records_not_processed = [i[0] for i in curs.fetchall()]
+                    d_events_to_process[launch_id].extend(records_not_processed)
 
-                curs.execute(events_already_processed_query)
-                records_already_processed = [i[0] for i in curs.fetchall()]
-                d_events_processed[launch_id].extend(records_already_processed)
+                    curs.execute(events_already_processed_query)
+                    records_already_processed = [i[0] for i in curs.fetchall()]
+                    d_events_processed[launch_id].extend(records_already_processed)
+                else:
+                    d_events_processed[launch_id].extend('0')
+                    d_events_to_process[launch_id].extend('0')
         except Exception as e:
-            print('\n*****ERROR ON LINE {}'.format(sys.exc_info()[-1].tb_lineno), ",", type(e).__name__, ":", e,
-                  "*****\n")
-            print(traceback.format_exc())
+            message = "*****ERROR ON LINE {}".format(sys.exc_info()[-1].tb_lineno), ',', type(e).__name__, ':', e, "*****"
+            self.db_func_log.error(message)
 
         return d_events_processed, d_events_to_process
 
     def get_query(self, accountName,schema,event_type, searchColumn, uniqueIDs):
-        event_table = self.get_event_table(event_type)
+        # event_table = self.get_event_table(event_type)
+        event_table = tables.event_table_names[event_type]
         event_table = accountName+"_"+schema+"."+event_table
         # event_table = event_table_names[event_type]
         # # event_table = DBFunctions.event_table_names[event_type]
@@ -179,7 +203,19 @@ class DBFunctions():
             'APPCLOUD_SKIPPED': 'E_RECIPIENT_APPCLOUD_SKIPPED',
             'CUSTOM_CHANNEL_SKIPPED' : 'E_RECIPIENT_CUSTOM_SKIPPED',
             'CUSTOM_CHANNEL_SENT' : 'E_RECIPIENT_CUSTOM_SENT',
-            'CUSTOM_CHANNEL_FAILED' : 'E_RECIPIENT_CUSTOM_FAILED'
+            'CUSTOM_CHANNEL_FAILED' : 'E_RECIPIENT_CUSTOM_FAILED',
+            'WEBPUSH_SENT':'E_RECIPIENT_WPUSH_SENT',
+            'WEBPUSH_FAILED' : 'E_RECIPIENT_WPUSH_FAILED',
+            'WEBPUSH_SKIPPED' : 'E_RECIPIENT_WPUSH_SKIPPED',
+            'WEBPUSH_BOUNCED' : 'E_RECIPIENT_WPUSH_BOUNCED',
+            'WEBPUSH_OPENED' : 'E_RECIPIENT_WPUSH_OPENED',
+            'WEBPUSH_BUTTON_CLICKED' : 'E_RECIPIENT_WPUSH_BTNCLICK',
+            'WEBPUSH_CONVERTED' : 'E_RECIPIENT_WPUSH_CONVERT',
+            'WEBPUSH_CLOSED' : 'E_RECIPIENT_WPUSH_CLOSED',
+            'WEBPUSH_DISPLAY':'E_RECIPIENT_WPUSH_DISPLAY',
+            'WEBPUSH_OPT_IN':'E_RECIPIENT_WPUSH_OPTIN',
+            'WEBPUSH_OPT_OUT': 'E_RECIPIENT_WPUSH_OPTOUT'
+
         }
         try:
             event_table = event_table_names[event_type]
@@ -188,24 +224,17 @@ class DBFunctions():
         return event_table
 
     def get_headers_from_db(self, curs, account_id):
-    # def get_headers_from_db(self, curs, account_name):
-    #     global account_id
-    #     account_id = self.prop[account_name + "CustAccID"]
         feedHeadersFromDB = {}
         header_query = "SELECT S.SECTION_KEY ,A.SECTION_KEY_VALUE_STRING FROM ACCOUNT_SETTINGS A LEFT OUTER JOIN " \
                        "SECTION_KEY S ON A.SECTION_KEY_ID=S.SECTION_KEY_ID WHERE S.SECTION_NAME LIKE '%EventConnect%' " \
                        "AND A.ACCOUNT_ID=" + str(account_id) + ""
-        # if curs != None:
-        #     curs.execute(header_query)
-        # else:
-        #     exit(1)
-
         curs.execute(header_query)
-        print("\n*** Reading CEDs Column headers from account's setting ***")
+        self.db_func_log.info("*** Reading CEDs Column headers from account's setting ***")
         query_result_all_headers = curs.fetchall()
         if curs.rowcount == 0:
-            print("\n ************NO RESULT, PLEASE CHECK IF ACCOUNT", account_id,
-                  "HAS ITS SETTINGS IN DB OR NOT**************")
+            message = "***** NO RESULT, PLEASE CHECK IF ACCOUNT", account_id,"HAS ITS SETTINGS IN DB OR NOT *****"
+            self.db_func_log.info(message)
+
         ced_headers_from_db = defaultdict(list)
         built_in_headers_from_db = defaultdict(list)
         events = []
@@ -322,12 +351,6 @@ class DBFunctions():
 
     def write_from_db_to_file(self, writer, event_type, cedFileName, searchID, id, cedCount, dbCount, NotProcessed,
             alreadyProcessed, status, result):
-        # writer = csv.writer(openFile, lineterminator="\n", quoting=csv.QUOTE_ALL)
-        # checkHeader = open(resultFile, "r").read()
-        # header = ["EVENT_TYPE", "FILE_NAME", "KEY", "ID", "COUNT_FROM_CED", "COUNT_FROM_DB", "EventsToBeProcessed",
-        #           "EventsAlreadyProcessed", "STATUS", "Comments"]
-        # if checkHeader == '':
-        #     writer.writerow(header)
         writer.writerow(
             [event_type, cedFileName, searchID, id, cedCount, dbCount, NotProcessed, alreadyProcessed, status, result])
 

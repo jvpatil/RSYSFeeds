@@ -1,0 +1,6 @@
+"EVENT_TYPE","FILE_NAME","KEY","ID","COUNT_FROM_CED","COUNT_FROM_DB","EventsToBeProcessed","Eventsalready_processed","STATUS","Comments"
+"CONVERT","30336_CONVERT_20191218_071701.txt","LAUNCH_ID","1462","10","36","26","10","Pass","Count for the ID Match. However there are 26 records to be processed yet"
+"CUSTOM_CHANNEL_FAILED","30336_CUSTOM_CHANNEL_FAILED_20191218_071702.txt","LAUNCH_ID","1462","20","36","26","0","Fail","Count for the ID does not Match. Seems Records are Purged for CUSTOM_CHANNEL_FAILED table"
+"CUSTOM_CHANNEL_SENT","30336_CUSTOM_CHANNEL_SENT_20191218_071702.txt","LAUNCH_ID","1462","20","36","26","0","Fail","Count for the ID does not Match. Seems Records are Purged for CUSTOM_CHANNEL_SENT table"
+"CUSTOM_CHANNEL_SKIPPED","30336_CUSTOM_CHANNEL_SKIPPED_20191218_071702.txt","LAUNCH_ID","1462","20","36","26","0","Fail","Count for the ID does not Match. Seems Records are Purged for CUSTOM_CHANNEL_SKIPPED table"
+"WEBPUSH_BUTTON_CLICKED","30336_WEBPUSH_BUTTON_CLICKED_20191218_071702.txt","LAUNCH_ID","1462","10","26","26","0","Fail","Count for the ID does not Match. Seems Records are Purged for WEBPUSH_BUTTON_CLICKED table"

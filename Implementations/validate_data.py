@@ -1,7 +1,7 @@
 import pytz
 from Implementations.setup import Setup
 from Implementations.db_fuctions import DBFunctions
-from Implementations.common_functions import CommonFunctions
+from Implementations.common_functions_progress import CommonFunctions
 from Implementations.device_details import DeviceDetails
 from datetime import datetime
 import sys
@@ -12,7 +12,7 @@ from collections import defaultdict
 import requests
 from bs4 import BeautifulSoup
 
-def validate_data_from_ced(self, curs, file, search_column, ced_data, index_Of_stored_date, ced_columns_from_file, event_stored_date, event_type,
+def validate_data_from_ced(self, barstatus, filesttatus,curs, file, search_column, ced_data, index_Of_stored_date, ced_columns_from_file, event_stored_date, event_type,
                            account_name, email_custom_columns, sms_custom_columns, CEDDatesInAccountTZ,acc_timezone):
     event_table = DBFunctions.get_event_table(self, event_type)
     column_name_query = "SELECT * from " + account_name + "_EVENT." + event_table + " WHERE rownum=0"
@@ -49,6 +49,9 @@ def validate_data_from_ced(self, curs, file, search_column, ced_data, index_Of_s
         add_remove_column_for_query(self, all_columns_from_ced, custom_columns)
 
     columns_to_be_queried_from_db = all_columns_from_ced
+
+    dreport = defaultdict(list)
+    row_error = []
     for id in ced_data:
         # print("Event Data for ID", id, "is ", event_stored_date[id][0])
         query = "SELECT " + str(
@@ -58,7 +61,14 @@ def validate_data_from_ced(self, curs, file, search_column, ced_data, index_Of_s
         query_result_for_id = curs.fetchall()
         # db_row_num = 0
         ced_row_num = 0
+        if len(query_result_for_id)==0:
+            print("Query returned null. No result from DB for ID :" +str(id))
+            dreport[id].append("skip_"+str(len(ced_data[id])))
+            break
+
         while (ced_row_num < len(ced_data[id])):
+            CommonFunctions.clear(self)
+            # CommonFunctions.printEachFileProgressBar(ced_row_num, len(ced_data[id]),file)
             db_row_num = 0
             Status = None
             error_rows_in_file = defaultdict(list)
@@ -79,7 +89,6 @@ def validate_data_from_ced(self, curs, file, search_column, ced_data, index_Of_s
                 else:
                     ced_db_match = check_for_match(self, riid_from_ced,riid_from_db,event_date_for_record_from_ced, event_date_for_record_from_db)
                 if int(id) in row_from_db and ced_db_match:
-                    # row_error = False
                 # if int(id) in row_from_db and event_date_for_record_from_ced == event_date_for_record_from_db:
                     print("\nValidating row", ced_row_num, "(DB row:", db_row_num, ")In file ", file, " for ", str(search_column), ":", id)
                     for col_index, col_value in enumerate(row_from_db):
@@ -137,7 +146,7 @@ def validate_data_from_ced(self, curs, file, search_column, ced_data, index_Of_s
                             elif type(db_value) != str and db_value != None and ced_value.isdigit():
                                 if float(ced_value) == float(db_value):  # handling numeric data coz sometimes 10 == 10.0 fails..
                                     Status = columns_to_be_queried_from_db[col_index] + "= Pass"
-                                    print(Status)
+                                    # print(Status)
                             else:
                                 Status = "row=" + str(db_row_num) + ",col=" + str(col_index) + ": Data for column " + str(columns_to_be_queried_from_db[col_index]) + " is NOT matching. Data_In_CED:" + ced_value + " & Data_in_DB:" + str(db_value)
                                 print(Status)
@@ -145,16 +154,22 @@ def validate_data_from_ced(self, curs, file, search_column, ced_data, index_Of_s
                         except Exception as e:
                             print('\n*****ERROR ON LINE {}'.format(sys.exc_info()[-1].tb_lineno), ",", type(e).__name__, ":", e, "*****\n")
                             print(traceback.format_exc())
-                        # if Status != "Pass":
-                        #     row_error = True
 
+                        if "Pass" in Status:
+                            row_error.append(True)
+                        else:
+                            row_error.append(False)
+                    row_status = False if False in row_error else True
                 else:
                     pass
                 db_row_num += 1
                 # error_rows_in_file[ced_row_num].append(row_error)
             if Status == None:
                 print("\nNO MATCHING RECORD FOUND IN DB FOR THE ROW ",ced_row_num ," OF ID ",id, " IN FILE ", file)
+                row_status = "skip_1"
             ced_row_num += 1
+            dreport[id].append(row_status)
+    return dreport
 
 def validate_device_data(self,device_ids, device_data, riid, event_type,db_row_num, col_index, col_name, file,ced_value):
     browser_type, os_vendor, operating_system, device_type, browser = DeviceDetails.get_data(self, device_ids, device_data, riid, event_type)
@@ -210,6 +225,7 @@ def add_remove_column_for_query(self, all_columns_from_ced,column_to_be_inserted
 
     except Exception as e:
         print("Error in inserting dummy columns for sql query " + str(e))
+
     return all_columns_from_ced
 
 def check_for_duplicate_custom_column(self,all_columns_from_ced,custom_columns):

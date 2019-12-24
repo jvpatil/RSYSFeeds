@@ -1,24 +1,27 @@
 import sys
+from collections import defaultdict
+from datetime import datetime
 
+from Implementations import generate_html_report
+from Implementations.device_details import DeviceDetails
 from Implementations.setup import Setup
 from Implementations.ced_functions import CEDFunctions
 from Implementations.db_fuctions import DBFunctions
-from Implementations.common_functions import CommonFunctions
+from Implementations.common_functions_progress import CommonFunctions
 from TestFunctions.OverwrittenColumnFromDB import ColumnsFromDB
+from ConfigFiles import paths, logger_util
 
-
-class ValidateColumns(CommonFunctions):
-    # def __init__(self, *args):
-    #     self.account_name = args
-    # account_name = "ipush"
-    # account_id = ""
+class ValidateColumns(DBFunctions,CommonFunctions,DeviceDetails):
+    def __init__(self):
+        self.test_class_name =  __class__.__name__
+        super().__init__(self.test_class_name)
 
     def verifyColumns(self):
-        accountName = "ipush"
+        start_time = datetime.now()
         if len(sys.argv) > 1:
             account_name = sys.argv[1]
-        elif accountName is not None:
-            account_name = accountName
+        elif paths.account_name.isalnum():
+            account_name = paths.account_name
         else:
             account_name = input("\n***PLEASE PROVIDE THE ACCOUNT NAME  :: ")
 
@@ -28,28 +31,41 @@ class ValidateColumns(CommonFunctions):
         ced_columns_from_db,built_in_headers_from_db = DBFunctions.get_headers_from_db(self, curs, account_id)
         result_file=CommonFunctions.write_headers_to_file(self,account_id, ced_columns_from_db, "ced_columns_from_db")
         CommonFunctions.close_db_connection(self, curs)
-        # print(result_file)
-        # ced_columns_from_db,built_in_headers_from_db = ColumnsFromDB()
 
         ced_columns_from_podconfig = CommonFunctions.get_headers_from_podconfig(self)
         result_file= CommonFunctions.write_headers_to_file(self,account_id, ced_columns_from_podconfig, "ced_columns_from_podconfig")
-        # print(result_file)
 
-        curs = Setup.init_db_connection(self, "syslocalCust")
-        email_columns_by_id, email_custom_columns, sms_columns_by_id, sms_custom_columns = CommonFunctions.get_custom_properties(self, curs,account_name)
-        CommonFunctions.close_db_connection(self, curs)
+        syslocalCust_curs = Setup.init_db_connection(self, "syslocalCust")
+        email_columns_by_id, email_custom_columns, sms_columns_by_id, sms_custom_columns = CommonFunctions.get_custom_properties(self, syslocalCust_curs,account_name)
+        CommonFunctions.close_db_connection(self, syslocalCust_curs)
 
+        status_report = defaultdict(list)
+        empty_files = []
+        iteration = 0
         for file in ced_files:
+            barStatus, fileStatus =CommonFunctions.status_progress(iteration + 1, len(ced_files), file)
+            CommonFunctions.clear(self)
+            CommonFunctions.print_status(barStatus, fileStatus)
             if  not CommonFunctions.is_file_empty(self,file):
-                print("\nVALIDATING COLUMNS FOR CED FILE ::", file)
                 ced_columns_from_file = CommonFunctions.get_headers_from_ced(self,file)
                 CommonFunctions.write_headers_to_file(self,account_id, ced_columns_from_file,"ced_columns_from_file")
-                CommonFunctions.validate_columns_and_save_result(self,account_name,account_id, file, ced_columns_from_file,
+                report = CommonFunctions.validate_columns_and_save_result(self,account_name,account_id, file, ced_columns_from_file,
                                                                  ced_columns_from_db,built_in_headers_from_db, ced_columns_from_podconfig, email_custom_columns,
                                                                  sms_custom_columns)
-                print("Validation Completed")
-        CEDFunctions.get_run_time(self)
-        return
+                status_report[file] = report
+            else:
+                empty_files.append(file)
+            iteration += 1
+        # if not syslocalCust_curs.close():
+        #     print("\nClosed the connection to ", syslocalCust_curs)
+
+        CommonFunctions.clear(self)
+        end_time = datetime.now()
+        CommonFunctions.print_status(barStatus)
+        timeTaken = (end_time - start_time).total_seconds()
+        total_time = Setup.get_run_time(self, timeTaken)
+        CommonFunctions.print_results_of_column_validation(self, status_report, total_time, len(ced_files), empty_files)
+        generate_html_report.generate_report(status_report, total_time, len(ced_files), empty_files, "validate_columns")
 
 if __name__ == '__main__':
     ValidateColumns().verifyColumns()

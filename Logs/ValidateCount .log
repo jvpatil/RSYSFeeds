@@ -1,0 +1,45 @@
+[2019-12-24 14:14:08,209] [ Implementations.ced_functions                :   110] [INFO] -- There are 20 records in file 30336_CUSTOM_CHANNEL_SKIPPED_20191218_071702.txt & the Unique LAUNCH_ID are :: 1
+[2019-12-24 14:14:08,209] [ Implementations.ced_functions                :   128] [INFO] -- Getting count from CED file.
+[2019-12-24 14:14:08,209] [ Implementations.db_fuctions                  :    30] [INFO] -- Getting count from DB.
+[2019-12-24 14:14:09,728] [ Implementations.common_functions_progress    :   127] [INFO] -- Validating count for ID :: 1462
+[2019-12-24 14:14:09,728] [ Implementations.common_functions_progress    :   162] [INFO] -- Count for the ID does not Match. Seems Records are Purged for CUSTOM_CHANNEL_SKIPPED table
+[2019-12-24 14:14:09,829] [ Implementations.ced_functions                :   110] [INFO] -- There are 10 records in file 30336_WEBPUSH_BUTTON_CLICKED_20191218_071702.txt & the Unique LAUNCH_ID are :: 1
+[2019-12-24 14:14:09,829] [ Implementations.ced_functions                :   128] [INFO] -- Getting count from CED file.
+[2019-12-24 14:14:09,829] [ Implementations.db_fuctions                  :    30] [INFO] -- Getting count from DB.
+[2019-12-24 14:14:10,891] [ Implementations.common_functions_progress    :   127] [INFO] -- Validating count for ID :: 1462
+[2019-12-24 14:14:10,891] [ Implementations.common_functions_progress    :   162] [INFO] -- Count for the ID does not Match. Seems Records are Purged for WEBPUSH_BUTTON_CLICKED table
+[2019-12-24 14:15:10,216] [ Implementations.ced_functions                :   110] [INFO] -- There are 20 records in file 30336_CUSTOM_CHANNEL_SKIPPED_20191218_071702.txt & the Unique LAUNCH_ID are :: 1
+[2019-12-24 14:15:10,216] [ Implementations.ced_functions                :   128] [INFO] -- Getting count from CED file.
+[2019-12-24 14:15:10,216] [ Implementations.db_fuctions                  :    30] [INFO] -- Getting count from DB.
+[2019-12-24 14:15:11,644] [ Implementations.common_functions_progress    :   127] [INFO] -- Validating count for ID :: 1462
+[2019-12-24 14:15:11,644] [ Implementations.common_functions_progress    :   162] [INFO] -- Count for the ID does not Match. Seems Records are Purged for CUSTOM_CHANNEL_SKIPPED table
+[2019-12-24 14:15:11,728] [ Implementations.ced_functions                :   110] [INFO] -- There are 10 records in file 30336_WEBPUSH_BUTTON_CLICKED_20191218_071702.txt & the Unique LAUNCH_ID are :: 1
+[2019-12-24 14:15:11,729] [ Implementations.ced_functions                :   128] [INFO] -- Getting count from CED file.
+[2019-12-24 14:15:11,729] [ Implementations.db_fuctions                  :    30] [INFO] -- Getting count from DB.
+[2019-12-24 14:15:12,791] [ Implementations.common_functions_progress    :   127] [INFO] -- Validating count for ID :: 1462
+[2019-12-24 14:15:12,791] [ Implementations.common_functions_progress    :   162] [INFO] -- Count for the ID does not Match. Seems Records are Purged for WEBPUSH_BUTTON_CLICKED table
+[2019-12-24 15:44:40,761] [ Implementations.ced_functions                :   110] [INFO] -- There are 10 records in file 30336_CONVERT_20191218_071701.txt & the Unique LAUNCH_ID are :: 1
+[2019-12-24 15:44:40,764] [ Implementations.ced_functions                :   128] [INFO] -- Getting count from CED file.
+[2019-12-24 15:44:40,764] [ Implementations.db_fuctions                  :    30] [INFO] -- Getting count from DB.
+[2019-12-24 15:44:42,409] [ Implementations.common_functions_progress    :   127] [INFO] -- Validating count for ID :: 1462
+[2019-12-24 15:44:42,410] [ Implementations.common_functions_progress    :   152] [INFO] -- Count for the ID Match. However there are 26 records to be processed yet
+[2019-12-24 15:44:42,514] [ Implementations.ced_functions                :   110] [INFO] -- There are 20 records in file 30336_CUSTOM_CHANNEL_FAILED_20191218_071702.txt & the Unique LAUNCH_ID are :: 1
+[2019-12-24 15:44:42,514] [ Implementations.ced_functions                :   128] [INFO] -- Getting count from CED file.
+[2019-12-24 15:44:42,514] [ Implementations.db_fuctions                  :    30] [INFO] -- Getting count from DB.
+[2019-12-24 15:44:43,569] [ Implementations.common_functions_progress    :   127] [INFO] -- Validating count for ID :: 1462
+[2019-12-24 15:44:43,569] [ Implementations.common_functions_progress    :   162] [INFO] -- Count for the ID does not Match. Seems Records are Purged for CUSTOM_CHANNEL_FAILED table
+[2019-12-24 15:44:43,699] [ Implementations.ced_functions                :   110] [INFO] -- There are 20 records in file 30336_CUSTOM_CHANNEL_SENT_20191218_071702.txt & the Unique LAUNCH_ID are :: 1
+[2019-12-24 15:44:43,699] [ Implementations.ced_functions                :   128] [INFO] -- Getting count from CED file.
+[2019-12-24 15:44:43,699] [ Implementations.db_fuctions                  :    30] [INFO] -- Getting count from DB.
+[2019-12-24 15:44:44,824] [ Implementations.common_functions_progress    :   127] [INFO] -- Validating count for ID :: 1462
+[2019-12-24 15:44:44,824] [ Implementations.common_functions_progress    :   162] [INFO] -- Count for the ID does not Match. Seems Records are Purged for CUSTOM_CHANNEL_SENT table
+[2019-12-24 15:44:44,927] [ Implementations.ced_functions                :   110] [INFO] -- There are 20 records in file 30336_CUSTOM_CHANNEL_SKIPPED_20191218_071702.txt & the Unique LAUNCH_ID are :: 1
+[2019-12-24 15:44:44,927] [ Implementations.ced_functions                :   128] [INFO] -- Getting count from CED file.
+[2019-12-24 15:44:44,927] [ Implementations.db_fuctions                  :    30] [INFO] -- Getting count from DB.
+[2019-12-24 15:44:45,988] [ Implementations.common_functions_progress    :   127] [INFO] -- Validating count for ID :: 1462
+[2019-12-24 15:44:45,988] [ Implementations.common_functions_progress    :   162] [INFO] -- Count for the ID does not Match. Seems Records are Purged for CUSTOM_CHANNEL_SKIPPED table
+[2019-12-24 15:44:46,127] [ Implementations.ced_functions                :   110] [INFO] -- There are 10 records in file 30336_WEBPUSH_BUTTON_CLICKED_20191218_071702.txt & the Unique LAUNCH_ID are :: 1
+[2019-12-24 15:44:46,128] [ Implementations.ced_functions                :   128] [INFO] -- Getting count from CED file.
+[2019-12-24 15:44:46,128] [ Implementations.db_fuctions                  :    30] [INFO] -- Getting count from DB.
+[2019-12-24 15:44:47,188] [ Implementations.common_functions_progress    :   127] [INFO] -- Validating count for ID :: 1462
+[2019-12-24 15:44:47,188] [ Implementations.common_functions_progress    :   162] [INFO] -- Count for the ID does not Match. Seems Records are Purged for WEBPUSH_BUTTON_CLICKED table

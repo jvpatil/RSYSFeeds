@@ -1,0 +1,3 @@
+"EVENT_TYPE","FILE_NAME","KEY","ID","COUNT_FROM_CED","COUNT_FROM_DB","EventsToBeProcessed","Eventsalready_processed","STATUS","Comments"
+"CONVERT","30336_CONVERT_20191218_071701.txt","LAUNCH_ID","1462","10","20","10","10","Pass","Count for the ID Match. However there are 10 records to be processed yet"
+"PUSH_CONVERTED","30336_PUSH_CONVERTED_20191218_071702.txt","LAUNCH_ID","1462","10","20","10","10","Pass","Count for the ID Match. However there are 10 records to be processed yet"

@@ -17,12 +17,12 @@ import cx_Oracle
 
 class Setup():
 
-    def __init__(self):
+    def __init__(self, test_class_name):
         self.curs = None
         self.update_os()
         # self.delete_files()
         # logging.basicConfig(filename='Feeds.log', filemode='w', format='%(process)d-%(levelname)s-%(message)s',level=logging.DEBUG)
-        logging.basicConfig(format='%(funcName)s.%(levelname)s : %(message)s',level=logging.INFO)
+        # logging.basicConfig(format='%(funcName)s.%(levelname)s : %(message)s',level=logging.INFO)
         # logging.basicConfig(format='%(process)d-%(levelname)s-%(message)s')
 
     ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -66,12 +66,12 @@ class Setup():
         connection_details = self.prop[accountName + "User"] + "/" + self.prop[accountName + "Pass"] + "@" + self.prop[accountName + "URL"]
         # self.dbcon = cx_Oracle.connect(self.prop[accountName+"User"] + "/" + self.prop[accountName+"Pass"] + "@" + self.prop[accountName+"URL"])
         try:
-            self.dbcon = cx_Oracle.connect(connection_details)
+            with  cx_Oracle.connect(connection_details) as self.dbcon:
         # dbcon = cx_Oracle.connect(prop["progtmUser"] + "/" + prop["progtmPwd"] + "@" + prop["progtmUrl"])
         # print("Connected to Oracle - ", (self.prop[accountName+"User"]).upper(), " account", "\n"," Oracle version is: " + self.dbcon.version)
-            self.curs = self.dbcon.cursor()
+                self.curs = self.dbcon.cursor()
         except Exception as e:
-            print("\nError in Connecting to DB using ",self.prop[accountName + "User"].upper())
+            print("\nError in Connecting to DB using ",accountName.upper())
             print("Error Type : " ,type(e).__name__)
             print("Error : " ,e , "\nExiting the execution")
             exit(1)
