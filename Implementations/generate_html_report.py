@@ -1,9 +1,7 @@
 import re
 from collections import defaultdict
-
+# from html_report_code import HTML
 import HTML
-
-
 #
 # def print_header():
 #     HTMLFILE = 'CountValidationReport.html'
@@ -49,6 +47,11 @@ def generate_report(status_report, total_time, ced_files, empty_files, test_name
                         total_ids = true_count + false_count + skip_count
                 t1.rows.append([line_no, file, total_ids, true_count, false_count, skip_count])
 
+            htmlcode = str(t1)
+            f.write(htmlcode)
+            f.write('<p>')
+
+
     elif test_name == "validate_columns":
         HTMLFILE = '../HTML_Reports/ColumnValidationReport.html'
         with open(HTMLFILE, 'w') as f:
@@ -80,8 +83,13 @@ def generate_report(status_report, total_time, ced_files, empty_files, test_name
 
                 t1.rows.append([line_no, file, total_cols, col_name_passed, col_name_failed, col_order_passed, col_order_failed])
 
+            htmlcode = str(t1)
+            f.write(htmlcode)
+            f.write('<p>')
+
     elif test_name.lower() == "validate_data":
         HTMLFILE = '../HTML_Reports/DataValidationReport.html'
+        # with open(HTMLFILE, 'w') as f:
         with open(HTMLFILE, 'w') as f:
 
             header_cols = ["Sl.No", "File Name ", "Total Rows ", "Passed Rows", "Failed Rows ", "Skipped Rows "]
@@ -110,6 +118,6 @@ def generate_report(status_report, total_time, ced_files, empty_files, test_name
 
                 t1.rows.append([line_no, file, total_rows, true_count, false_count, skip_count])
 
-    htmlcode = str(t1)
-    f.write(htmlcode)
-    f.write('<p>')
+            htmlcode = str(t1)
+            f.write(htmlcode)
+            f.write('<p>')

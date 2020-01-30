@@ -27,11 +27,11 @@ class Setup():
 
     ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     print("Root Directory :", ROOT_DIR)
-    propertyFile = ROOT_DIR + "\\python.properties"
+    propertyFile = ROOT_DIR + "/python.properties"
     print("Property File", propertyFile)
 
-    resultFilePath = ROOT_DIR + "\\Result"
-    testfilespath = ROOT_DIR + "\\InputFiles"
+    resultFilePath = ROOT_DIR + "/Result"
+    testfilespath = ROOT_DIR + "/InputFiles"
 
     def delete_files(self):
         path = self.resultFilePath
@@ -66,16 +66,18 @@ class Setup():
         connection_details = self.prop[accountName + "User"] + "/" + self.prop[accountName + "Pass"] + "@" + self.prop[accountName + "URL"]
         # self.dbcon = cx_Oracle.connect(self.prop[accountName+"User"] + "/" + self.prop[accountName+"Pass"] + "@" + self.prop[accountName+"URL"])
         try:
-            with  cx_Oracle.connect(connection_details) as self.dbcon:
-        # dbcon = cx_Oracle.connect(prop["progtmUser"] + "/" + prop["progtmPwd"] + "@" + prop["progtmUrl"])
-        # print("Connected to Oracle - ", (self.prop[accountName+"User"]).upper(), " account", "\n"," Oracle version is: " + self.dbcon.version)
-                self.curs = self.dbcon.cursor()
+            # with cx_Oracle.connect(connection_details) as dbcon:
+            #     self.curs = dbcon.cursor()
+            #     return self.curs
+            dbcon =  cx_Oracle.connect(connection_details)
+            curs = dbcon.cursor()
+            return curs
+
         except Exception as e:
             print("\nError in Connecting to DB using ",accountName.upper())
             print("Error Type : " ,type(e).__name__)
             print("Error : " ,e , "\nExiting the execution")
             exit(1)
-        return self.curs
 
     def close_db_connection(self,curs):
         if  not curs.close():

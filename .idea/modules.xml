@@ -2,6 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/../GenerateDataWithPython/.idea/GenerateDataWithPython.iml" filepath="$PROJECT_DIR$/../GenerateDataWithPython/.idea/GenerateDataWithPython.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../ResponsysInteract/.idea/Interact.iml" filepath="$PROJECT_DIR$/../ResponsysInteract/.idea/Interact.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/TestFeeds.iml" filepath="$PROJECT_DIR$/.idea/TestFeeds.iml" />
     </modules>
   </component>

@@ -1,5 +1,5 @@
 account_name = "dataqa1"
-input_files_path = "D:\\FEEDS\\DATAQA1\\20A"
+input_files_path = "/Users/jaganpat/Documents/OFFICE/FEEDS/DATAQA1/20A_Freeze"
 # input_files_path = None
 output_files_path = None
 ExportInAccountTimeZone = False

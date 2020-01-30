@@ -133,8 +133,6 @@ class CEDFunctions(CommonFunctions):
         except Exception as e:
             message = "*****ERROR ON LINE {}".format(sys.exc_info()[-1].tb_lineno), ",", type(e).__name__, ":", e, "*****"
             self.ced_func_log.info(message)
-
-
         return d_count_from_ced
 
     def read_data_from_ced(self,file, unique_IDs, search_column):

@@ -65,9 +65,10 @@ class ValidateDataImpl:
             curs.execute(query)
             query_result_for_id = curs.fetchall()
             ced_row_num = 0
+            primary_key = columns_to_be_queried_from_db[index_of_unique_id]
             if len(query_result_for_id)==0:
                 self.val_imp_log.info("Skipping validation for file : " +str(file))
-                primary_key = columns_to_be_queried_from_db[index_of_unique_id]
+                # primary_key = columns_to_be_queried_from_db[index_of_unique_id]
                 dreport[id].append("Skip Reason for "+str(event_type)+" : Query returned null. No result from DB for "+str(primary_key)+" : " +str(id)+"_"+str(len(ced_data[id])))
                 self.val_imp_log.info("Skip Reason for "+str(event_type)+" : Query returned null. No result from DB for "+str(primary_key)+" : " +str(id))
                 break

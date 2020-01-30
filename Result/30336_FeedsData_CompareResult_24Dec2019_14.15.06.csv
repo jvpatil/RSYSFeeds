@@ -1,3 +1,0 @@
-"EVENT_TYPE","FILE_NAME","KEY","ID","COUNT_FROM_CED","COUNT_FROM_DB","EventsToBeProcessed","Eventsalready_processed","STATUS","Comments"
-"CUSTOM_CHANNEL_SKIPPED","30336_CUSTOM_CHANNEL_SKIPPED_20191218_071702.txt","LAUNCH_ID","1462","20","36","26","0","Fail","Count for the ID does not Match. Seems Records are Purged for CUSTOM_CHANNEL_SKIPPED table"
-"WEBPUSH_BUTTON_CLICKED","30336_WEBPUSH_BUTTON_CLICKED_20191218_071702.txt","LAUNCH_ID","1462","10","26","26","0","Fail","Count for the ID does not Match. Seems Records are Purged for WEBPUSH_BUTTON_CLICKED table"

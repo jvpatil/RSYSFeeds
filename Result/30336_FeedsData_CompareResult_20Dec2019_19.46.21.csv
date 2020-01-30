@@ -1,7 +1,0 @@
-"EVENT_TYPE","FILE_NAME","KEY","ID","COUNT_FROM_CED","COUNT_FROM_DB","EventsToBeProcessed","Eventsalready_processed","STATUS","Comments"
-"FAIL","30336_FAIL_20191218_071701.txt","LAUNCH_ID","1462","10","20","10","10","Pass","Count for the ID Match. However there are 10 records to be processed yet"
-"FORM","30336_FORM_20191218_071702.txt","FORM_ID","28581","10","20","10","10","Pass","Count for the ID Match. However there are 10 records to be processed yet"
-"HOLDOUT_GROUP","30336_HOLDOUT_GROUP_20191218_071702.txt","PROGRAM_ID","12345","10","20","10","10","Pass","Count for the ID Match. However there are 10 records to be processed yet"
-"MMS_FAILED","30336_MMS_FAILED_20191218_071701.txt","LAUNCH_ID","1462","10","20","10","10","Pass","Count for the ID Match. However there are 10 records to be processed yet"
-"MMS_SENT","30336_MMS_SENT_20191218_071701.txt","LAUNCH_ID","1462","10","20","10","10","Pass","Count for the ID Match. However there are 10 records to be processed yet"
-"MMS_SKIPPED","30336_MMS_SKIPPED_20191218_071701.txt","LAUNCH_ID","1462","10","20","10","10","Pass","Count for the ID Match. However there are 10 records to be processed yet"
