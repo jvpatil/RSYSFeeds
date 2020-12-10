@@ -13,5 +13,7 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="GenerateDataWithPython" />
     <orderEntry type="module" module-name="Interact" />
+    <orderEntry type="module" module-name="PyLearn" />
+    <orderEntry type="module" module-name="FilterConditions" />
   </component>
 </module>

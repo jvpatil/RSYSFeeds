@@ -100,7 +100,7 @@ class CEDFunctions(CommonFunctions):
 
             for row in content[1:]:
                 row = row.strip().replace('\"', '')
-                col_data = re.split(',', row)
+                col_data = re.split(';|,|\t|\||""', row)
                 id_value = col_data[index_Of_search_column]
                 event_stored_time = col_data[index_Of_event_stored_date]
                 IDs.append(id_value)
@@ -182,7 +182,8 @@ class CEDFunctions(CommonFunctions):
 
             for row in content[:1]:
                 stripped_row = row.strip().replace('\"', '')
-                all_columns = re.split(';|,|\t|""', stripped_row)
+                # all_columns = re.split(';|,|\t|""', stripped_row)
+                all_columns = re.split(';|,|\t|\||""', stripped_row) # split column either by ; or , or | or \t or "
                 for i in all_columns:
                     if i == 'EVENT_STORED_DT':
                         index_Of_stored_date = all_columns.index(i)
@@ -195,6 +196,7 @@ class CEDFunctions(CommonFunctions):
                     if id in rowData:
                         rowData = rowData.strip()
                         split_columns = re.split(',(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)',rowData)
+                        # split_columns = re.split('\|,(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)',rowData)
                         for eachColumn in split_columns:
                             eachColumn = eachColumn.strip('"')
                             ced_data[id][rownum].append(eachColumn)

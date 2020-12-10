@@ -3,6 +3,7 @@ from collections import defaultdict
 
 from Implementations.setup import Setup
 from device_detector import DeviceDetector
+from device_detector import SoftwareDetector
 from ConfigFiles import paths, logger_util
 
 class DeviceDetails(Setup):
@@ -15,29 +16,26 @@ class DeviceDetails(Setup):
         # ua = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:61.0) Gecko/20100101 SA/61.0'
 
         # Parse UA string and load data to dict of 'operating_system', 'client', 'device' keys
-        if not user_agent_string is None:
+        if user_agent_string != None:
             try:
-                device = DeviceDetector(user_agent_string).parse()
-
+                # device = DeviceDetector(user_agent_string).parse()
+                device = SoftwareDetector(user_agent_string).parse()
                 operating_system = device.os_name()
                 device_type = device.device_type()
                 browser = device.client_name()
                 browser_type = device.client_type()
                 manfacturer = None
-
-                print(operating_system, device_type, browser, browser_type)
-                if operating_system.lower == 'windows':
+                # print(operating_system, device_type, browser, browser_type)
+                if operating_system.lower() == 'windows':
                     manfacturer = "Microsoft"
-                if operating_system.lower == 'mac':
+                if operating_system.lower() == 'mac':
+                    operating_system = 'Mac OS X'
                     manfacturer = "Apple"
-                if operating_system.lower == 'Android':
+                if operating_system.lower() == 'Android':
                     manfacturer = "Google"
-
                 return manfacturer,operating_system, device_type, browser, browser_type
-
             except Exception as e:
                 print(e)
-
         else:
             print("Blank user agent supplied")
             exit(1)
@@ -100,27 +98,34 @@ class DeviceDetails(Setup):
             # syslocal_cust.close()
         return device_ids, device_data
 
-    def get_device_id(self,device_ids, device_data, riid,event_type):
+    def get_device_id_for_riid(self, device_ids_for_riids, device_data, riid, event_type):
         browser_type, os_vendor, operating_system, device_type, browser = None,None,None,None,None
         try:
             device_id = None
             device_id_index = 0
             last_click_date_index = 1   #1 holds data for last_click_date in dictionary
             last_open_date_index = 2    #2 holds data for last_open_date in dictionary
-            if "open" in event_type.lower():
-                for row in range(len(device_ids[riid])):
-                    last_click_date = device_ids[riid][row][last_click_date_index]
-                    if last_click_date is None:  #last_click_date is null
-                        device_id = device_ids[riid][row][device_id_index]
-                        # print(device_id)
-            elif "click" in event_type.lower()  or "convert" in event_type.lower():
-                for row in range(len(device_ids[riid])):
-                    last_click_date = device_ids[riid][row][last_click_date_index]
-                    if last_click_date is not None:  # last_click_date is null
-                        device_id = device_ids[riid][row][device_id_index]
+            device_id_for_riid = device_ids_for_riids[riid]
+            if len(device_ids_for_riids) != 0:
+                if "open" in event_type.lower():
+                    for row in range(len(device_id_for_riid)):
+                        last_click_date = device_ids_for_riids[riid][row][last_click_date_index]
+                        if last_click_date is None:  # last_click_date is null
+                            device_id = device_ids_for_riids[riid][row][device_id_index]
+                            # print(device_id)
+                elif "click" in event_type.lower() or "convert" in event_type.lower():
+                    for row in range(len(device_id_for_riid)):
+                        last_click_date = device_ids_for_riids[riid][row][last_click_date_index]
+                        if last_click_date is not None:  # last_click_date is null
+                            device_id = device_ids_for_riids[riid][row][device_id_index]
+            else:
+                device_id = None
             return device_id
             # browser_type, os_vendor,operating_system,device_type,browser = [row for row in device_data[device_id][0]]
         except IndexError as e:
+            self.dev_details_log.info("--- SKIPPING AS THERE ARE NO DEVICE DETAILS AVAILABLE FOR RIID : " + str(riid))
+            pass
+        except Exception as e:
             self.dev_details_log.info("--- SKIPPING AS THERE ARE NO DEVICE DETAILS AVAILABLE FOR RIID : " + str(riid))
             pass
         # print(browser_type, os_vendor,operating_system,device_type,browser)

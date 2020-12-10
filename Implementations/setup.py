@@ -41,7 +41,10 @@ class Setup():
                 print("Deleted old file :", file.name,"  from ",path )
 
     def update_os(self):
-        os.environ["PATH"] = "C:\ORACLE_CLIENT\instantclient-basic-windows.x64-11.2.0.4.0\;" + os.environ["PATH"]
+        # os.environ["PATH"] = "C:\ORACLE_CLIENT\instantclient-basic-windows.x64-11.2.0.4.0\;" + os.environ["PATH"]
+        # os.environ["PATH"] = "/opt/oracle/instantclient_19_3" + os.environ["PATH"]
+        cx_Oracle.init_oracle_client(lib_dir="/opt/oracle/instantclient_19_3")
+        # os.environ["PATH"] = "/opt/oracle/instantclient_19_3" + os.environ["PATH"]
         # print(os.environ["PATH"])
         # os.environ["NLS_LANG"] = ".UTF8"
 

@@ -39,7 +39,8 @@ class CommonFunctions(Setup):
                 content = f.readlines()
                 for column in content[:1]:
                     column = column.strip().replace('\"', '')
-                    list_of_columns = re.split(',', column)
+                    # list_of_columns = re.split(',', column)
+                    list_of_columns = re.split(';|,|\t|\||""', column)
                 index_of_search_column = list_of_columns.index(search_column)
                 index_of_event_stored_dt = list_of_columns.index("EVENT_STORED_DT")
         except Exception as e:
@@ -219,7 +220,7 @@ class CommonFunctions(Setup):
         if len(content) != 0:
             for header_row in content[:1]:
                 col = header_row.strip().replace('\"', '')
-                ced_col_names = re.split(';|,|\t|""', col)
+                ced_col_names = re.split(';|,|\t|\||""', col)
                 for i in ced_col_names:
                     ced_headers_from_file[event_type].append(i)
         else:
@@ -258,8 +259,11 @@ class CommonFunctions(Setup):
                 data[field['name']] = field['value']
             except:
                 pass
-        data[u'UserName'] = "SYSDM"
-        data[u'Password'] = "Welcome1234!"
+        # data[u'UserName'] = "SYSDM"
+        # data[u'Password'] = "Welcome1234%"
+
+        data[u'UserName'] = paths.sysadminUser
+        data[u'Password'] = paths.sysadminPwd
 
         '''submit post request with username / password and other needed info'''
         post_resp = session.post('https://interact-a.qa1.responsys.net/authentication/login/LoginAction', data=data)
