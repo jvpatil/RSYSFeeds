@@ -34,17 +34,20 @@ class TestValidateData(ValidateDataImpl,CEDFunctions,DeviceDetails):
             account_name = input("\n***PLEASE PROVIDE THE ACCOUNT NAME  :: ")
 
         if self.CEDDatesInAccountTZ:
-            sysadmin_curs = CommonFunctions.init_db_connection(self, "sysAdmin")
+            # sysadmin_curs = CommonFunctions.init_db_connection(self, "sysAdmin")
+            sysadmin_curs = CommonFunctions.start_db_connection(self,paths.pod, "sysAdmin")
             acc_timezone = self.get_account_timezone_info(sysadmin_curs, account_name)
             CommonFunctions.close_db_connection(self, sysadmin_curs)
         else:
             acc_timezone = paths.accountTimeZone
 
-        syslocalCust_curs = CommonFunctions.init_db_connection(self, "syslocalCust")
+        # syslocalCust_curs = CommonFunctions.init_db_connection(self, "syslocalCust")
+        syslocalCust_curs = CommonFunctions.start_db_connection(self,paths.pod, "syslocalCust")
         email_columns_by_id, email_custom_columns, sms_columns_by_id, sms_custom_columns = CommonFunctions.get_custom_properties(self, syslocalCust_curs,account_name)
         CommonFunctions.close_db_connection(self, syslocalCust_curs)
 
-        syslocalEvent_curs = CommonFunctions.init_db_connection(self, "syslocalEvent")
+        # syslocalEvent_curs = CommonFunctions.init_db_connection(self, "syslocalEvent")
+        syslocalEvent_curs = CommonFunctions.start_db_connection(self,paths.pod, "syslocalEvent")
         ced_files = CEDFunctions.find_files(self)
         status_report = defaultdict(list)
         empty_files=[]

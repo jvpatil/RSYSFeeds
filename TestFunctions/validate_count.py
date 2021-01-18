@@ -26,7 +26,8 @@ class ValidateCount(CEDFunctions,DBFunctions, CommonFunctions):
             account_name = input("\n***PLEASE PROVIDE THE ACCOUNT NAME  :: ")
 
         ced_files = CommonFunctions.find_files(self)
-        syslocalEvent_curs = CEDFunctions.init_db_connection(self, "syslocalEvent")
+        # syslocalEvent_curs = CEDFunctions.init_db_connection(self, "syslocalEvent")
+        syslocalEvent_curs = CEDFunctions.start_db_connection(self,paths.pod, "syslocalEvent")
 
         status_report = defaultdict(list)
         empty_files = []

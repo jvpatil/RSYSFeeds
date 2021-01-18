@@ -84,25 +84,32 @@ class CommonFunctions(Setup):
     def find_files(self):
         count = 0
         files = None
+        valid_files = []
         # if input_files_path is not None:
         #     in_file_path = input_files_path
         # else:
         #     in_file_path = self.input_file_path
 
+        # try:
+        #     files = os.listdir(self.input_file_path)
+        #     for fname in range(len(files)):
+        #         count += 1
+        #     print("\nThere are total", count, "files to process:")
+        #     # print(*files, sep="\n")
+        #     print('\t', *files, sep="\n")
         try:
             files = os.listdir(self.input_file_path)
-            for fname in range(len(files)):
-                count += 1
+            for file_name in files:
+                if not os.path.isdir(self.input_file_path+"/"+file_name):
+                    valid_files.append(file_name)
+                    count += 1
             print("\nThere are total", count, "files to process:")
             # print(*files, sep="\n")
-            print('\t', *files, sep="\n")
+            print('\t', *valid_files, sep="\n")
         except Exception as e:
-            # print('\n*****ERROR ON LINE {}'.format(sys.exc_info()[-1].tb_lineno), ",", type(e).__name__, ":", e, "*****\n")
-            # print(traceback.format_exc())
             message = "*****ERROR ON LINE {}".format(sys.exc_info()[-1].tb_lineno), ',', type(e).__name__, ':', e, "*****"
             self.common_func_log.error(message, traceback.format_exc())
-
-        return files
+        return valid_files
 
     def compare_counts(self, cedFileName, searchID, dCountFromCED, dCountFromDB, deventsToProcess, deventsProcessed):
         # global account_id
@@ -229,9 +236,10 @@ class CommonFunctions(Setup):
         return ced_headers_from_file
 
     def get_headers_from_podconfig(self):
-        site = "https://interact.qa1.responsys.net/authentication/login/LoginPage"
-        BASE_URL = "https://interact-a.qa1.responsys.net/interact/"
-        MANAGE_POD = "siteadmin/PodActivityFunctionsAction"
+        file_path = self.ROOT_DIR + "/ConfigFiles/pod_monitor_urls.ini"
+        site = self.read_config_file(file_path, section=paths.pod, option="loginURL")
+        BASE_URL = self.read_config_file(file_path, section=paths.pod, option="baseURL")
+        loginActionURL = self.read_config_file(file_path, section=paths.pod, option="podMonitorActionUrl")
         POD_CONFIG_PAGE = "siteadmin/PodActivityConfigViewAction"
 
         '''initiate session'''
@@ -266,7 +274,8 @@ class CommonFunctions(Setup):
         data[u'Password'] = paths.sysadminPwd
 
         '''submit post request with username / password and other needed info'''
-        post_resp = session.post('https://interact-a.qa1.responsys.net/authentication/login/LoginAction', data=data)
+        post_resp = session.post(loginActionURL, data=data)
+        # post_resp = session.post('https://interact-a.qa1.responsys.net/authentication/login/LoginAction', data=data)
         post_soup = BeautifulSoup(post_resp.content, 'lxml')
 
         if post_soup.find_all('title')[0].text == 'Oracle Responsys':

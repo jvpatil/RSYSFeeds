@@ -82,6 +82,38 @@ class Setup():
             print("Error : " ,e , "\nExiting the execution")
             exit(1)
 
+    def start_db_connection(self,pod, accountSchema):
+        shema_details = self.get_db_connection_details(pod,accountSchema)
+        try:
+            dbcon =  cx_Oracle.connect(shema_details)
+            curs = dbcon.cursor()
+            return curs
+        except Exception as e:
+            print("\nError in Connecting to DB using ",accountSchema.upper())
+            print("Error Type : " ,type(e).__name__)
+            print("Error : " ,e , "\nExiting the execution")
+            exit(1)
+
+    def get_db_connection_details(self,pod,accountSchema):
+        file_path = self.ROOT_DIR +"/ConfigFiles/dbconnections.ini"
+        user_name = self.read_config_file(file_path,section=pod,option=accountSchema+"User")
+        password = self.read_config_file(file_path, section=pod, option=accountSchema + "Pass")
+        url = self.read_config_file(file_path, section=pod, option=accountSchema + "URL")
+        connection_details = user_name + "/" + password + "@" + url
+        return connection_details
+
+    def read_config_file(self,file_path,section,option):
+        Config = configparser.ConfigParser()
+        Config.read(file_path)
+        if Config.has_section(section):
+            if Config.has_option(section,option):
+                config_value = Config.get(section,option)
+                return config_value
+            else:
+                print("--***** Option '"+ option +"' is not present in file "+ file_path +" *****--")
+        else:
+            print("--***** Sectio '" + section + "' is not present in file " + file_path + " *****--")
+
     def close_db_connection(self,curs):
         if  not curs.close():
             return
