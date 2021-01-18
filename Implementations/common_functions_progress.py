@@ -39,7 +39,8 @@ class CommonFunctions(Setup):
                 content = f.readlines()
                 for column in content[:1]:
                     column = column.strip().replace('\"', '')
-                    list_of_columns = re.split(',', column)
+                    # list_of_columns = re.split(',', column)
+                    list_of_columns = re.split(';|,|\t|\||""', column)
                 index_of_search_column = list_of_columns.index(search_column)
                 index_of_event_stored_dt = list_of_columns.index("EVENT_STORED_DT")
         except Exception as e:
@@ -54,13 +55,14 @@ class CommonFunctions(Setup):
         return account_id
 
     def get_search_column(self, cedFile):
-
         search_key = "LAUNCH_ID"
         if re.match(r'[0-9]+_' + 'OPT', cedFile):
             search_column = 'RIID'
         elif re.match(r'[0-9]+_' + 'SMS_OPT', cedFile):
             search_column = 'RIID'
         elif re.match(r'[0-9]+_' + 'PUSH_OPT', cedFile):
+            search_column = 'RIID'
+        elif re.match(r'[0-9]+_'+'WEBPUSH_OPT',cedFile):
             search_column = 'RIID'
         elif re.match(r'[0-9]+_' + 'FORM', cedFile):
             search_column = 'FORM_ID'
@@ -107,7 +109,7 @@ class CommonFunctions(Setup):
         # print("*** Validating count for file :: ", cedFileName, " ***")
         account_id = re.split(r"_", cedFileName)  # Extract Account ID from the filename
         account_id = account_id[0].strip('_')
-        resultFile = self.result_file_path + "\\" + account_id + "_FeedsData_CompareResult_" + self.run_time + ".csv"
+        resultFile = self.result_file_path + "/" + account_id + "_FeedsData_CompareResult_" + self.run_time + ".csv"
 
         header = ["EVENT_TYPE", "FILE_NAME", "KEY", "ID", "COUNT_FROM_CED", "COUNT_FROM_DB", "EventsToBeProcessed", "Eventsalready_processed",
                   "STATUS", "Comments"]
@@ -218,7 +220,7 @@ class CommonFunctions(Setup):
         if len(content) != 0:
             for header_row in content[:1]:
                 col = header_row.strip().replace('\"', '')
-                ced_col_names = re.split(';|,|\t|""', col)
+                ced_col_names = re.split(';|,|\t|\||""', col)
                 for i in ced_col_names:
                     ced_headers_from_file[event_type].append(i)
         else:
@@ -257,8 +259,11 @@ class CommonFunctions(Setup):
                 data[field['name']] = field['value']
             except:
                 pass
-        data[u'UserName'] = "SYSDM"
-        data[u'Password'] = "Welcome1234%"
+        # data[u'UserName'] = "SYSDM"
+        # data[u'Password'] = "Welcome1234%"
+
+        data[u'UserName'] = paths.sysadminUser
+        data[u'Password'] = paths.sysadminPwd
 
         '''submit post request with username / password and other needed info'''
         post_resp = session.post('https://interact-a.qa1.responsys.net/authentication/login/LoginAction', data=data)
@@ -287,10 +292,11 @@ class CommonFunctions(Setup):
             session.close()
             return header_columns_from_podconfig
         elif 'password' in (post_soup.find_all('title')[0].text).lower():
-            self.common_func_log.info("Password Expired for user ", data[u'UserName'], " Please reset and try again")
+            self.common_func_log.info("Password Expired for user " + data[u'UserName'] + " Please reset and try again")
+            exit(1)
         else:
             self.common_func_log.info('***LOGIN TO SYSADMIN FAILED - UNABLE TO READ HEADERS FROM THE PodConfig.ini*** ')
-            exit()
+            exit(1)
 
     """ ADD ON COLUMNS ARE NOT REQUIRED TO APPEND TO PODCONFIG DEFAULT COLUMNS.IF ADD-ON COLUMNS ARE SELECTED IN ACCOUNTS FEED SETTING, 
     IT WILL BE REFLECTING IN SETTINS.INI. 
@@ -327,7 +333,7 @@ class CommonFunctions(Setup):
             filename = "ResultFile_" + self.run_time + ".csv"
 
         # result_file_name = self.result_file_path+"\\"+account_id+"_CEDHeaders_FromSysAdminDB_"+self.run_time+".csv"
-        result_file_name = self.result_file_path + "\\" + filename
+        result_file_name = self.result_file_path + "/" + filename
         with open(result_file_name, "a+") as f:
             writer = csv.writer(f, delimiter=',', lineterminator="\n", quoting=csv.QUOTE_ALL)
 
@@ -549,7 +555,8 @@ class CommonFunctions(Setup):
     def writeColumnCheckResult(self, event_name, file, each_column_in_db, column_presence_status, column_in_ced, short_status, index_of_db_column,
                                index_of_ced_column, column_order_status):
 
-        filename = self.result_file_path + "\\" + account_id + "_CEDHeaders_VerficationResult_" + self.run_time + ".csv"
+        # filename = self.result_file_path + "\\" + account_id + "_CEDHeaders_VerficationResult_" + self.run_time + ".csv"
+        filename = self.result_file_path + "/" + account_id + "_CEDHeaders_VerficationResult_" + self.run_time + ".csv"
         f = open(filename, "a+")
         writer = csv.writer(f, delimiter=',', lineterminator="\n", quoting=csv.QUOTE_ALL)
 
@@ -896,7 +903,7 @@ class CommonFunctions(Setup):
         account_id = re.split(r"_", cedFileName)  # Extract Account ID from the filename
         account_id = account_id[0].strip('_')
 
-        filename = CommonFunctions.result_file_path + "\\" + account_id + "_DataValidationReport_" + CommonFunctions.run_time + ".csv"
+        filename = CommonFunctions.result_file_path + "/" + account_id + "_DataValidationReport_" + CommonFunctions.run_time + ".csv"
         with open(filename, "a+") as f:
             writer = csv.writer(f, delimiter=',', lineterminator="\n", quoting=csv.QUOTE_ALL)
 

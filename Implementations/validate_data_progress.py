@@ -1,4 +1,6 @@
 import pytz
+
+import paths
 from Implementations.common_functions_progress import CommonFunctions
 from Implementations.device_details import DeviceDetails
 from datetime import datetime
@@ -13,6 +15,7 @@ class ValidateDataImpl:
     def __init__(self, test_class_name):
         super().__init__(test_class_name)
         self.val_imp_log = logger_util.get_logger(test_class_name +" :: " +__name__)
+        self.path = paths
 
     def validate_data_from_ced_progress(self, barStatus, fileStatus,curs, file, search_column, ced_data, index_Of_stored_date, ced_columns_from_file, event_stored_date, event_type,
                                account_name, email_custom_columns, sms_custom_columns, CEDDatesInAccountTZ,acc_timezone):
@@ -46,9 +49,14 @@ class ValidateDataImpl:
             index_of_unique_id = all_columns_from_ced.index("RIID")
 
         if "USER_AGENT_STRING" in all_columns_from_ced:
-            device_ids, device_data = DeviceDetails.get_device_attributes(self, account_name)
-            ValidateDataImpl.add_remove_column_for_query(self,all_columns_from_ced,device_attributes)
-
+            if 'PUSH' in event_type.upper():
+                self.val_imp_log.info('As per configuration DEVICE DETAILS not required for push channel')
+            elif self.path.dataSeeded == False:
+                device_ids, device_data = DeviceDetails.get_device_attributes(self, account_name)
+                ValidateDataImpl.add_remove_column_for_query(self,all_columns_from_ced,device_attributes)
+            else:
+                ValidateDataImpl.add_remove_column_for_query(self, all_columns_from_ced, device_attributes)
+            #
         if "CUSTOM_PROPERTIES" in db_column_names:
             ValidateDataImpl.add_remove_column_for_query(self, all_columns_from_ced, custom_columns)
 
@@ -65,9 +73,10 @@ class ValidateDataImpl:
             curs.execute(query)
             query_result_for_id = curs.fetchall()
             ced_row_num = 0
+            primary_key = columns_to_be_queried_from_db[index_of_unique_id]
             if len(query_result_for_id)==0:
                 self.val_imp_log.info("Skipping validation for file : " +str(file))
-                primary_key = columns_to_be_queried_from_db[index_of_unique_id]
+                # primary_key = columns_to_be_queried_from_db[index_of_unique_id]
                 dreport[id].append("Skip Reason for "+str(event_type)+" : Query returned null. No result from DB for "+str(primary_key)+" : " +str(id)+"_"+str(len(ced_data[id])))
                 self.val_imp_log.info("Skip Reason for "+str(event_type)+" : Query returned null. No result from DB for "+str(primary_key)+" : " +str(id))
                 break
@@ -95,7 +104,8 @@ class ValidateDataImpl:
                         ced_db_match = ValidateDataImpl.check_for_match(self,unique_id_from_ced,unique_id_from_db,event_date_for_record_from_ced, event_date_for_record_from_db)
                     if int(id) in row_from_db and ced_db_match:
                         # print("\nValidating row", ced_row_num, "(DB row:", db_row_num, ")In file ", file, " for ", str(search_column), ":", id)
-                        self.val_imp_log.info("Validating row " +str(ced_row_num)+ "(DB row:" +str(db_row_num)+ ")In file " +str(file)+ " for " +str(search_column)+ " : "+ id)
+                        self.val_imp_log.info("Validating row " +str(ced_row_num)+ "(DB row:" +str(db_row_num)+ ")In file " +str(file)+ " for " +str(
+                            search_column)+ " : "+ str(id) + " & unique ID :" + str(unique_id_from_db))
                         device_id = None
                         for col_index, col_value in enumerate(row_from_db):
                             try:
@@ -110,12 +120,14 @@ class ValidateDataImpl:
                                     Status = "--- SKIPPING CUSTOM COLUMN FOR NOW ---"
                                     self.val_imp_log.info(Status)
                                     continue
-
                                 elif col_name in device_attributes:
+                                    user_agent = row_from_db[ced_columns_from_file[event_type].index('USER_AGENT_STRING')]
                                     riid = row_from_db[index_of_unique_id]
-                                    if device_id == None:
-                                        device_id = DeviceDetails.get_device_id(self, device_ids, device_data, riid, event_type)
-                                    Status = ValidateDataImpl.validate_device_data(self,device_ids, device_data, id,device_id,db_row_num, col_index, col_name, file,ced_value)
+                                    if device_id == None and self.path.dataSeeded == False:
+                                        device_id = DeviceDetails.get_device_id_for_riid(self, device_ids, device_data, riid, event_type)
+                                    # if device_id != None:
+                                    Status = ValidateDataImpl.validate_device_data(self,device_ids, device_data, id,device_id,db_row_num, col_index,
+                                                                                   col_name, file,ced_value,user_agent)
                                     self.val_imp_log.info(Status)
 
                                 elif type(db_value) == datetime:
@@ -165,7 +177,7 @@ class ValidateDataImpl:
                                 Status = '*****ERROR ON LINE {}'.format(sys.exc_info()[-1].tb_lineno), ",", type(e).__name__, ":", e, "*****\n"
                                 self.val_imp_log.info(Status)
 
-                            if  "Pass" in Status:
+                            if "Pass" in str(Status):
                                 row_error.append(True)
                             else:
                                 row_error.append(False)
@@ -182,10 +194,15 @@ class ValidateDataImpl:
                 dreport[id].append(row_status)
         return dreport
 
-    def validate_device_data(self,device_ids, device_data, id, device_id,db_row_num, col_index, col_name, file,ced_value):
-        browser_type, os_vendor, operating_system, device_type, browser = [row for row in device_data[device_id][0]]
-        status = None
+    def validate_device_data(self,device_ids, device_data, id, device_id,db_row_num, col_index, col_name, file,ced_value,user_agent):
+        if self.path.dataSeeded == True:
+            os_vendor,operating_system, device_type, browser, browser_type = DeviceDetails.get_device_details(user_agent)
+        elif device_id != None:
+            browser_type, os_vendor, operating_system, device_type, browser = [row for row in device_data[device_id][0]]
+        else:
+            browser_type, os_vendor, operating_system, device_type, browser = None,None,None,None,None
 
+        status = None
         if col_name == "BROWSER_TYPE_INFO":
             status = ValidateDataImpl.check_if_data_matches(self,db_row_num, col_index, file, col_name, id, ced_value, browser_type)
 
@@ -200,6 +217,7 @@ class ValidateDataImpl:
 
         elif col_name == "DEVICE_TYPE_INFO":
             status = ValidateDataImpl.check_if_data_matches(self,db_row_num, col_index, file, col_name, id, ced_value, device_type)
+
         return status
 
     def check_if_data_matches(self, row_num,col_num, file,column_name,id, ced_value, db_value):

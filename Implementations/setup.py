@@ -27,11 +27,11 @@ class Setup():
 
     ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     print("Root Directory :", ROOT_DIR)
-    propertyFile = ROOT_DIR + "\\python.properties"
+    propertyFile = ROOT_DIR + "/python.properties"
     print("Property File", propertyFile)
 
-    resultFilePath = ROOT_DIR + "\\Result"
-    testfilespath = ROOT_DIR + "\\InputFiles"
+    resultFilePath = ROOT_DIR + "/Result"
+    testfilespath = ROOT_DIR + "/InputFiles"
 
     def delete_files(self):
         path = self.resultFilePath
@@ -41,7 +41,10 @@ class Setup():
                 print("Deleted old file :", file.name,"  from ",path )
 
     def update_os(self):
-        os.environ["PATH"] = "C:\ORACLE_CLIENT\instantclient-basic-windows.x64-11.2.0.4.0\;" + os.environ["PATH"]
+        # os.environ["PATH"] = "C:\ORACLE_CLIENT\instantclient-basic-windows.x64-11.2.0.4.0\;" + os.environ["PATH"]
+        # os.environ["PATH"] = "/opt/oracle/instantclient_19_3" + os.environ["PATH"]
+        cx_Oracle.init_oracle_client(lib_dir="/opt/oracle/instantclient_19_3")
+        # os.environ["PATH"] = "/opt/oracle/instantclient_19_3" + os.environ["PATH"]
         # print(os.environ["PATH"])
         # os.environ["NLS_LANG"] = ".UTF8"
 
@@ -66,16 +69,18 @@ class Setup():
         connection_details = self.prop[accountName + "User"] + "/" + self.prop[accountName + "Pass"] + "@" + self.prop[accountName + "URL"]
         # self.dbcon = cx_Oracle.connect(self.prop[accountName+"User"] + "/" + self.prop[accountName+"Pass"] + "@" + self.prop[accountName+"URL"])
         try:
-            with  cx_Oracle.connect(connection_details) as self.dbcon:
-        # dbcon = cx_Oracle.connect(prop["progtmUser"] + "/" + prop["progtmPwd"] + "@" + prop["progtmUrl"])
-        # print("Connected to Oracle - ", (self.prop[accountName+"User"]).upper(), " account", "\n"," Oracle version is: " + self.dbcon.version)
-                self.curs = self.dbcon.cursor()
+            # with cx_Oracle.connect(connection_details) as dbcon:
+            #     self.curs = dbcon.cursor()
+            #     return self.curs
+            dbcon =  cx_Oracle.connect(connection_details)
+            curs = dbcon.cursor()
+            return curs
+
         except Exception as e:
             print("\nError in Connecting to DB using ",accountName.upper())
             print("Error Type : " ,type(e).__name__)
             print("Error : " ,e , "\nExiting the execution")
             exit(1)
-        return self.curs
 
     def close_db_connection(self,curs):
         if  not curs.close():

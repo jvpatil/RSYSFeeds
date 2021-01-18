@@ -1,3 +1,0 @@
-"EVENT_TYPE","FILE_NAME","KEY","ID","COUNT_FROM_CED","COUNT_FROM_DB","EventsToBeProcessed","Eventsalready_processed","STATUS","Comments"
-"APPCLOUD_FAILED","30336_APPCLOUD_FAILED_20191218_071702.txt","LAUNCH_ID","1462","10","0","0","0","Fail","No Data found in APPCLOUD_FAILED table for LAUNCH_ID : 1462"
-"LAUNCH_STATE","30336_LAUNCH_STATE_20191218_071702.txt","LAUNCH_ID","1462","10","[0]","0","0","Fail","Count for the ID does not Match"

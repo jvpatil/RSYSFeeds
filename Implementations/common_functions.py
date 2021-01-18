@@ -101,7 +101,8 @@ class CommonFunctions(Setup):
         print("*** Validating count for file :: ", cedFileName, " ***")
         account_id = re.split(r"_", cedFileName)  # Extract Account ID from the filename
         account_id = account_id[0].strip('_')
-        resultFile = self.result_file_path + "\\" + account_id + "_FeedsData_CompareResult_" + self.run_time + ".csv"
+        # resultFile = self.result_file_path + "\\" + account_id + "_FeedsData_CompareResult_" + self.run_time + ".csv"
+        resultFile = self.result_file_path + "/" + account_id + "_FeedsData_CompareResult_" + self.run_time + ".csv"
 
         header = ["EVENT_TYPE", "FILE_NAME", "KEY", "ID", "COUNT_FROM_CED", "COUNT_FROM_DB", "EventsToBeProcessed", "Eventsalready_processed",
                   "STATUS", "Comments"]
@@ -484,7 +485,8 @@ class CommonFunctions(Setup):
     def writeColumnCheckResult(self, event_name, file, each_column_in_db, column_presence_status, column_in_ced, short_status, index_of_db_column,
                                index_of_ced_column, column_order_status):
 
-        filename = self.result_file_path + "\\" + account_id + "_CEDHeaders_VerficationResult_" + self.run_time + ".csv"
+        filename = self.result_file_path + "/" + account_id + "_CEDHeaders_VerficationResult_" + self.run_time + ".csv"
+        # filename = self.result_file_path + "\\" + account_id + "_CEDHeaders_VerficationResult_" + self.run_time + ".csv"
         f = open(filename, "a+")
         writer = csv.writer(f, delimiter=',', lineterminator="\n", quoting=csv.QUOTE_ALL)
 
@@ -819,7 +821,8 @@ class CommonFunctions(Setup):
         account_id = re.split(r"_", cedFileName)  # Extract Account ID from the filename
         account_id = account_id[0].strip('_')
 
-        filename = CommonFunctions.result_file_path + "\\" + account_id + "_DataValidationReport_" + CommonFunctions.run_time + ".csv"
+        filename = CommonFunctions.result_file_path + "/" + account_id + "_DataValidationReport_" + CommonFunctions.run_time + ".csv"
+        # filename = CommonFunctions.result_file_path + "\\" + account_id + "_DataValidationReport_" + CommonFunctions.run_time + ".csv"
         with open(filename, "a+") as f:
             writer = csv.writer(f, delimiter=',', lineterminator="\n", quoting=csv.QUOTE_ALL)
 

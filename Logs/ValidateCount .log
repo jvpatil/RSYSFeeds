@@ -1,45 +1,216 @@
-[2019-12-24 14:14:08,209] [ Implementations.ced_functions                :   110] [INFO] -- There are 20 records in file 30336_CUSTOM_CHANNEL_SKIPPED_20191218_071702.txt & the Unique LAUNCH_ID are :: 1
-[2019-12-24 14:14:08,209] [ Implementations.ced_functions                :   128] [INFO] -- Getting count from CED file.
-[2019-12-24 14:14:08,209] [ Implementations.db_fuctions                  :    30] [INFO] -- Getting count from DB.
-[2019-12-24 14:14:09,728] [ Implementations.common_functions_progress    :   127] [INFO] -- Validating count for ID :: 1462
-[2019-12-24 14:14:09,728] [ Implementations.common_functions_progress    :   162] [INFO] -- Count for the ID does not Match. Seems Records are Purged for CUSTOM_CHANNEL_SKIPPED table
-[2019-12-24 14:14:09,829] [ Implementations.ced_functions                :   110] [INFO] -- There are 10 records in file 30336_WEBPUSH_BUTTON_CLICKED_20191218_071702.txt & the Unique LAUNCH_ID are :: 1
-[2019-12-24 14:14:09,829] [ Implementations.ced_functions                :   128] [INFO] -- Getting count from CED file.
-[2019-12-24 14:14:09,829] [ Implementations.db_fuctions                  :    30] [INFO] -- Getting count from DB.
-[2019-12-24 14:14:10,891] [ Implementations.common_functions_progress    :   127] [INFO] -- Validating count for ID :: 1462
-[2019-12-24 14:14:10,891] [ Implementations.common_functions_progress    :   162] [INFO] -- Count for the ID does not Match. Seems Records are Purged for WEBPUSH_BUTTON_CLICKED table
-[2019-12-24 14:15:10,216] [ Implementations.ced_functions                :   110] [INFO] -- There are 20 records in file 30336_CUSTOM_CHANNEL_SKIPPED_20191218_071702.txt & the Unique LAUNCH_ID are :: 1
-[2019-12-24 14:15:10,216] [ Implementations.ced_functions                :   128] [INFO] -- Getting count from CED file.
-[2019-12-24 14:15:10,216] [ Implementations.db_fuctions                  :    30] [INFO] -- Getting count from DB.
-[2019-12-24 14:15:11,644] [ Implementations.common_functions_progress    :   127] [INFO] -- Validating count for ID :: 1462
-[2019-12-24 14:15:11,644] [ Implementations.common_functions_progress    :   162] [INFO] -- Count for the ID does not Match. Seems Records are Purged for CUSTOM_CHANNEL_SKIPPED table
-[2019-12-24 14:15:11,728] [ Implementations.ced_functions                :   110] [INFO] -- There are 10 records in file 30336_WEBPUSH_BUTTON_CLICKED_20191218_071702.txt & the Unique LAUNCH_ID are :: 1
-[2019-12-24 14:15:11,729] [ Implementations.ced_functions                :   128] [INFO] -- Getting count from CED file.
-[2019-12-24 14:15:11,729] [ Implementations.db_fuctions                  :    30] [INFO] -- Getting count from DB.
-[2019-12-24 14:15:12,791] [ Implementations.common_functions_progress    :   127] [INFO] -- Validating count for ID :: 1462
-[2019-12-24 14:15:12,791] [ Implementations.common_functions_progress    :   162] [INFO] -- Count for the ID does not Match. Seems Records are Purged for WEBPUSH_BUTTON_CLICKED table
-[2019-12-24 15:44:40,761] [ Implementations.ced_functions                :   110] [INFO] -- There are 10 records in file 30336_CONVERT_20191218_071701.txt & the Unique LAUNCH_ID are :: 1
-[2019-12-24 15:44:40,764] [ Implementations.ced_functions                :   128] [INFO] -- Getting count from CED file.
-[2019-12-24 15:44:40,764] [ Implementations.db_fuctions                  :    30] [INFO] -- Getting count from DB.
-[2019-12-24 15:44:42,409] [ Implementations.common_functions_progress    :   127] [INFO] -- Validating count for ID :: 1462
-[2019-12-24 15:44:42,410] [ Implementations.common_functions_progress    :   152] [INFO] -- Count for the ID Match. However there are 26 records to be processed yet
-[2019-12-24 15:44:42,514] [ Implementations.ced_functions                :   110] [INFO] -- There are 20 records in file 30336_CUSTOM_CHANNEL_FAILED_20191218_071702.txt & the Unique LAUNCH_ID are :: 1
-[2019-12-24 15:44:42,514] [ Implementations.ced_functions                :   128] [INFO] -- Getting count from CED file.
-[2019-12-24 15:44:42,514] [ Implementations.db_fuctions                  :    30] [INFO] -- Getting count from DB.
-[2019-12-24 15:44:43,569] [ Implementations.common_functions_progress    :   127] [INFO] -- Validating count for ID :: 1462
-[2019-12-24 15:44:43,569] [ Implementations.common_functions_progress    :   162] [INFO] -- Count for the ID does not Match. Seems Records are Purged for CUSTOM_CHANNEL_FAILED table
-[2019-12-24 15:44:43,699] [ Implementations.ced_functions                :   110] [INFO] -- There are 20 records in file 30336_CUSTOM_CHANNEL_SENT_20191218_071702.txt & the Unique LAUNCH_ID are :: 1
-[2019-12-24 15:44:43,699] [ Implementations.ced_functions                :   128] [INFO] -- Getting count from CED file.
-[2019-12-24 15:44:43,699] [ Implementations.db_fuctions                  :    30] [INFO] -- Getting count from DB.
-[2019-12-24 15:44:44,824] [ Implementations.common_functions_progress    :   127] [INFO] -- Validating count for ID :: 1462
-[2019-12-24 15:44:44,824] [ Implementations.common_functions_progress    :   162] [INFO] -- Count for the ID does not Match. Seems Records are Purged for CUSTOM_CHANNEL_SENT table
-[2019-12-24 15:44:44,927] [ Implementations.ced_functions                :   110] [INFO] -- There are 20 records in file 30336_CUSTOM_CHANNEL_SKIPPED_20191218_071702.txt & the Unique LAUNCH_ID are :: 1
-[2019-12-24 15:44:44,927] [ Implementations.ced_functions                :   128] [INFO] -- Getting count from CED file.
-[2019-12-24 15:44:44,927] [ Implementations.db_fuctions                  :    30] [INFO] -- Getting count from DB.
-[2019-12-24 15:44:45,988] [ Implementations.common_functions_progress    :   127] [INFO] -- Validating count for ID :: 1462
-[2019-12-24 15:44:45,988] [ Implementations.common_functions_progress    :   162] [INFO] -- Count for the ID does not Match. Seems Records are Purged for CUSTOM_CHANNEL_SKIPPED table
-[2019-12-24 15:44:46,127] [ Implementations.ced_functions                :   110] [INFO] -- There are 10 records in file 30336_WEBPUSH_BUTTON_CLICKED_20191218_071702.txt & the Unique LAUNCH_ID are :: 1
-[2019-12-24 15:44:46,128] [ Implementations.ced_functions                :   128] [INFO] -- Getting count from CED file.
-[2019-12-24 15:44:46,128] [ Implementations.db_fuctions                  :    30] [INFO] -- Getting count from DB.
-[2019-12-24 15:44:47,188] [ Implementations.common_functions_progress    :   127] [INFO] -- Validating count for ID :: 1462
-[2019-12-24 15:44:47,188] [ Implementations.common_functions_progress    :   162] [INFO] -- Count for the ID does not Match. Seems Records are Purged for WEBPUSH_BUTTON_CLICKED table
+[2020-12-10 12:47:56,162] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 12345
+[2020-12-10 12:47:56,163] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:47:58,360] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 654321
+[2020-12-10 12:47:58,360] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:47:58,361] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 123456
+[2020-12-10 12:47:58,361] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:48:00,683] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 654321
+[2020-12-10 12:48:00,683] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:48:00,683] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 123456
+[2020-12-10 12:48:00,683] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:48:02,852] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 654321
+[2020-12-10 12:48:02,852] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:48:02,852] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 123456
+[2020-12-10 12:48:02,852] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:48:05,223] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 340015612
+[2020-12-10 12:48:05,224] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:48:05,224] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 340015411
+[2020-12-10 12:48:05,224] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:48:05,230] [ Implementations.common_functions_progress    :   209] [INFO] -- 30336_MULTIVARIATE_TEST_20201210_065659.txtis empty
+[2020-12-10 12:48:07,415] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 12342
+[2020-12-10 12:48:07,415] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:48:07,416] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 12341
+[2020-12-10 12:48:07,416] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:48:09,581] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 654321
+[2020-12-10 12:48:09,581] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:48:09,581] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 123456
+[2020-12-10 12:48:09,581] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:48:11,813] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 654321
+[2020-12-10 12:48:11,813] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:48:11,813] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 123456
+[2020-12-10 12:48:11,813] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:48:14,130] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 654321
+[2020-12-10 12:48:14,130] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:48:14,130] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 123456
+[2020-12-10 12:48:14,130] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:48:16,486] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 340015612
+[2020-12-10 12:48:16,486] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:48:16,487] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 340015411
+[2020-12-10 12:48:16,487] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:48:18,742] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 654321
+[2020-12-10 12:48:18,742] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:48:18,742] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 123456
+[2020-12-10 12:48:18,743] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:48:21,037] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 340015612
+[2020-12-10 12:48:21,037] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:48:21,037] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 340015411
+[2020-12-10 12:48:21,037] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:48:23,456] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 654321
+[2020-12-10 12:48:23,456] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:48:23,457] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 123456
+[2020-12-10 12:48:23,457] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:48:25,905] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 654321
+[2020-12-10 12:48:25,906] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:48:25,906] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 123456
+[2020-12-10 12:48:25,906] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:48:28,261] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 654321
+[2020-12-10 12:48:28,261] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:48:28,261] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 123456
+[2020-12-10 12:48:28,261] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:48:30,506] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 654321
+[2020-12-10 12:48:30,506] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:48:30,506] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 123456
+[2020-12-10 12:48:30,507] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:48:32,668] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 12342
+[2020-12-10 12:48:32,668] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:48:32,669] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 12341
+[2020-12-10 12:48:32,669] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:48:34,972] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 654321
+[2020-12-10 12:48:34,973] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:48:34,973] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 123456
+[2020-12-10 12:48:34,973] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:48:37,123] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 654321
+[2020-12-10 12:48:37,124] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:48:37,124] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 123456
+[2020-12-10 12:48:37,124] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:48:39,284] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 654321
+[2020-12-10 12:48:39,284] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:48:39,284] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 123456
+[2020-12-10 12:48:39,284] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:48:41,472] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 654321
+[2020-12-10 12:48:41,472] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:48:41,473] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 123456
+[2020-12-10 12:48:41,473] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:48:43,828] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 654321
+[2020-12-10 12:48:43,828] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:48:43,828] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 123456
+[2020-12-10 12:48:43,829] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:48:46,187] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 654321
+[2020-12-10 12:48:46,188] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:48:46,188] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 123456
+[2020-12-10 12:48:46,188] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:48:48,432] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 654321
+[2020-12-10 12:48:48,433] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:48:48,433] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 123456
+[2020-12-10 12:48:48,433] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:48:50,796] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 654321
+[2020-12-10 12:48:50,797] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:48:50,797] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 123456
+[2020-12-10 12:48:50,798] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:48:50,824] [ Implementations.common_functions_progress    :   209] [INFO] -- 30336_PUSH_CONVERTED_20201210_065658.txtis empty
+[2020-12-10 12:48:53,144] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 654321
+[2020-12-10 12:48:53,144] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:48:53,144] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 123456
+[2020-12-10 12:48:53,145] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:48:55,304] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 654321
+[2020-12-10 12:48:55,304] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:48:55,304] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 123456
+[2020-12-10 12:48:55,304] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:48:57,516] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 654321
+[2020-12-10 12:48:57,516] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:48:57,517] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 123456
+[2020-12-10 12:48:57,517] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:48:59,701] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 654321
+[2020-12-10 12:48:59,701] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:48:59,702] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 123456
+[2020-12-10 12:48:59,702] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:49:02,039] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 654321
+[2020-12-10 12:49:02,039] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:49:02,040] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 123456
+[2020-12-10 12:49:02,040] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:49:04,958] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 654321
+[2020-12-10 12:49:04,958] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:49:04,958] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 123456
+[2020-12-10 12:49:04,958] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:49:07,181] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 340015612
+[2020-12-10 12:49:07,181] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:49:07,181] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 340015411
+[2020-12-10 12:49:07,181] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:49:09,657] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 654321
+[2020-12-10 12:49:09,657] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:49:09,658] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 123456
+[2020-12-10 12:49:09,658] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:49:11,878] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 654321
+[2020-12-10 12:49:11,878] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:49:11,878] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 123456
+[2020-12-10 12:49:11,878] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:49:14,021] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 654321
+[2020-12-10 12:49:14,021] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:49:14,021] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 123456
+[2020-12-10 12:49:14,021] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:49:16,228] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 654321
+[2020-12-10 12:49:16,228] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:49:16,228] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 123456
+[2020-12-10 12:49:16,228] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:49:18,450] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 654321
+[2020-12-10 12:49:18,451] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:49:18,451] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 123456
+[2020-12-10 12:49:18,452] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:49:20,633] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 654321
+[2020-12-10 12:49:20,633] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:49:20,633] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 123456
+[2020-12-10 12:49:20,633] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:49:22,821] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 654321
+[2020-12-10 12:49:22,821] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:49:22,821] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 123456
+[2020-12-10 12:49:22,821] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:49:25,019] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 654321
+[2020-12-10 12:49:25,019] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:49:25,020] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 123456
+[2020-12-10 12:49:25,020] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:49:27,227] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 654321
+[2020-12-10 12:49:27,229] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:49:27,229] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 123456
+[2020-12-10 12:49:27,229] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:49:29,705] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 654321
+[2020-12-10 12:49:29,705] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:49:29,705] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 123456
+[2020-12-10 12:49:29,706] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:49:31,906] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 654321
+[2020-12-10 12:49:31,907] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:49:31,907] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 123456
+[2020-12-10 12:49:31,907] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:49:34,518] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 654321
+[2020-12-10 12:49:34,518] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:49:34,519] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 123456
+[2020-12-10 12:49:34,519] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:49:36,892] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 654321
+[2020-12-10 12:49:36,892] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:49:36,892] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 123456
+[2020-12-10 12:49:36,892] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:49:39,132] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 654321
+[2020-12-10 12:49:39,133] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:49:39,133] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 123456
+[2020-12-10 12:49:39,134] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:49:40,253] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 12345
+[2020-12-10 12:49:40,253] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:49:42,557] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 340015612
+[2020-12-10 12:49:42,557] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:49:42,557] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 340015411
+[2020-12-10 12:49:42,558] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:49:44,733] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 340015612
+[2020-12-10 12:49:44,734] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:49:44,734] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 340015411
+[2020-12-10 12:49:44,734] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:49:46,960] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 654321
+[2020-12-10 12:49:46,961] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:49:46,961] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 123456
+[2020-12-10 12:49:46,961] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:49:49,186] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 340015612
+[2020-12-10 12:49:49,186] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:49:49,186] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 340015411
+[2020-12-10 12:49:49,186] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:49:51,506] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 340015612
+[2020-12-10 12:49:51,506] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:49:51,507] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 340015411
+[2020-12-10 12:49:51,507] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:49:52,590] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 12345
+[2020-12-10 12:49:52,590] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:49:54,850] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 654321
+[2020-12-10 12:49:54,851] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:49:54,851] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 123456
+[2020-12-10 12:49:54,851] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:49:57,181] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 340015612
+[2020-12-10 12:49:57,181] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2020-12-10 12:49:57,181] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 340015411
+[2020-12-10 12:49:57,181] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match

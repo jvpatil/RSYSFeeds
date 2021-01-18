@@ -3,8 +3,17 @@
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Implementations" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/TestFunctions" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/ConfigFiles" isTestSource="false" />
+      <excludeFolder url="file://$MODULE_DIR$/venv" />
     </content>
-    <orderEntry type="jdk" jdkName="Python 3.7" jdkType="Python SDK" />
+    <content url="file://$MODULE_DIR$/venv/bin" />
+    <orderEntry type="jdk" jdkName="Python 3.8" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="GenerateDataWithPython" />
+    <orderEntry type="module" module-name="Interact" />
+    <orderEntry type="module" module-name="PyLearn" />
+    <orderEntry type="module" module-name="FilterConditions" />
   </component>
 </module>
