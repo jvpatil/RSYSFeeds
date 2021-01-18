@@ -61,5 +61,5 @@ event_table_names = {
             'WEBPUSH_DISPLAY':'E_RECIPIENT_WPUSH_DISPLAY',
             'WEBPUSH_OPT_IN':'E_RECIPIENT_WPUSH_OPTIN',
             'WEBPUSH_OPT_OUT': 'E_RECIPIENT_WPUSH_OPTOUT'
-
+            # 'MULTIVARIATE_TEST' : 'D_CAMPAIGN_VERSION_TEST'
         }
