@@ -27,7 +27,7 @@ class ValidateColumns(DBFunctions,CommonFunctions,DeviceDetails):
 
         ced_files = CEDFunctions.find_files(self)
         account_id = CommonFunctions.get_account_id(self,ced_files[0])
-        # curs = Setup.init_db_connection(self,"sysAdmin")
+        curs = Setup.init_db_connection(self,"sysAdmin")
         curs = Setup.start_db_connection(self,paths.pod,"sysAdmin")
         ced_columns_from_db,built_in_headers_from_db = DBFunctions.get_headers_from_db(self, curs, account_id)
         result_file=CommonFunctions.write_headers_to_file(self,account_id, ced_columns_from_db, "ced_columns_from_db")
@@ -38,7 +38,7 @@ class ValidateColumns(DBFunctions,CommonFunctions,DeviceDetails):
 
         # syslocalCust_curs = Setup.init_db_connection(self, "syslocalCust")
         syslocalCust_curs = Setup.start_db_connection(self,paths.pod,"syslocalCust")
-        email_columns_by_id, email_custom_columns, sms_columns_by_id, sms_custom_columns = CommonFunctions.get_custom_properties(self, syslocalCust_curs,account_name)
+        email_columns_by_id, email_custom_columns, sms_columns_by_id, sms_custom_columns = CommonFunctions.get_custom_columns(syslocalCust_curs, account_name)
         CommonFunctions.close_db_connection(self, syslocalCust_curs)
 
         status_report = defaultdict(list)
@@ -47,9 +47,12 @@ class ValidateColumns(DBFunctions,CommonFunctions,DeviceDetails):
         for file in ced_files:
             barStatus, fileStatus =CommonFunctions.status_progress(iteration + 1, len(ced_files), file)
             CommonFunctions.clear(self)
-            CommonFunctions.print_status(barStatus, fileStatus)
+            CommonFunctions.print_status(barStatus)
+            # CommonFunctions.print_status(barStatus, fileStatus)
             if  not CommonFunctions.is_file_empty(self,file):
-                ced_columns_from_file = CommonFunctions.get_headers_from_ced(self,file)
+                delimiter,qoute_char = CommonFunctions.get_file_info(self,file)
+                # ced_columns_from_file = CommonFunctions.get_headers_from_ced(self,file)
+                ced_columns_from_file = CommonFunctions.get_headers_from_ced(self,file,delimiter,qoute_char)
                 CommonFunctions.write_headers_to_file(self,account_id, ced_columns_from_file,"ced_columns_from_file")
                 report = CommonFunctions.validate_columns_and_save_result(self,account_name,account_id, file, ced_columns_from_file,
                                                                  ced_columns_from_db,built_in_headers_from_db, ced_columns_from_podconfig, email_custom_columns,

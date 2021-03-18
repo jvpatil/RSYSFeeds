@@ -27,7 +27,7 @@ class DBFunctions:
     def get_count_from_db(self, curs, accountName, schema, event_type, searchColumn, set_unique_ids, dEventStoredDate):
         d_count_from_db = defaultdict(list)
         d_event_dates_from_db = defaultdict(list)
-        self.db_func_log.info("Getting count from DB.")
+        # self.db_func_log.info("Getting count from DB.")
         try:
             # for id in uniqueIDs:
             #     query = self.getQuery(event_type,searchColumn,id)

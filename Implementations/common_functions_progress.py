@@ -3,6 +3,7 @@ import time
 
 import pytz
 
+# import read_xml
 from Implementations.setup import Setup
 from Implementations.db_fuctions import DBFunctions
 from Implementations.device_details import DeviceDetails
@@ -78,25 +79,12 @@ class CommonFunctions(Setup):
             search_column = 'RIID'
         else:
             search_column = search_key
-
         return search_column
 
     def find_files(self):
         count = 0
         files = None
         valid_files = []
-        # if input_files_path is not None:
-        #     in_file_path = input_files_path
-        # else:
-        #     in_file_path = self.input_file_path
-
-        # try:
-        #     files = os.listdir(self.input_file_path)
-        #     for fname in range(len(files)):
-        #         count += 1
-        #     print("\nThere are total", count, "files to process:")
-        #     # print(*files, sep="\n")
-        #     print('\t', *files, sep="\n")
         try:
             files = os.listdir(self.input_file_path)
             for file_name in files:
@@ -136,35 +124,30 @@ class CommonFunctions(Setup):
                 self.common_func_log.info("Validating count for ID :: " + str(id))
                 id_status = []
                 ced_count = dCountFromCED[id][0]
-                # db_count = dCountFromDB[int(id)][0]
                 db_count = dCountFromDB[int(id)]
-                # if len(dCountFromDB[id]) != 0:
-                #     db_count = dCountFromDB[int(id)][0]
-                # else:
-                #     db_count = 0
                 yet_to_process = deventsToProcess[int(id)][0]
                 already_processed = deventsProcessed[int(id)][0]
 
                 if db_count == ced_count:
                     result = "Count for the ID Match"
-                    self.common_func_log.info(result)
+                    # self.common_func_log.info(result)
                     status = "Pass"
                 elif db_count != ced_count and yet_to_process != 0:
                     if type(yet_to_process) == str:
                         result = "No Data found in " + event_type + " table for " + searchID + " : " + id
-                        self.common_func_log.info(result)
+                        # self.common_func_log.info(result)
                         status = "Fail"
                     else:
                         actual_count = db_count - yet_to_process
                         if ced_count == actual_count:
                             result = "Count for the ID Match. However there are " + str(yet_to_process) + " records to be processed yet"
-                            self.common_func_log.info(result)
+                            # self.common_func_log.info(result)
                             status = "Pass"
                         # elif ced_count == (db_count-yet_to_process-already_processed):
                         elif already_processed != 0:
-                            result = "Count for the ID does not Match. Seems Few Records have already been processed & few are to be processed yet " \
+                            result = "Count for the ID does not Match. Seems Few Records have already been processed & few are yet to be processed " \
                                      "for " + event_type + " table"
-                            self.common_func_log.info(result)
+                            # self.common_func_log.info(result)
                             status = "Fail"
                         else:
                             result = "Count for the ID does not Match. Seems Records are Purged for " + event_type + " table"
@@ -173,7 +156,7 @@ class CommonFunctions(Setup):
                 elif db_count != ced_count and already_processed != 0:
                     if type(already_processed) == str:
                         result = "No Data found in " + event_type + " table for " + searchID + " : " + id
-                        self.common_func_log.info(result)
+                        # self.common_func_log.info(result)
                         status = "Fail"
                     else:
                         act_count = db_count - already_processed
@@ -184,7 +167,7 @@ class CommonFunctions(Setup):
                             status = "Fail"
                         else:
                             result = "Count for the ID does not Match, Seems Records are Purged for " + event_type + " table"
-                            self.common_func_log.info(result)
+                            # self.common_func_log.info(result)
                             status = "Fail"
                 else:
                     result = "Count for the ID does not Match"
@@ -206,34 +189,53 @@ class CommonFunctions(Setup):
         return report
 
     def is_file_empty(self, ced_file):
-        # input_file_path = self.testfilespath
         with open(os.path.join(self.input_file_path, ced_file), 'r') as f:
             content = f.readlines()
         if len(content) != 0:
             return False
         else:
-            # print("\t--File ", ced_file, " is empty. Hence Skipping the file")
             self.common_func_log.info(str(ced_file) + "is empty")
             return True
 
-    def get_headers_from_ced(self, ced_file):
-        # input_file_path = self.testfilespath
+    def get_headers_from_ced(self,ced_file,delimiter,enclosure):
         ced_headers_from_file = defaultdict(list)
         event_type = re.split(r"\d+", ced_file)
         event_type = event_type[1].strip('_')
 
-        with open(os.path.join(self.input_file_path, ced_file), 'r') as f:
-            content = f.readlines()
-        if len(content) != 0:
-            for header_row in content[:1]:
-                col = header_row.strip().replace('\"', '')
-                ced_col_names = re.split(';|,|\t|\||""', col)
-                for i in ced_col_names:
-                    ced_headers_from_file[event_type].append(i)
-        else:
-            self.common_func_log.info("\File ", ced_file, " is empty")
-            pass
-        return ced_headers_from_file
+        with open(os.path.join(self.input_file_path, ced_file), 'r') as file:
+            if enclosure == None:
+                enclosure = " "
+                content = csv.reader(file,delimiter=delimiter)
+                # content = csv.reader(file,delimiter=delimiter,quotechar=enclosure) #this also works when set eclosure=" "
+            else:
+                content = csv.reader(file, delimiter=delimiter, quotechar=enclosure)
+            header = next(content)
+            if len(header) != 0:
+                for col in header:
+                    ced_headers_from_file[event_type].append(col)
+            else:
+                self.common_func_log.info("\File ", ced_file, " is empty")
+                pass
+            return ced_headers_from_file
+
+    def get_file_info(self,ced_file):
+        with open(os.path.join(self.input_file_path, ced_file), 'r') as file:
+            content = csv.reader(file)
+            header = next(content)
+            qoute_char = header[0][0]
+            if qoute_char.isalnum():
+                qoute_char = None
+            if len(header) > 1:
+                delimiter = ","
+            else:
+                #non capturing group which looks for a word, then optional qoutes (if present any). then capture the next character in seperate group
+                delimiter = re.search('(?:\w+[\'\"]?)(.?)',header[0]).group(1)
+                # delim = re.findall('(?:\w+\S)(.?)', header)
+                if delimiter.isspace():
+                    delimiter = "\t"
+            # print("Delimiter :: {} & Quote :: {}".format(delimiter,qoute_char))
+        return delimiter,qoute_char
+
 
     def get_headers_from_podconfig(self):
         file_path = self.ROOT_DIR + "/ConfigFiles/pod_monitor_urls.ini"
@@ -345,7 +347,6 @@ class CommonFunctions(Setup):
         result_file_name = self.result_file_path + "/" + filename
         with open(result_file_name, "a+") as f:
             writer = csv.writer(f, delimiter=',', lineterminator="\n", quoting=csv.QUOTE_ALL)
-
             prev_data = open(result_file_name, "r").read()
             header = ["Event Types", "Column Name"]
             # Add a header only if the fname is empty
@@ -358,7 +359,7 @@ class CommonFunctions(Setup):
         result_file = "***INFO : SAVED A FILE (" + filename.upper() + ") WITH ALL EVENTS & THIER HEADERS*****"
         return result_file
 
-    def get_custom_properties(self, curs, account_name):
+    def get_custom_columns(self, curs, account_name):
         self.common_func_log.info("*** Reading Custom Column for the account " + str(account_name.upper()) + " ***")
         email_column_ids_sorted = None
         sms_column_ids_sorted = None
@@ -397,8 +398,7 @@ class CommonFunctions(Setup):
         event_name = re.split(r"\d+", file_name)
         event_name = event_name[1].strip('_')
 
-        self.common_func_log.info("\n")
-        self.common_func_log.info("*** Validation started for file :" + file_name)
+        self.common_func_log.info("Validation started for file :" + file_name)
         if event_name in ced_columns_from_db:
             ced_headers_from_db = ced_columns_from_db
         else:
@@ -431,11 +431,10 @@ class CommonFunctions(Setup):
                 try:
                     if each_column_in_db in ced_columns_from_file[event_name]:
                         index_of_present_db_column = ced_headers_from_db[event_name].index(each_column_in_db)
-                        column_in_ced = ced_columns_from_file[event_name][index_of_present_db_column]
+                        column_in_ced = ced_columns_from_file[event_name][index_of_db_column]
+                        # column_in_ced = ced_columns_from_file[event_name][index_of_present_db_column]
                         column_presence_status = "Column " + str(each_column_in_db) + " is present in CED"
                         status = "Present"
-                        self.common_func_log.info(column_presence_status)
-
                     elif "$" in each_column_in_db:
                         built_in_column_name = built_in_headers_from_db[event_name][0]
                         # index_of_ced_column = ced_columns_from_file[event_name].index(built_in_column_name)
@@ -445,7 +444,7 @@ class CommonFunctions(Setup):
                             column_presence_status = "Column " + str(built_in_column_name) + " (which is configured in headers using built-in " + str(
                                 each_column_in_db) + ") is present in CED"
                             status = "Present"
-                            self.common_func_log.info(column_presence_status)
+                            # self.common_func_log.info(column_presence_status)
                     else:
                         index_of_missing_db_column = ced_headers_from_db[event_name].index(each_column_in_db)
                         column_in_ced = ced_columns_from_file[event_name][index_of_missing_db_column]
@@ -474,9 +473,8 @@ class CommonFunctions(Setup):
                     status = "Missing"
                     # column_in_ced = "N/A"
                     if not "CUSTOM_PROPERTIES" in str(e):
-                        self.common_func_log.info("***There is an Exception :(" + str(e) + "), Column", each_column_in_db, "is not present in file",
-                                                  file_name, "***")
-
+                        self.common_func_log.info("*** There is an Exception :'{}', Column, {} is not present in file {} ***".format(e,each_column_in_db,
+                                                                                                                                     file_name))
                 if each_column_in_db == "CUSTOM_PROPERTIES":
                     db_index = ced_headers_from_db[event_name].index("CUSTOM_PROPERTIES")  # capture index of custom properties and
                     # keep increasing till for each of custom column
@@ -492,19 +490,19 @@ class CommonFunctions(Setup):
                                     status = "Present"
                                     column_presence_status = "Column " + str(
                                         each_column_in_db) + " (from CUSTOM_PROPERTIES) is duplicated and is already present in CED as DEFAULT column"
-                                    self.common_func_log.info(column_presence_status)
+                                    # self.common_func_log.info(column_presence_status)
                                 else:
                                     custom_column_in_ced = ced_columns_from_file[event_name][index_of_present_custom_column]
                                     column_presence_status = "Column " + str(each_column_in_db) + " (from CUSTOM_PROPERTIES) is present in CED"
                                     status = "Present"
-                                    self.common_func_log.info(column_presence_status)
+                                    # self.common_func_log.info(column_presence_status)
                             else:
                                 index_of_missing_custom_column = custom_column_names[i].index(each_column_in_db)
                                 index_of_missing_custom_column += db_index
                                 custom_column_in_ced = ced_columns_from_file[event_name][index_of_missing_custom_column]
                                 column_presence_status = "Column " + str(each_column_in_db) + " (from CUSTOM_PROPERTIES) is missing"
                                 status = "Missing"
-                                self.common_func_log.info(column_presence_status)
+                                # self.common_func_log.info(column_presence_status)
 
                             ced_index = ced_columns_from_file[event_name].index(each_column_in_db)
                             if db_index == ced_index:
@@ -521,9 +519,8 @@ class CommonFunctions(Setup):
                             self.common_func_log.info(column_presence_status)
                             status = "Missing"
                             custom_column_in_ced = "N/A"
-                            self.common_func_log.info(
-                                "***There is an Exception :(" + str(e) + "),Column" + str(each_column_in_db) + "is not present in file " + str(
-                                    file_name) + "***")
+                            self.common_func_log.info("***There is an Exception :('{}'),Column {} is not present in file {} ***".format(e,each_column_in_db,
+                                                                                                                                        file_name))
 
                         self.writeColumnCheckResult(event_name, file_name, each_column_in_db, column_presence_status, custom_column_in_ced, status,
                                                     db_index, ced_index, column_order_status)
@@ -563,12 +560,9 @@ class CommonFunctions(Setup):
 
     def writeColumnCheckResult(self, event_name, file, each_column_in_db, column_presence_status, column_in_ced, short_status, index_of_db_column,
                                index_of_ced_column, column_order_status):
-
-        # filename = self.result_file_path + "\\" + account_id + "_CEDHeaders_VerficationResult_" + self.run_time + ".csv"
         filename = self.result_file_path + "/" + account_id + "_CEDHeaders_VerficationResult_" + self.run_time + ".csv"
         f = open(filename, "a+")
         writer = csv.writer(f, delimiter=',', lineterminator="\n", quoting=csv.QUOTE_ALL)
-
         prev_data = open(filename, "r").read()
         header = ["Event Types", "File Name", "ColumnNames From FeedsSetting", "Present in CED?", "Column in CED", "Result", "DB Column Index",
                   "CED Column Index", "Column Order Result"]
@@ -583,12 +577,6 @@ class CommonFunctions(Setup):
 
     def validate_data_from_ced_bkp(self, curs, file, search_column, ced_data, index_Of_stored_date, ced_columns_from_file, event_stored_date,
                                    event_type):
-        # global eventName
-        # eventName = "Test"
-        # htmlfile = CommonFunctions.result_file_path + "\\DataValidationReport_" + CommonFunctions.run_time + ".html"
-        # hs = open(htmlfile, 'a+')
-        # searchID = searchCol
-
         for id in ced_data:
             # index_Of_date = event_stored_date[id]
             index_Of_date = index_Of_stored_date
@@ -973,7 +961,6 @@ class CommonFunctions(Setup):
             file_status = "%s " % ("Current File : " + str(ced_file))
         else:
             file_status = ""
-
         return bar_status, file_status
 
     def calculate_time(total_count, iteration, start_time):

@@ -43,7 +43,7 @@ class TestValidateData(ValidateDataImpl,CEDFunctions,DeviceDetails):
 
         # syslocalCust_curs = CommonFunctions.init_db_connection(self, "syslocalCust")
         syslocalCust_curs = CommonFunctions.start_db_connection(self,paths.pod, "syslocalCust")
-        email_columns_by_id, email_custom_columns, sms_columns_by_id, sms_custom_columns = CommonFunctions.get_custom_properties(self, syslocalCust_curs,account_name)
+        email_columns_by_id, email_custom_columns, sms_columns_by_id, sms_custom_columns = CommonFunctions.get_custom_columns(syslocalCust_curs, account_name)
         CommonFunctions.close_db_connection(self, syslocalCust_curs)
 
         # syslocalEvent_curs = CommonFunctions.init_db_connection(self, "syslocalEvent")
@@ -57,9 +57,10 @@ class TestValidateData(ValidateDataImpl,CEDFunctions,DeviceDetails):
             barStatus, fileStatus = CommonFunctions.status_progress(iteration + 1, len(ced_files), file)
             CommonFunctions.print_status(barStatus, fileStatus)
             if not CommonFunctions.is_file_empty(self, file):
-                ced_columns_from_file = CEDFunctions.get_headers_from_ced(self, file)
-                IDs, unique_IDs, event_stored_date, search_column, event_type = CEDFunctions.get_ids_from_ced(self, file)
-                ced_data, index_Of_stored_date = CEDFunctions.read_ced_data_for_validation(self, file, unique_IDs, search_column)
+                delimiter, qoutechar = CommonFunctions.get_file_info(self, file)
+                ced_columns_from_file = CEDFunctions.get_headers_from_ced(self, file,delimiter, qoutechar)
+                IDs, unique_IDs, event_stored_date, search_column, event_type = CEDFunctions.get_ids_from_ced(self, file,delimiter,qoutechar)
+                ced_data, index_Of_stored_date = CEDFunctions.read_ced_data_for_validation(self, file, unique_IDs, search_column,delimiter,qoutechar)
                 report = ValidateDataImpl.validate_data_from_ced_progress(self, barStatus, fileStatus,syslocalEvent_curs, file, search_column, ced_data, index_Of_stored_date,
                                                        ced_columns_from_file, event_stored_date, event_type,account_name,email_custom_columns,sms_custom_columns,self.CEDDatesInAccountTZ,acc_timezone)
                 status_report[file]=report

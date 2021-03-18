@@ -1,4 +1,7 @@
 from __future__ import print_function
+
+import csv
+
 from Implementations.setup import Setup
 from Implementations.common_functions_progress import CommonFunctions
 
@@ -82,50 +85,63 @@ class CEDFunctions(CommonFunctions):
     #
     #     return files
 
-    def get_ids_from_ced(self, ced_file):
-
+    # def get_ids_from_ced(self, ced_file):
+    #     IDs = []
+    #     event_stored_date = defaultdict(list)
+    #     unique_IDs = defaultdict(list)
+    #     try:
+    #         with open(os.path.join(CEDFunctions.input_file_path, ced_file), 'r') as f:
+    #             content = f.readlines()
+    #         header_row = content[:1]
+    #         event_type = re.split(r"\d+", ced_file)
+    #         event_type = event_type[1].strip('_')
+    #
+    #         search_column = self.get_search_column(ced_file)
+    #         index_Of_search_column, index_Of_event_stored_date = self.get_index(search_column, ced_file)
+    #
+    #         for row in content[1:]:
+    #             row = row.strip().replace('\"', '')
+    #             col_data = re.split(';|,|\t|\||""', row)
+    #             id_value = col_data[index_Of_search_column]
+    #             event_stored_time = col_data[index_Of_event_stored_date]
+    #             IDs.append(id_value)
+    #             event_stored_date[id_value].append(event_stored_time)
+    #
+    #         unique_IDs = set(IDs)
+    #         self.ced_func_log.info("There are %s records in file %s & the Unique %s are :: %s" %(len(IDs),ced_file ,search_column,len(unique_IDs)))
+    #
+    #         return IDs, unique_IDs, event_stored_date, search_column, event_type
+    #     except Exception as e:
+    #         self.ced_func_log.error('*** ERROR ON LINE %s , %s : %s ***' % (format(sys.exc_info()[-1].tb_lineno), type(e).__name__, e))
+    def get_ids_from_ced(self, ced_file,delimiter,quotechar):
         IDs = []
         event_stored_date = defaultdict(list)
         unique_IDs = defaultdict(list)
-
         try:
-            with open(os.path.join(CEDFunctions.input_file_path, ced_file), 'r') as f:
-                content = f.readlines()
-            header_row = content[:1]
-            event_type = re.split(r"\d+", ced_file)
-            event_type = event_type[1].strip('_')
-
-            search_column = self.get_search_column(ced_file)
-            index_Of_search_column, index_Of_event_stored_date = self.get_index(search_column, ced_file)
-
-            for row in content[1:]:
-                row = row.strip().replace('\"', '')
-                col_data = re.split(';|,|\t|\||""', row)
-                id_value = col_data[index_Of_search_column]
-                event_stored_time = col_data[index_Of_event_stored_date]
-                IDs.append(id_value)
-                event_stored_date[id_value].append(event_stored_time)
-
-            unique_IDs = set(IDs)
-            self.ced_func_log.info("There are %s records in file %s & the Unique %s are :: %s" %(len(IDs),ced_file ,search_column,len(unique_IDs)))
-
-            return IDs, unique_IDs, event_stored_date, search_column, event_type
-            # print("*** There are", len(IDs), "records in file ", ced_file, " & the Unique", search_column, "are :: ",
-            #       len(unique_IDs)," :: ", unique_IDs)
-            # logging.info("There are {}, records in file {} and the Unique {} are {}, {}".format(len(IDs), cedFile,
-            # searchColumn, len(lUniqueIDs), lUniqueIDs))
-            # print("\tThere are", len(IDs), "records in CED file ", ced_file, " & the Unique", search_column,
-            #       "are :: ",  len(unique_IDs))
-
+            with open(os.path.join(CEDFunctions.input_file_path, ced_file), 'r') as file:
+                content = csv.reader(file,delimiter=delimiter,quotechar=quotechar)
+                header_row = next(content)
+                event_type = re.split(r"\d+", ced_file)
+                event_type = event_type[1].strip('_')
+                search_column = self.get_search_column(ced_file)
+                index_Of_search_column = header_row.index(search_column)
+                index_Of_event_stored_date = header_row.index("EVENT_STORED_DT")
+                for row in content:
+                    # for col in row:
+                    id_value = row[index_Of_search_column]
+                    event_stored_time = row[index_Of_event_stored_date]
+                    IDs.append(id_value)
+                    event_stored_date[id_value].append(event_stored_time)
+                unique_IDs = set(IDs)
+                self.ced_func_log.info("There are %s records in file %s & the Unique %s are :: %s" %(len(IDs),ced_file ,search_column,len(unique_IDs)))
+                return IDs, unique_IDs, event_stored_date, search_column, event_type
         except Exception as e:
             self.ced_func_log.error('*** ERROR ON LINE %s , %s : %s ***' % (format(sys.exc_info()[-1].tb_lineno), type(e).__name__, e))
-
-
 
     def get_count_from_ced(self, IDs, uniqueIDs):
         d_count_from_ced = defaultdict(list)
         try:
-            self.ced_func_log.info("Getting count from CED file.")
+            # self.ced_func_log.info("Getting count from CED file.")
             for id in uniqueIDs:
                 count = IDs.count(id)
                 d_count_from_ced[id].append(count)
@@ -172,33 +188,21 @@ class CEDFunctions(CommonFunctions):
         # print("\nData is :\n",ced_data)
         return ced_data, index_Of_stored_date
 
-    def read_ced_data_for_validation(self,file, unique_IDs, search_column):
+    def read_ced_data_for_validation(self,file, unique_IDs, search_column,delimiter,quotechar):
         # print("*** Reading Data From File :: ", file , " ***")
         ced_data = defaultdict(lambda: defaultdict(list))
         index_Of_stored_date = None
 
-        with open(os.path.join(CEDFunctions.input_file_path, file), 'r') as f:
-            content = f.readlines()
-
-            for row in content[:1]:
-                stripped_row = row.strip().replace('\"', '')
-                # all_columns = re.split(';|,|\t|""', stripped_row)
-                all_columns = re.split(';|,|\t|\||""', stripped_row) # split column either by ; or , or | or \t or "
-                for i in all_columns:
-                    if i == 'EVENT_STORED_DT':
-                        index_Of_stored_date = all_columns.index(i)
-                        break
-                # index_Of_stored_date[file].append(stored_date_index)
+        with open(os.path.join(CEDFunctions.input_file_path, file), 'r') as file:
+            content = csv.reader(file,delimiter=delimiter,quotechar=quotechar)
+            header = next(content)
+            index_Of_stored_date = header.index("EVENT_STORED_DT")
 
             for id in unique_IDs:
                 rownum = 0
-                for rowData in content[1:]:
+                for rowData in content:
                     if id in rowData:
-                        rowData = rowData.strip()
-                        split_columns = re.split(',(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)',rowData)
-                        # split_columns = re.split('\|,(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)',rowData)
-                        for eachColumn in split_columns:
-                            eachColumn = eachColumn.strip('"')
+                        for eachColumn in rowData:
                             ced_data[id][rownum].append(eachColumn)
                         rownum +=1
                         # rownum = 0

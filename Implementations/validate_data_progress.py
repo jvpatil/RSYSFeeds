@@ -1,6 +1,7 @@
 import pytz
 
-import paths
+# import read_xml
+from ConfigFiles import paths
 from Implementations.common_functions_progress import CommonFunctions
 from Implementations.device_details import DeviceDetails
 from datetime import datetime
@@ -8,7 +9,7 @@ import sys
 import traceback
 from collections import defaultdict
 from ConfigFiles import tables
-from Implementations.common_functions import CommonFunctions
+# from Implementations.common_functions import CommonFunctions
 from ConfigFiles import logger_util
 
 class ValidateDataImpl:
@@ -58,7 +59,9 @@ class ValidateDataImpl:
                 ValidateDataImpl.add_remove_column_for_query(self, all_columns_from_ced, device_attributes)
             #
         if "CUSTOM_PROPERTIES" in db_column_names:
+            index_of_custom_properties = db_column_names.index('CUSTOM_PROPERTIES')
             ValidateDataImpl.add_remove_column_for_query(self, all_columns_from_ced, custom_columns)
+            # cust_property_data = read_xml.get_attributes()
 
         columns_to_be_queried_from_db = all_columns_from_ced
         # self.val_imp_log.info("\n")
@@ -93,7 +96,7 @@ class ValidateDataImpl:
                     unique_id_from_db = row_from_db[index_of_unique_id]
                     if CEDDatesInAccountTZ:
                         event_date_for_record_from_ced = datetime.strptime(event_date_for_record_from_ced, '%d-%b-%Y %H:%M:%S')
-                        event_date_for_record_from_ced = CommonFunctions.covert_acc_tz_to_utc(event_date_for_record_from_ced, acc_timezone)
+                        event_date_for_record_from_ced = CommonFunctions.covert_acc_tz_to_utc(self,event_date_for_record_from_ced, acc_timezone)
 
                     if 'SMS' in event_type or 'MMS' in event_type or 'PUSH' in event_type:
                         index_of_uuid = ced_columns_from_file[event_type].index('EVENT_UUID')
@@ -107,6 +110,7 @@ class ValidateDataImpl:
                         self.val_imp_log.info("Validating row " +str(ced_row_num)+ "(DB row:" +str(db_row_num)+ ")In file " +str(file)+ " for " +str(
                             search_column)+ " : "+ str(id) + " & unique ID :" + str(unique_id_from_db))
                         device_id = None
+                        # cust_property_data = read_xml.read_custom_properties(row_from_db[db_column_names.index('CUSTOM_PROPERTIES')])
                         for col_index, col_value in enumerate(row_from_db):
                             try:
                                 ced_value = ced_data[id][ced_row_num][col_index]
@@ -117,8 +121,9 @@ class ValidateDataImpl:
 
                                 col_name = all_columns_from_ced[col_index].replace("null as ",'')
                                 if all_columns_from_ced[col_index].replace("null as ",'') in custom_columns.values():
+
                                     Status = "--- SKIPPING CUSTOM COLUMN FOR NOW ---"
-                                    self.val_imp_log.info(Status)
+                                    # self.val_imp_log.info(Status)
                                     continue
                                 elif col_name in device_attributes:
                                     user_agent = row_from_db[ced_columns_from_file[event_type].index('USER_AGENT_STRING')]
@@ -128,7 +133,7 @@ class ValidateDataImpl:
                                     # if device_id != None:
                                     Status = ValidateDataImpl.validate_device_data(self,device_ids, device_data, id,device_id,db_row_num, col_index,
                                                                                    col_name, file,ced_value,user_agent)
-                                    self.val_imp_log.info(Status)
+                                    # self.val_imp_log.info(Status)
 
                                 elif type(db_value) == datetime:
                                     formatTimeInPST = pytz.timezone('US/Pacific').localize(db_value)
@@ -141,41 +146,41 @@ class ValidateDataImpl:
                                     if columns_to_be_queried_from_db[col_index] != 'EVENT_STORED_DT':
                                         if ced_value == str(convertedToUTC.strftime(date_format)):  # for event_captured_Dt is which is in PST,
                                             Status = columns_to_be_queried_from_db[col_index] + "= Pass"
-                                            self.val_imp_log.info(Status)
+                                            # self.val_imp_log.info(Status)
 
                                         else:
                                             Status = "row=" + str(db_row_num) + ",col=" + str(col_index) + ": Data for column " + \
                                                      columns_to_be_queried_from_db[col_index] + " is NOT matching. Data_In_CED:" + str(
                                                 ced_value) + " & Data_in_DB:" + str(convertedToUTC.strftime(date_format))
                                             CommonFunctions.write_results(self, file, id, ced_value, db_value, Status)
-                                            self.val_imp_log.info(Status)
+                                            # self.val_imp_log.info(Status)
 
                                     elif ced_value == str(db_value.strftime(date_format)):
                                         Status = columns_to_be_queried_from_db[col_index] + "= Pass"
-                                        self.val_imp_log.info(Status)
+                                        # self.val_imp_log.info(Status)
 
                                     else:
                                         Status = "row=" + str(db_row_num) + ",col=" + str(col_index) + ": Data for column " + columns_to_be_queried_from_db[col_index] + " is NOT matching. Data_In_CED:" + str(ced_value) + " & Data_in_DB:" + str(
                                             db_value.strftime(date_format))
                                         CommonFunctions.write_results(self, file, id, ced_value, db_value, Status)
-                                        self.val_imp_log.info(Status)
+                                        # self.val_imp_log.info(Status)
 
                                 elif ced_value == str(db_value) or ced_value == "Unknown" or ced_value == "UI - Data Viewer" or ced_value == "Unsubscribe Page/Link":
                                     Status = columns_to_be_queried_from_db[col_index] + "= Pass"
-                                    self.val_imp_log.info(Status)
+                                    # self.val_imp_log.info(Status)
 
                                 elif type(db_value) != str and db_value != None and ced_value.isdigit():
                                     if float(ced_value) == float(db_value):  # handling numeric data coz sometimes 10 == 10.0 fails..
                                         Status = columns_to_be_queried_from_db[col_index] + "= Pass"
-                                        self.val_imp_log.info(Status)
+                                        # self.val_imp_log.info(Status)
                                 else:
                                     Status = "row=" + str(db_row_num) + ",col=" + str(col_index) + ": Data for column " + str(columns_to_be_queried_from_db[col_index]) + " is NOT matching. Data_In_CED:" + ced_value + " & Data_in_DB:" + str(db_value)
                                     CommonFunctions.write_results(self, file, id, ced_value, db_value, Status)
-                                    self.val_imp_log.info(Status)
+                                    # self.val_imp_log.info(Status)
 
                             except Exception as e:
                                 Status = '*****ERROR ON LINE {}'.format(sys.exc_info()[-1].tb_lineno), ",", type(e).__name__, ":", e, "*****\n"
-                                self.val_imp_log.info(Status)
+                                # self.val_imp_log.info(Status)
 
                             if "Pass" in str(Status):
                                 row_error.append(True)

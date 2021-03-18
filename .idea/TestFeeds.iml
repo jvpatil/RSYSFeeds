@@ -13,7 +13,14 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="GenerateDataWithPython" />
     <orderEntry type="module" module-name="Interact" />
-    <orderEntry type="module" module-name="PyLearn" />
+    <orderEntry type="module" module-name="PyProject" />
     <orderEntry type="module" module-name="FilterConditions" />
+    <orderEntry type="module" module-name="TestProject" />
+  </component>
+  <component name="PackageRequirementsSettings">
+    <option name="requirementsPath" value="" />
+  </component>
+  <component name="TestRunnerService">
+    <option name="PROJECT_TEST_RUNNER" value="pytest" />
   </component>
 </module>

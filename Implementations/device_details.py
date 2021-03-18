@@ -14,6 +14,7 @@ class DeviceDetails(Setup):
     def get_device_details(user_agent_string = None):
         # ua = 'Mozilla/5.0 (Linux; Android 4.3; C5502 Build/10.4.1.B.0.101) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/33.0.1750.136 Mobile Safari/537.36'
         # ua = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:61.0) Gecko/20100101 SA/61.0'
+        # ua = 'Mozilla/5.0 (Linux; Android 9; KFKAWI Build/PS7318; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/87.0.4280.101 Safari/537.36'
 
         # Parse UA string and load data to dict of 'operating_system', 'client', 'device' keys
         if user_agent_string != None:
@@ -33,6 +34,7 @@ class DeviceDetails(Setup):
                     manfacturer = "Apple"
                 if operating_system.lower() == 'Android':
                     manfacturer = "Google"
+                print("Manfacturer : %s, OS : %s,  Device Type : %s, Browser : %s, Browser type : %s," %(manfacturer,operating_system, device_type, browser, browser_type))
                 return manfacturer,operating_system, device_type, browser, browser_type
             except Exception as e:
                 print(e)
@@ -133,6 +135,9 @@ class DeviceDetails(Setup):
 
 
 # ua = "Mozilla/5.0 (Linux; Android 4.3; C5502 Build/10.4.1.B.0.101) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/33.0.1750.136 Mobile Safari/537.36"
-# if __name__ == '__main__':
+if __name__ == '__main__':
+    # ua = 'Mozilla/5.0 (Linux; Android 9; KFKAWI Build/PS7318; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/87.0.4280.101 Safari/537.36'
+    ua = 'Mozilla/5.0 (Windows NT 5.1; rv:11.0) Gecko Firefox/11.0 (via ggpht.com GoogleImageProxy)'
+    DeviceDetails.get_device_details(ua)
     # device_ids, device_data = DeviceDetails.get_device_attributes("dataqa1")
     # DeviceDetails.get_data(device_ids, device_data, 8121,"open")

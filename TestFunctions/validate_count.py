@@ -37,7 +37,8 @@ class ValidateCount(CEDFunctions,DBFunctions, CommonFunctions):
             CommonFunctions.clear(self)
             CommonFunctions.print_status(barStatus, fileStatus)
             if not CommonFunctions.is_file_empty(self, file):
-                IDs, luniqueIDs, dEventStoredDateFromCED, searchColumn, eventType = CEDFunctions.get_ids_from_ced(self, file)
+                delimiter, qoutechar = CommonFunctions.get_file_info(self, file)
+                IDs, luniqueIDs, dEventStoredDateFromCED, searchColumn, eventType = CEDFunctions.get_ids_from_ced(self, file,delimiter, qoutechar )
                 dCountFromCED = CEDFunctions.get_count_from_ced(self, IDs, luniqueIDs)
                 dCountFromDB, dEventDatesFromDB = DBFunctions.get_count_from_db(self, syslocalEvent_curs, account_name,
                                                                                       self.eventSchema,
