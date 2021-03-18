@@ -1,7 +1,7 @@
 from Implementations.setup import Setup
 from Implementations.ced_functions import CEDFunctions
 from Implementations.db_fuctions import DBFunctions
-from Implementations.common_functions_progress import CommonFunctions
+from Implementations.common_functions import CommonFunctions
 from Implementations.omniture import OmnitureFunctions
 
 class Omniture(CommonFunctions):

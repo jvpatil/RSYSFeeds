@@ -5,11 +5,11 @@ from datetime import datetime
 from Implementations import generate_html_report
 from Implementations.setup import Setup
 from Implementations.ced_functions import CEDFunctions
-from Implementations.common_functions_progress import CommonFunctions
+from Implementations.common_functions import CommonFunctions
 from Implementations.device_details import DeviceDetails
 # import Implementations.ssh as SSH
 # import Implementations.ssh_tunnel as SSH
-from Implementations.validate_data_progress import ValidateDataImpl
+from Implementations.validate_data import ValidateDataImpl
 # from ConfigFiles.paths import *
 from ConfigFiles import paths, logger_util
 
@@ -34,34 +34,35 @@ class TestValidateData(ValidateDataImpl,CEDFunctions,DeviceDetails):
             account_name = input("\n***PLEASE PROVIDE THE ACCOUNT NAME  :: ")
 
         if self.CEDDatesInAccountTZ:
-            # sysadmin_curs = CommonFunctions.init_db_connection(self, "sysAdmin")
-            sysadmin_curs = CommonFunctions.start_db_connection(self,paths.pod, "sysAdmin")
+            # sysadmin_curs = self.init_db_connection(self, "sysAdmin")
+            sysadmin_curs = self.start_db_connection(paths.pod, "sysAdmin")
             acc_timezone = self.get_account_timezone_info(sysadmin_curs, account_name)
-            CommonFunctions.close_db_connection(self, sysadmin_curs)
+            self.close_db_connection(sysadmin_curs)
         else:
             acc_timezone = paths.accountTimeZone
 
-        # syslocalCust_curs = CommonFunctions.init_db_connection(self, "syslocalCust")
-        syslocalCust_curs = CommonFunctions.start_db_connection(self,paths.pod, "syslocalCust")
-        email_columns_by_id, email_custom_columns, sms_columns_by_id, sms_custom_columns = CommonFunctions.get_custom_columns(syslocalCust_curs, account_name)
-        CommonFunctions.close_db_connection(self, syslocalCust_curs)
+        # syslocalCust_curs = self.init_db_connection(self, "syslocalCust")
+        syslocalCust_curs = self.start_db_connection(paths.pod, "syslocalCust")
+        email_columns_by_id, email_custom_columns, sms_columns_by_id, sms_custom_columns = self.get_custom_columns(syslocalCust_curs, account_name)
+        self.close_db_connection(syslocalCust_curs)
 
-        # syslocalEvent_curs = CommonFunctions.init_db_connection(self, "syslocalEvent")
-        syslocalEvent_curs = CommonFunctions.start_db_connection(self,paths.pod, "syslocalEvent")
+        # syslocalEvent_curs = self.init_db_connection(self, "syslocalEvent")
+        syslocalEvent_curs = self.start_db_connection(paths.pod, "syslocalEvent")
         ced_files = CEDFunctions.find_files(self)
         status_report = defaultdict(list)
         empty_files=[]
         iteration = 0
         for file in ced_files:
-            CommonFunctions.clear(self)
-            barStatus, fileStatus = CommonFunctions.status_progress(iteration + 1, len(ced_files), file)
-            CommonFunctions.print_status(barStatus, fileStatus)
-            if not CommonFunctions.is_file_empty(self, file):
-                delimiter, qoutechar = CommonFunctions.get_file_info(self, file)
-                ced_columns_from_file = CEDFunctions.get_headers_from_ced(self, file,delimiter, qoutechar)
-                IDs, unique_IDs, event_stored_date, search_column, event_type = CEDFunctions.get_ids_from_ced(self, file,delimiter,qoutechar)
-                ced_data, index_Of_stored_date = CEDFunctions.read_ced_data_for_validation(self, file, unique_IDs, search_column,delimiter,qoutechar)
-                report = ValidateDataImpl.validate_data_from_ced_progress(self, barStatus, fileStatus,syslocalEvent_curs, file, search_column, ced_data, index_Of_stored_date,
+            self.clear()
+            barStatus, fileStatus = self.status_progress(iteration + 1, len(ced_files), file)
+            self.print_status(barStatus, fileStatus)
+            if not self.is_file_empty(file):
+                delimiter, qoutechar = self.get_file_info(file)
+                ced_columns_from_file = self.get_headers_from_ced(file,delimiter, qoutechar)
+                IDs, unique_IDs, event_stored_date, search_column, event_type = self.get_ids_from_ced(file,delimiter,qoutechar)
+                ced_data, index_Of_stored_date = self.read_ced_data_for_validation(file, unique_IDs, search_column,delimiter,qoutechar)
+                report = self.validate_data_from_ced_progress(barStatus, fileStatus,syslocalEvent_curs, file, search_column, ced_data,
+                                                             index_Of_stored_date,
                                                        ced_columns_from_file, event_stored_date, event_type,account_name,email_custom_columns,sms_custom_columns,self.CEDDatesInAccountTZ,acc_timezone)
                 status_report[file]=report
             else:
@@ -70,12 +71,12 @@ class TestValidateData(ValidateDataImpl,CEDFunctions,DeviceDetails):
         if not syslocalEvent_curs.close():
             print("\nClosed the connection to ", syslocalEvent_curs)
 
-        CommonFunctions.clear(self)
+        self.clear()
         end_time = datetime.now()
-        CommonFunctions.print_status(barStatus)
+        self.print_status(barStatus)
         timeTaken = (end_time - start_time).total_seconds()
-        total_time = Setup.get_run_time(self,timeTaken)
-        CommonFunctions.print_results_of_data_validation(self,status_report,total_time,len(ced_files),empty_files)
+        total_time = Setup.get_run_time(timeTaken)
+        self.print_results_of_data_validation(status_report,total_time,len(ced_files),empty_files)
         generate_html_report.generate_report(status_report, total_time, len(ced_files), empty_files, "validate_data")
 
 

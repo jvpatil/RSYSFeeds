@@ -16,6 +16,7 @@
     <orderEntry type="module" module-name="PyProject" />
     <orderEntry type="module" module-name="FilterConditions" />
     <orderEntry type="module" module-name="TestProject" />
+    <orderEntry type="module" module-name="ResponsysFeeds" />
   </component>
   <component name="PackageRequirementsSettings">
     <option name="requirementsPath" value="" />

@@ -1,216 +1,324 @@
-[2020-12-10 12:47:56,162] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 12345
-[2020-12-10 12:47:56,163] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:47:58,360] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 654321
-[2020-12-10 12:47:58,360] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:47:58,361] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 123456
-[2020-12-10 12:47:58,361] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:48:00,683] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 654321
-[2020-12-10 12:48:00,683] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:48:00,683] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 123456
-[2020-12-10 12:48:00,683] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:48:02,852] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 654321
-[2020-12-10 12:48:02,852] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:48:02,852] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 123456
-[2020-12-10 12:48:02,852] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:48:05,223] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 340015612
-[2020-12-10 12:48:05,224] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:48:05,224] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 340015411
-[2020-12-10 12:48:05,224] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:48:05,230] [ Implementations.common_functions_progress    :   209] [INFO] -- 30336_MULTIVARIATE_TEST_20201210_065659.txtis empty
-[2020-12-10 12:48:07,415] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 12342
-[2020-12-10 12:48:07,415] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:48:07,416] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 12341
-[2020-12-10 12:48:07,416] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:48:09,581] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 654321
-[2020-12-10 12:48:09,581] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:48:09,581] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 123456
-[2020-12-10 12:48:09,581] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:48:11,813] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 654321
-[2020-12-10 12:48:11,813] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:48:11,813] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 123456
-[2020-12-10 12:48:11,813] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:48:14,130] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 654321
-[2020-12-10 12:48:14,130] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:48:14,130] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 123456
-[2020-12-10 12:48:14,130] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:48:16,486] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 340015612
-[2020-12-10 12:48:16,486] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:48:16,487] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 340015411
-[2020-12-10 12:48:16,487] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:48:18,742] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 654321
-[2020-12-10 12:48:18,742] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:48:18,742] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 123456
-[2020-12-10 12:48:18,743] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:48:21,037] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 340015612
-[2020-12-10 12:48:21,037] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:48:21,037] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 340015411
-[2020-12-10 12:48:21,037] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:48:23,456] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 654321
-[2020-12-10 12:48:23,456] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:48:23,457] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 123456
-[2020-12-10 12:48:23,457] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:48:25,905] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 654321
-[2020-12-10 12:48:25,906] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:48:25,906] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 123456
-[2020-12-10 12:48:25,906] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:48:28,261] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 654321
-[2020-12-10 12:48:28,261] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:48:28,261] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 123456
-[2020-12-10 12:48:28,261] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:48:30,506] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 654321
-[2020-12-10 12:48:30,506] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:48:30,506] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 123456
-[2020-12-10 12:48:30,507] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:48:32,668] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 12342
-[2020-12-10 12:48:32,668] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:48:32,669] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 12341
-[2020-12-10 12:48:32,669] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:48:34,972] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 654321
-[2020-12-10 12:48:34,973] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:48:34,973] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 123456
-[2020-12-10 12:48:34,973] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:48:37,123] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 654321
-[2020-12-10 12:48:37,124] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:48:37,124] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 123456
-[2020-12-10 12:48:37,124] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:48:39,284] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 654321
-[2020-12-10 12:48:39,284] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:48:39,284] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 123456
-[2020-12-10 12:48:39,284] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:48:41,472] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 654321
-[2020-12-10 12:48:41,472] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:48:41,473] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 123456
-[2020-12-10 12:48:41,473] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:48:43,828] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 654321
-[2020-12-10 12:48:43,828] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:48:43,828] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 123456
-[2020-12-10 12:48:43,829] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:48:46,187] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 654321
-[2020-12-10 12:48:46,188] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:48:46,188] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 123456
-[2020-12-10 12:48:46,188] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:48:48,432] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 654321
-[2020-12-10 12:48:48,433] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:48:48,433] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 123456
-[2020-12-10 12:48:48,433] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:48:50,796] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 654321
-[2020-12-10 12:48:50,797] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:48:50,797] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 123456
-[2020-12-10 12:48:50,798] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:48:50,824] [ Implementations.common_functions_progress    :   209] [INFO] -- 30336_PUSH_CONVERTED_20201210_065658.txtis empty
-[2020-12-10 12:48:53,144] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 654321
-[2020-12-10 12:48:53,144] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:48:53,144] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 123456
-[2020-12-10 12:48:53,145] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:48:55,304] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 654321
-[2020-12-10 12:48:55,304] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:48:55,304] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 123456
-[2020-12-10 12:48:55,304] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:48:57,516] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 654321
-[2020-12-10 12:48:57,516] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:48:57,517] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 123456
-[2020-12-10 12:48:57,517] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:48:59,701] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 654321
-[2020-12-10 12:48:59,701] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:48:59,702] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 123456
-[2020-12-10 12:48:59,702] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:49:02,039] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 654321
-[2020-12-10 12:49:02,039] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:49:02,040] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 123456
-[2020-12-10 12:49:02,040] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:49:04,958] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 654321
-[2020-12-10 12:49:04,958] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:49:04,958] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 123456
-[2020-12-10 12:49:04,958] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:49:07,181] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 340015612
-[2020-12-10 12:49:07,181] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:49:07,181] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 340015411
-[2020-12-10 12:49:07,181] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:49:09,657] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 654321
-[2020-12-10 12:49:09,657] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:49:09,658] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 123456
-[2020-12-10 12:49:09,658] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:49:11,878] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 654321
-[2020-12-10 12:49:11,878] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:49:11,878] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 123456
-[2020-12-10 12:49:11,878] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:49:14,021] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 654321
-[2020-12-10 12:49:14,021] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:49:14,021] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 123456
-[2020-12-10 12:49:14,021] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:49:16,228] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 654321
-[2020-12-10 12:49:16,228] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:49:16,228] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 123456
-[2020-12-10 12:49:16,228] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:49:18,450] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 654321
-[2020-12-10 12:49:18,451] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:49:18,451] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 123456
-[2020-12-10 12:49:18,452] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:49:20,633] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 654321
-[2020-12-10 12:49:20,633] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:49:20,633] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 123456
-[2020-12-10 12:49:20,633] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:49:22,821] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 654321
-[2020-12-10 12:49:22,821] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:49:22,821] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 123456
-[2020-12-10 12:49:22,821] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:49:25,019] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 654321
-[2020-12-10 12:49:25,019] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:49:25,020] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 123456
-[2020-12-10 12:49:25,020] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:49:27,227] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 654321
-[2020-12-10 12:49:27,229] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:49:27,229] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 123456
-[2020-12-10 12:49:27,229] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:49:29,705] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 654321
-[2020-12-10 12:49:29,705] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:49:29,705] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 123456
-[2020-12-10 12:49:29,706] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:49:31,906] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 654321
-[2020-12-10 12:49:31,907] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:49:31,907] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 123456
-[2020-12-10 12:49:31,907] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:49:34,518] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 654321
-[2020-12-10 12:49:34,518] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:49:34,519] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 123456
-[2020-12-10 12:49:34,519] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:49:36,892] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 654321
-[2020-12-10 12:49:36,892] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:49:36,892] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 123456
-[2020-12-10 12:49:36,892] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:49:39,132] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 654321
-[2020-12-10 12:49:39,133] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:49:39,133] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 123456
-[2020-12-10 12:49:39,134] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:49:40,253] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 12345
-[2020-12-10 12:49:40,253] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:49:42,557] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 340015612
-[2020-12-10 12:49:42,557] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:49:42,557] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 340015411
-[2020-12-10 12:49:42,558] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:49:44,733] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 340015612
-[2020-12-10 12:49:44,734] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:49:44,734] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 340015411
-[2020-12-10 12:49:44,734] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:49:46,960] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 654321
-[2020-12-10 12:49:46,961] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:49:46,961] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 123456
-[2020-12-10 12:49:46,961] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:49:49,186] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 340015612
-[2020-12-10 12:49:49,186] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:49:49,186] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 340015411
-[2020-12-10 12:49:49,186] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:49:51,506] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 340015612
-[2020-12-10 12:49:51,506] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:49:51,507] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 340015411
-[2020-12-10 12:49:51,507] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:49:52,590] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 12345
-[2020-12-10 12:49:52,590] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:49:54,850] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 654321
-[2020-12-10 12:49:54,851] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:49:54,851] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 123456
-[2020-12-10 12:49:54,851] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:49:57,181] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 340015612
-[2020-12-10 12:49:57,181] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
-[2020-12-10 12:49:57,181] [ Implementations.common_functions_progress    :   129] [INFO] -- Validating count for ID :: 340015411
-[2020-12-10 12:49:57,181] [ Implementations.common_functions_progress    :   143] [INFO] -- Count for the ID Match
+[2021-03-18 20:47:12,610] [ Implementations.ced_functions                :   136] [INFO] -- There are 3 records in file 30336_WEBPUSH_BUTTON_CLICKED_20210317_091649.txt & the Unique LAUNCH_ID are :: 1
+[2021-03-18 20:47:13,804] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 200820204
+[2021-03-18 20:47:13,824] [ Implementations.ced_functions                :   136] [INFO] -- There are 2 records in file 30336_MMS_FAILED_20210317_091648.txt & the Unique LAUNCH_ID are :: 1
+[2021-03-18 20:47:15,042] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 200820201
+[2021-03-18 20:47:15,066] [ Implementations.ced_functions                :   136] [INFO] -- There are 10 records in file 30336_CUSTOM_CHANNEL_SENT_20210317_091649.txt & the Unique LAUNCH_ID are :: 1
+[2021-03-18 20:47:16,687] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 200820201
+[2021-03-18 20:47:16,721] [ Implementations.ced_functions                :   136] [INFO] -- There are 2 records in file 30336_SMS_FAIL_20210317_091648.txt & the Unique LAUNCH_ID are :: 1
+[2021-03-18 20:47:18,009] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 200820202
+[2021-03-18 20:47:18,036] [ Implementations.ced_functions                :   136] [INFO] -- There are 2 records in file 30336_PUSH_CONVERTED_20210317_091648.txt & the Unique LAUNCH_ID are :: 1
+[2021-03-18 20:47:19,120] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 200820203
+[2021-03-18 20:47:19,145] [ Implementations.ced_functions                :   136] [INFO] -- There are 10 records in file 30336_SMS_MO_FW_FAILED_20210317_091648.txt & the Unique LAUNCH_ID are :: 1
+[2021-03-18 20:47:20,150] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 200820202
+[2021-03-18 20:47:20,175] [ Implementations.ced_functions                :   136] [INFO] -- There are 3 records in file 30336_CLICK_20210317_091648.txt & the Unique LAUNCH_ID are :: 1
+[2021-03-18 20:47:21,215] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 200820201
+[2021-03-18 20:47:21,238] [ Implementations.ced_functions                :   136] [INFO] -- There are 2 records in file 30336_CUSTOM_CHANNEL_SKIPPED_20210317_091649.txt & the Unique LAUNCH_ID are :: 1
+[2021-03-18 20:47:22,540] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 200820201
+[2021-03-18 20:47:22,562] [ Implementations.ced_functions                :   136] [INFO] -- There are 2 records in file 30336_CONVERT_20210317_091648.txt & the Unique LAUNCH_ID are :: 1
+[2021-03-18 20:47:23,729] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 200820201
+[2021-03-18 20:47:23,770] [ Implementations.ced_functions                :   136] [INFO] -- There are 2 records in file 30336_FAIL_20210317_091648.txt & the Unique LAUNCH_ID are :: 1
+[2021-03-18 20:47:24,860] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 200820201
+[2021-03-18 20:47:24,883] [ Implementations.ced_functions                :   136] [INFO] -- There are 1 records in file 30336_FORM_STATE_20210317_091649.txt & the Unique FORM_ID are :: 1
+[2021-03-18 20:47:25,983] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 85381
+[2021-03-18 20:47:26,006] [ Implementations.ced_functions                :   136] [INFO] -- There are 2 records in file 30336_SKIPPED_20210317_091648.txt & the Unique LAUNCH_ID are :: 1
+[2021-03-18 20:47:27,004] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 200820201
+[2021-03-18 20:47:27,023] [ Implementations.ced_functions                :   136] [INFO] -- There are 2 records in file 30336_PUSH_INBOX_SENT_20210317_091649.txt & the Unique LAUNCH_ID are :: 1
+[2021-03-18 20:47:28,235] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 200820203
+[2021-03-18 20:47:28,251] [ Implementations.ced_functions                :   136] [INFO] -- There are 2 records in file 30336_PUSH_OPT_OUT_20210317_091649.txt & the Unique RIID are :: 2
+[2021-03-18 20:47:30,386] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 76001881
+[2021-03-18 20:47:30,387] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 76001901
+[2021-03-18 20:47:30,405] [ Implementations.ced_functions                :   136] [INFO] -- There are 10 records in file 30336_PUSH_SENT_20210317_091648.txt & the Unique LAUNCH_ID are :: 1
+[2021-03-18 20:47:31,514] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 200820203
+[2021-03-18 20:47:31,534] [ Implementations.ced_functions                :   136] [INFO] -- There are 10 records in file 30336_SENT_20210317_091648.txt & the Unique LAUNCH_ID are :: 1
+[2021-03-18 20:47:32,739] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 200820201
+[2021-03-18 20:47:32,757] [ Implementations.ced_functions                :   136] [INFO] -- There are 6 records in file 30336_BOUNCE_20210317_091648.txt & the Unique LAUNCH_ID are :: 5
+[2021-03-18 20:47:37,257] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 201681
+[2021-03-18 20:47:37,257] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 204881
+[2021-03-18 20:47:37,257] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 204081
+[2021-03-18 20:47:37,258] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 200820201
+[2021-03-18 20:47:37,258] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 204581
+[2021-03-18 20:47:37,275] [ Implementations.ced_functions                :   136] [INFO] -- There are 2 records in file 30336_SMS_OPT_OUT_20210317_091648.txt & the Unique RIID are :: 2
+[2021-03-18 20:47:39,307] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 34001601
+[2021-03-18 20:47:39,308] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 34001621
+[2021-03-18 20:47:39,323] [ Implementations.ced_functions                :   136] [INFO] -- There are 2 records in file 30336_CUSTOM_CHANNEL_FAILED_20210317_091649.txt & the Unique LAUNCH_ID are :: 1
+[2021-03-18 20:47:40,339] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 200820201
+[2021-03-18 20:47:40,358] [ Implementations.ced_functions                :   136] [INFO] -- There are 1 records in file 30336_DYNAMIC_CONTENT_20210317_091649.txt & the Unique LAUNCH_ID are :: 1
+[2021-03-18 20:47:41,449] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 200820201
+[2021-03-18 20:47:41,469] [ Implementations.ced_functions                :   136] [INFO] -- There are 3 records in file 30336_PUSH_BUTTON_CLICKED_20210317_091648.txt & the Unique LAUNCH_ID are :: 1
+[2021-03-18 20:47:42,424] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 200820203
+[2021-03-18 20:47:42,443] [ Implementations.ced_functions                :   136] [INFO] -- There are 10 records in file 30336_SMS_SENT_20210317_091648.txt & the Unique LAUNCH_ID are :: 1
+[2021-03-18 20:47:43,494] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 200820202
+[2021-03-18 20:47:43,511] [ Implementations.common_functions_progress    :   197] [INFO] -- 30336_MULTIVARIATE_TEST_20210317_091649.txtis empty
+[2021-03-18 20:47:43,528] [ Implementations.ced_functions                :   136] [INFO] -- There are 1 records in file 30336_WEBPUSH_OPT_OUT_20210317_091649.txt & the Unique RIID are :: 1
+[2021-03-18 20:47:44,629] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 76002101
+[2021-03-18 20:47:44,650] [ Implementations.ced_functions                :   136] [INFO] -- There are 2 records in file 30336_MMS_SKIPPED_20210317_091648.txt & the Unique LAUNCH_ID are :: 1
+[2021-03-18 20:47:45,743] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 200820201
+[2021-03-18 20:47:45,757] [ Implementations.common_functions_progress    :   197] [INFO] -- 30336_HOLDOUT_GROUP_20210317_091649.txtis empty
+[2021-03-18 20:47:45,772] [ Implementations.ced_functions                :   136] [INFO] -- There are 1 records in file 30336_WEBPUSH_CLOSED_20210317_091649.txt & the Unique LAUNCH_ID are :: 1
+[2021-03-18 20:47:46,934] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 200820204
+[2021-03-18 20:47:46,953] [ Implementations.ced_functions                :   136] [INFO] -- There are 3 records in file 30336_PUSH_CLICKED_20210317_091648.txt & the Unique LAUNCH_ID are :: 1
+[2021-03-18 20:47:47,900] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 200820203
+[2021-03-18 20:47:47,915] [ Implementations.ced_functions                :   136] [INFO] -- There are 4 records in file 30336_FORM_20210317_091649.txt & the Unique FORM_ID are :: 1
+[2021-03-18 20:47:49,032] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 85381
+[2021-03-18 20:47:49,049] [ Implementations.ced_functions                :   136] [INFO] -- There are 2 records in file 30336_WEBPUSH_CONVERTED_20210317_091649.txt & the Unique LAUNCH_ID are :: 1
+[2021-03-18 20:47:50,044] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 200820204
+[2021-03-18 20:47:50,065] [ Implementations.ced_functions                :   136] [INFO] -- There are 3 records in file 30336_SMS_DELIVERED_20210317_091648.txt & the Unique LAUNCH_ID are :: 1
+[2021-03-18 20:47:51,172] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 200820202
+[2021-03-18 20:47:51,190] [ Implementations.ced_functions                :   136] [INFO] -- There are 2 records in file 30336_SMS_OPT_IN_20210317_091648.txt & the Unique RIID are :: 2
+[2021-03-18 20:47:53,232] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 34001601
+[2021-03-18 20:47:53,232] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 34001621
+[2021-03-18 20:47:53,249] [ Implementations.ced_functions                :   136] [INFO] -- There are 2 records in file 30336_PUSH_OPT_IN_20210317_091649.txt & the Unique RIID are :: 2
+[2021-03-18 20:47:55,389] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 76001881
+[2021-03-18 20:47:55,389] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 76001901
+[2021-03-18 20:47:55,407] [ Implementations.ced_functions                :   136] [INFO] -- There are 3 records in file 30336_OPT_IN_20210317_091648.txt & the Unique RIID are :: 3
+[2021-03-18 20:47:58,138] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 194301721
+[2021-03-18 20:47:58,138] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 34001601
+[2021-03-18 20:47:58,138] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 34001621
+[2021-03-18 20:47:58,159] [ Implementations.ced_functions                :   136] [INFO] -- There are 2 records in file 30336_OPT_OUT_20210317_091648.txt & the Unique RIID are :: 2
+[2021-03-18 20:48:00,531] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 34001601
+[2021-03-18 20:48:00,531] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 34001621
+[2021-03-18 20:48:00,554] [ Implementations.ced_functions                :   136] [INFO] -- There are 10 records in file 30336_MMS_SENT_20210317_091648.txt & the Unique LAUNCH_ID are :: 1
+[2021-03-18 20:48:01,686] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 200820202
+[2021-03-18 20:48:01,704] [ Implementations.common_functions_progress    :   197] [INFO] -- 30336_PROGRAM_20210317_091649.txtis empty
+[2021-03-18 20:48:01,726] [ Implementations.ced_functions                :   136] [INFO] -- There are 1 records in file 30336_WEBPUSH_OPT_IN_20210317_091649.txt & the Unique RIID are :: 1
+[2021-03-18 20:48:02,763] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 76002101
+[2021-03-18 20:48:02,839] [ Implementations.ced_functions                :   136] [INFO] -- There are 2 records in file 30336_COMPLAINT_20210317_091648.txt & the Unique LAUNCH_ID are :: 1
+[2021-03-18 20:48:04,184] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 200820201
+[2021-03-18 20:48:04,205] [ Implementations.ced_functions                :   136] [INFO] -- There are 3 records in file 30336_SMS_CLICK_20210317_091648.txt & the Unique LAUNCH_ID are :: 1
+[2021-03-18 20:48:06,452] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 200820202
+[2021-03-18 20:48:06,474] [ Implementations.ced_functions                :   136] [INFO] -- There are 2 records in file 30336_PROGRAM_STATE_20210317_091649.txt & the Unique PROGRAM_ID are :: 2
+[2021-03-18 20:48:08,604] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 85281
+[2021-03-18 20:48:08,604] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 263821
+[2021-03-18 20:48:08,628] [ Implementations.ced_functions                :   136] [INFO] -- There are 2 records in file 30336_WEBPUSH_FAILED_20210317_091649.txt & the Unique LAUNCH_ID are :: 1
+[2021-03-18 20:48:09,915] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 200820204
+[2021-03-18 20:48:09,939] [ Implementations.ced_functions                :   136] [INFO] -- There are 1 records in file 30336_WEBPUSH_BOUNCED_20210317_091649.txt & the Unique LAUNCH_ID are :: 1
+[2021-03-18 20:48:11,040] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 200820204
+[2021-03-18 20:48:11,064] [ Implementations.ced_functions                :   136] [INFO] -- There are 3 records in file 30336_SMS_RECEIVED_20210317_091648.txt & the Unique LAUNCH_ID are :: 1
+[2021-03-18 20:48:12,167] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 200820202
+[2021-03-18 20:48:12,191] [ Implementations.ced_functions                :   136] [INFO] -- There are 2 records in file 30336_PUSH_FAILED_20210317_091648.txt & the Unique LAUNCH_ID are :: 1
+[2021-03-18 20:48:13,192] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 200820203
+[2021-03-18 20:48:13,252] [ Implementations.ced_functions                :   136] [INFO] -- There are 10 records in file 30336_SMS_MO_FW_SENT_20210317_091648.txt & the Unique LAUNCH_ID are :: 1
+[2021-03-18 20:48:14,316] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 200820202
+[2021-03-18 20:48:14,339] [ Implementations.ced_functions                :   136] [INFO] -- There are 2 records in file 30336_WEBPUSH_SKIPPED_20210317_091649.txt & the Unique LAUNCH_ID are :: 1
+[2021-03-18 20:48:15,449] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 200820204
+[2021-03-18 20:48:15,481] [ Implementations.ced_functions                :   136] [INFO] -- There are 2 records in file 30336_SMS_CONVERT_20210317_091648.txt & the Unique LAUNCH_ID are :: 1
+[2021-03-18 20:48:16,550] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 200820202
+[2021-03-18 20:48:16,569] [ Implementations.ced_functions                :   136] [INFO] -- There are 10 records in file 30336_WEBPUSH_SENT_20210317_091649.txt & the Unique LAUNCH_ID are :: 1
+[2021-03-18 20:48:17,701] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 200820204
+[2021-03-18 20:48:17,722] [ Implementations.ced_functions                :   136] [INFO] -- There are 3 records in file 30336_OPEN_20210317_091648.txt & the Unique LAUNCH_ID are :: 1
+[2021-03-18 20:48:18,829] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 200820201
+[2021-03-18 20:48:18,847] [ Implementations.ced_functions                :   136] [INFO] -- There are 2 records in file 30336_WEBPUSH_OPENED_20210317_091649.txt & the Unique LAUNCH_ID are :: 1
+[2021-03-18 20:48:19,948] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 200820204
+[2021-03-18 20:48:19,968] [ Implementations.ced_functions                :   136] [INFO] -- There are 1 records in file 30336_PUSH_BOUNCED_20210317_091648.txt & the Unique LAUNCH_ID are :: 1
+[2021-03-18 20:48:21,074] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 200820203
+[2021-03-18 20:48:21,099] [ Implementations.ced_functions                :   136] [INFO] -- There are 1 records in file 30336_PUSH_UNINSTALL_20210317_091649.txt & the Unique RIID are :: 1
+[2021-03-18 20:48:22,198] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 76001941
+[2021-03-18 20:48:22,217] [ Implementations.ced_functions                :   136] [INFO] -- There are 2 records in file 30336_SMS_SKIPPED_20210317_091648.txt & the Unique LAUNCH_ID are :: 1
+[2021-03-18 20:48:23,327] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 200820202
+[2021-03-18 20:48:23,348] [ Implementations.ced_functions                :   136] [INFO] -- There are 2 records in file 30336_PUSH_SKIPPED_20210317_091648.txt & the Unique LAUNCH_ID are :: 1
+[2021-03-18 20:48:24,555] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 200820203
+[2021-03-18 20:48:24,581] [ Implementations.ced_functions                :   136] [INFO] -- There are 159 records in file 30336_LAUNCH_STATE_20210317_091649.txt & the Unique LAUNCH_ID are :: 38
+[2021-03-18 20:48:50,462] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 199701
+[2021-03-18 20:48:50,462] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 200881
+[2021-03-18 20:48:50,462] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 204081
+[2021-03-18 20:48:50,463] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 204181
+[2021-03-18 20:48:50,463] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 198901
+[2021-03-18 20:48:50,463] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 200901
+[2021-03-18 20:48:50,463] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 202521
+[2021-03-18 20:48:50,463] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 199281
+[2021-03-18 20:48:50,463] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 203681
+[2021-03-18 20:48:50,463] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 200481
+[2021-03-18 20:48:50,463] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 198881
+[2021-03-18 20:48:50,463] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 204881
+[2021-03-18 20:48:50,464] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 204101
+[2021-03-18 20:48:50,464] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 200820201
+[2021-03-18 20:48:50,464] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 198481
+[2021-03-18 20:48:50,464] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 204581
+[2021-03-18 20:48:50,464] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 204501
+[2021-03-18 20:48:50,464] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 204201
+[2021-03-18 20:48:50,464] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 202481
+[2021-03-18 20:48:50,464] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 201701
+[2021-03-18 20:48:50,464] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 201681
+[2021-03-18 20:48:50,464] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 204481
+[2021-03-18 20:48:50,465] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 202561
+[2021-03-18 20:48:50,465] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 203281
+[2021-03-18 20:48:50,465] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 199681
+[2021-03-18 20:48:50,465] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 204121
+[2021-03-18 20:48:50,465] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 204601
+[2021-03-18 20:48:50,465] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 5161
+[2021-03-18 20:48:50,466] [ Implementations.common_functions_progress    :   154] [INFO] -- Count for the ID does not Match. Seems Records are Purged for LAUNCH_STATE table
+[2021-03-18 20:48:50,466] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 10781
+[2021-03-18 20:48:50,466] [ Implementations.common_functions_progress    :   154] [INFO] -- Count for the ID does not Match. Seems Records are Purged for LAUNCH_STATE table
+[2021-03-18 20:48:50,466] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 200081
+[2021-03-18 20:48:50,466] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 202881
+[2021-03-18 20:48:50,467] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 202081
+[2021-03-18 20:48:50,467] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 201281
+[2021-03-18 20:48:50,467] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 204561
+[2021-03-18 20:48:50,467] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 203301
+[2021-03-18 20:48:50,467] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 202501
+[2021-03-18 20:48:50,467] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 202541
+[2021-03-18 20:48:50,468] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 202901
+[2021-03-18 20:48:50,483] [ Implementations.ced_functions                :   136] [INFO] -- There are 3 records in file 30336_PUSH_OPENED_20210317_091648.txt & the Unique LAUNCH_ID are :: 1
+[2021-03-18 20:48:51,588] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 200820203
+[2021-03-18 20:49:10,261] [ Implementations.ced_functions                :   136] [INFO] -- There are 3 records in file 30336_WEBPUSH_BUTTON_CLICKED_20210317_091649.txt & the Unique LAUNCH_ID are :: 1
+[2021-03-18 20:49:11,434] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 200820204
+[2021-03-18 20:49:11,455] [ Implementations.ced_functions                :   136] [INFO] -- There are 2 records in file 30336_MMS_FAILED_20210317_091648.txt & the Unique LAUNCH_ID are :: 1
+[2021-03-18 20:49:12,480] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 200820201
+[2021-03-18 20:49:12,507] [ Implementations.ced_functions                :   136] [INFO] -- There are 10 records in file 30336_CUSTOM_CHANNEL_SENT_20210317_091649.txt & the Unique LAUNCH_ID are :: 1
+[2021-03-18 20:49:13,516] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 200820201
+[2021-03-18 20:49:13,539] [ Implementations.ced_functions                :   136] [INFO] -- There are 2 records in file 30336_SMS_FAIL_20210317_091648.txt & the Unique LAUNCH_ID are :: 1
+[2021-03-18 20:49:14,845] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 200820202
+[2021-03-18 20:49:14,873] [ Implementations.ced_functions                :   136] [INFO] -- There are 2 records in file 30336_PUSH_CONVERTED_20210317_091648.txt & the Unique LAUNCH_ID are :: 1
+[2021-03-18 20:49:15,959] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 200820203
+[2021-03-18 20:49:15,980] [ Implementations.ced_functions                :   136] [INFO] -- There are 10 records in file 30336_SMS_MO_FW_FAILED_20210317_091648.txt & the Unique LAUNCH_ID are :: 1
+[2021-03-18 20:49:17,222] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 200820202
+[2021-03-18 20:49:17,252] [ Implementations.ced_functions                :   136] [INFO] -- There are 3 records in file 30336_CLICK_20210317_091648.txt & the Unique LAUNCH_ID are :: 1
+[2021-03-18 20:49:18,336] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 200820201
+[2021-03-18 20:49:18,365] [ Implementations.ced_functions                :   136] [INFO] -- There are 2 records in file 30336_CUSTOM_CHANNEL_SKIPPED_20210317_091649.txt & the Unique LAUNCH_ID are :: 1
+[2021-03-18 20:49:19,567] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 200820201
+[2021-03-18 20:49:19,595] [ Implementations.ced_functions                :   136] [INFO] -- There are 2 records in file 30336_CONVERT_20210317_091648.txt & the Unique LAUNCH_ID are :: 1
+[2021-03-18 20:49:20,874] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 200820201
+[2021-03-18 20:49:20,899] [ Implementations.ced_functions                :   136] [INFO] -- There are 2 records in file 30336_FAIL_20210317_091648.txt & the Unique LAUNCH_ID are :: 1
+[2021-03-18 20:49:22,041] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 200820201
+[2021-03-18 20:49:22,067] [ Implementations.ced_functions                :   136] [INFO] -- There are 1 records in file 30336_FORM_STATE_20210317_091649.txt & the Unique FORM_ID are :: 1
+[2021-03-18 20:49:23,331] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 85381
+[2021-03-18 20:49:23,357] [ Implementations.ced_functions                :   136] [INFO] -- There are 2 records in file 30336_SKIPPED_20210317_091648.txt & the Unique LAUNCH_ID are :: 1
+[2021-03-18 20:49:24,869] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 200820201
+[2021-03-18 20:49:24,893] [ Implementations.ced_functions                :   136] [INFO] -- There are 2 records in file 30336_PUSH_INBOX_SENT_20210317_091649.txt & the Unique LAUNCH_ID are :: 1
+[2021-03-18 20:49:25,900] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 200820203
+[2021-03-18 20:49:25,926] [ Implementations.ced_functions                :   136] [INFO] -- There are 2 records in file 30336_PUSH_OPT_OUT_20210317_091649.txt & the Unique RIID are :: 2
+[2021-03-18 20:49:28,042] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 76001881
+[2021-03-18 20:49:28,043] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 76001901
+[2021-03-18 20:49:28,071] [ Implementations.ced_functions                :   136] [INFO] -- There are 10 records in file 30336_PUSH_SENT_20210317_091648.txt & the Unique LAUNCH_ID are :: 1
+[2021-03-18 20:49:29,172] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 200820203
+[2021-03-18 20:49:29,193] [ Implementations.ced_functions                :   136] [INFO] -- There are 10 records in file 30336_SENT_20210317_091648.txt & the Unique LAUNCH_ID are :: 1
+[2021-03-18 20:49:30,295] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 200820201
+[2021-03-18 20:49:30,311] [ Implementations.ced_functions                :   136] [INFO] -- There are 6 records in file 30336_BOUNCE_20210317_091648.txt & the Unique LAUNCH_ID are :: 5
+[2021-03-18 20:49:34,596] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 204081
+[2021-03-18 20:49:34,597] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 204881
+[2021-03-18 20:49:34,597] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 200820201
+[2021-03-18 20:49:34,597] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 201681
+[2021-03-18 20:49:34,597] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 204581
+[2021-03-18 20:49:34,615] [ Implementations.ced_functions                :   136] [INFO] -- There are 2 records in file 30336_SMS_OPT_OUT_20210317_091648.txt & the Unique RIID are :: 2
+[2021-03-18 20:49:37,155] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 34001621
+[2021-03-18 20:49:37,156] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 34001601
+[2021-03-18 20:49:37,177] [ Implementations.ced_functions                :   136] [INFO] -- There are 2 records in file 30336_CUSTOM_CHANNEL_FAILED_20210317_091649.txt & the Unique LAUNCH_ID are :: 1
+[2021-03-18 20:49:38,385] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 200820201
+[2021-03-18 20:49:38,407] [ Implementations.ced_functions                :   136] [INFO] -- There are 1 records in file 30336_DYNAMIC_CONTENT_20210317_091649.txt & the Unique LAUNCH_ID are :: 1
+[2021-03-18 20:49:39,616] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 200820201
+[2021-03-18 20:49:39,635] [ Implementations.ced_functions                :   136] [INFO] -- There are 3 records in file 30336_PUSH_BUTTON_CLICKED_20210317_091648.txt & the Unique LAUNCH_ID are :: 1
+[2021-03-18 20:49:40,844] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 200820203
+[2021-03-18 20:49:40,866] [ Implementations.ced_functions                :   136] [INFO] -- There are 10 records in file 30336_SMS_SENT_20210317_091648.txt & the Unique LAUNCH_ID are :: 1
+[2021-03-18 20:49:41,866] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 200820202
+[2021-03-18 20:49:41,889] [ Implementations.common_functions_progress    :   197] [INFO] -- 30336_MULTIVARIATE_TEST_20210317_091649.txtis empty
+[2021-03-18 20:49:41,912] [ Implementations.ced_functions                :   136] [INFO] -- There are 1 records in file 30336_WEBPUSH_OPT_OUT_20210317_091649.txt & the Unique RIID are :: 1
+[2021-03-18 20:49:42,934] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 76002101
+[2021-03-18 20:49:42,957] [ Implementations.ced_functions                :   136] [INFO] -- There are 2 records in file 30336_MMS_SKIPPED_20210317_091648.txt & the Unique LAUNCH_ID are :: 1
+[2021-03-18 20:49:44,324] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 200820201
+[2021-03-18 20:49:44,343] [ Implementations.common_functions_progress    :   197] [INFO] -- 30336_HOLDOUT_GROUP_20210317_091649.txtis empty
+[2021-03-18 20:49:44,365] [ Implementations.ced_functions                :   136] [INFO] -- There are 1 records in file 30336_WEBPUSH_CLOSED_20210317_091649.txt & the Unique LAUNCH_ID are :: 1
+[2021-03-18 20:49:45,561] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 200820204
+[2021-03-18 20:49:45,587] [ Implementations.ced_functions                :   136] [INFO] -- There are 3 records in file 30336_PUSH_CLICKED_20210317_091648.txt & the Unique LAUNCH_ID are :: 1
+[2021-03-18 20:49:46,753] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 200820203
+[2021-03-18 20:49:46,772] [ Implementations.ced_functions                :   136] [INFO] -- There are 4 records in file 30336_FORM_20210317_091649.txt & the Unique FORM_ID are :: 1
+[2021-03-18 20:49:47,843] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 85381
+[2021-03-18 20:49:47,863] [ Implementations.ced_functions                :   136] [INFO] -- There are 2 records in file 30336_WEBPUSH_CONVERTED_20210317_091649.txt & the Unique LAUNCH_ID are :: 1
+[2021-03-18 20:49:49,038] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 200820204
+[2021-03-18 20:49:49,063] [ Implementations.ced_functions                :   136] [INFO] -- There are 3 records in file 30336_SMS_DELIVERED_20210317_091648.txt & the Unique LAUNCH_ID are :: 1
+[2021-03-18 20:49:50,059] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 200820202
+[2021-03-18 20:49:50,084] [ Implementations.ced_functions                :   136] [INFO] -- There are 2 records in file 30336_SMS_OPT_IN_20210317_091648.txt & the Unique RIID are :: 2
+[2021-03-18 20:49:52,232] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 34001621
+[2021-03-18 20:49:52,233] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 34001601
+[2021-03-18 20:49:52,259] [ Implementations.ced_functions                :   136] [INFO] -- There are 2 records in file 30336_PUSH_OPT_IN_20210317_091649.txt & the Unique RIID are :: 2
+[2021-03-18 20:49:54,474] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 76001881
+[2021-03-18 20:49:54,474] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 76001901
+[2021-03-18 20:49:54,494] [ Implementations.ced_functions                :   136] [INFO] -- There are 3 records in file 30336_OPT_IN_20210317_091648.txt & the Unique RIID are :: 3
+[2021-03-18 20:49:57,331] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 194301721
+[2021-03-18 20:49:57,331] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 34001621
+[2021-03-18 20:49:57,332] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 34001601
+[2021-03-18 20:49:57,353] [ Implementations.ced_functions                :   136] [INFO] -- There are 2 records in file 30336_OPT_OUT_20210317_091648.txt & the Unique RIID are :: 2
+[2021-03-18 20:49:59,396] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 34001621
+[2021-03-18 20:49:59,396] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 34001601
+[2021-03-18 20:49:59,410] [ Implementations.ced_functions                :   136] [INFO] -- There are 10 records in file 30336_MMS_SENT_20210317_091648.txt & the Unique LAUNCH_ID are :: 1
+[2021-03-18 20:50:00,429] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 200820202
+[2021-03-18 20:50:00,446] [ Implementations.common_functions_progress    :   197] [INFO] -- 30336_PROGRAM_20210317_091649.txtis empty
+[2021-03-18 20:50:00,463] [ Implementations.ced_functions                :   136] [INFO] -- There are 1 records in file 30336_WEBPUSH_OPT_IN_20210317_091649.txt & the Unique RIID are :: 1
+[2021-03-18 20:50:01,463] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 76002101
+[2021-03-18 20:50:01,477] [ Implementations.ced_functions                :   136] [INFO] -- There are 2 records in file 30336_COMPLAINT_20210317_091648.txt & the Unique LAUNCH_ID are :: 1
+[2021-03-18 20:50:02,506] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 200820201
+[2021-03-18 20:50:02,516] [ Implementations.ced_functions                :   136] [INFO] -- There are 3 records in file 30336_SMS_CLICK_20210317_091648.txt & the Unique LAUNCH_ID are :: 1
+[2021-03-18 20:50:03,478] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 200820202
+[2021-03-18 20:50:03,495] [ Implementations.ced_functions                :   136] [INFO] -- There are 2 records in file 30336_PROGRAM_STATE_20210317_091649.txt & the Unique PROGRAM_ID are :: 2
+[2021-03-18 20:50:05,520] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 85281
+[2021-03-18 20:50:05,520] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 263821
+[2021-03-18 20:50:05,540] [ Implementations.ced_functions                :   136] [INFO] -- There are 2 records in file 30336_WEBPUSH_FAILED_20210317_091649.txt & the Unique LAUNCH_ID are :: 1
+[2021-03-18 20:50:06,546] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 200820204
+[2021-03-18 20:50:06,566] [ Implementations.ced_functions                :   136] [INFO] -- There are 1 records in file 30336_WEBPUSH_BOUNCED_20210317_091649.txt & the Unique LAUNCH_ID are :: 1
+[2021-03-18 20:50:07,502] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 200820204
+[2021-03-18 20:50:07,515] [ Implementations.ced_functions                :   136] [INFO] -- There are 3 records in file 30336_SMS_RECEIVED_20210317_091648.txt & the Unique LAUNCH_ID are :: 1
+[2021-03-18 20:50:08,511] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 200820202
+[2021-03-18 20:50:08,528] [ Implementations.ced_functions                :   136] [INFO] -- There are 2 records in file 30336_PUSH_FAILED_20210317_091648.txt & the Unique LAUNCH_ID are :: 1
+[2021-03-18 20:50:09,627] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 200820203
+[2021-03-18 20:50:09,644] [ Implementations.ced_functions                :   136] [INFO] -- There are 10 records in file 30336_SMS_MO_FW_SENT_20210317_091648.txt & the Unique LAUNCH_ID are :: 1
+[2021-03-18 20:50:10,748] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 200820202
+[2021-03-18 20:50:10,761] [ Implementations.ced_functions                :   136] [INFO] -- There are 2 records in file 30336_WEBPUSH_SKIPPED_20210317_091649.txt & the Unique LAUNCH_ID are :: 1
+[2021-03-18 20:50:11,709] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 200820204
+[2021-03-18 20:50:11,723] [ Implementations.ced_functions                :   136] [INFO] -- There are 2 records in file 30336_SMS_CONVERT_20210317_091648.txt & the Unique LAUNCH_ID are :: 1
+[2021-03-18 20:50:12,693] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 200820202
+[2021-03-18 20:50:12,714] [ Implementations.ced_functions                :   136] [INFO] -- There are 10 records in file 30336_WEBPUSH_SENT_20210317_091649.txt & the Unique LAUNCH_ID are :: 1
+[2021-03-18 20:50:14,209] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 200820204
+[2021-03-18 20:50:14,237] [ Implementations.ced_functions                :   136] [INFO] -- There are 3 records in file 30336_OPEN_20210317_091648.txt & the Unique LAUNCH_ID are :: 1
+[2021-03-18 20:50:15,271] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 200820201
+[2021-03-18 20:50:15,348] [ Implementations.ced_functions                :   136] [INFO] -- There are 2 records in file 30336_WEBPUSH_OPENED_20210317_091649.txt & the Unique LAUNCH_ID are :: 1
+[2021-03-18 20:50:16,725] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 200820204
+[2021-03-18 20:50:16,756] [ Implementations.ced_functions                :   136] [INFO] -- There are 1 records in file 30336_PUSH_BOUNCED_20210317_091648.txt & the Unique LAUNCH_ID are :: 1
+[2021-03-18 20:50:17,857] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 200820203
+[2021-03-18 20:50:17,894] [ Implementations.ced_functions                :   136] [INFO] -- There are 1 records in file 30336_PUSH_UNINSTALL_20210317_091649.txt & the Unique RIID are :: 1
+[2021-03-18 20:50:19,039] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 76001941
+[2021-03-18 20:50:19,070] [ Implementations.ced_functions                :   136] [INFO] -- There are 2 records in file 30336_SMS_SKIPPED_20210317_091648.txt & the Unique LAUNCH_ID are :: 1
+[2021-03-18 20:50:20,078] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 200820202
+[2021-03-18 20:50:20,106] [ Implementations.ced_functions                :   136] [INFO] -- There are 2 records in file 30336_PUSH_SKIPPED_20210317_091648.txt & the Unique LAUNCH_ID are :: 1
+[2021-03-18 20:50:21,193] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 200820203
+[2021-03-18 20:50:21,226] [ Implementations.ced_functions                :   136] [INFO] -- There are 159 records in file 30336_LAUNCH_STATE_20210317_091649.txt & the Unique LAUNCH_ID are :: 38
+[2021-03-18 20:50:48,954] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 198481
+[2021-03-18 20:50:48,955] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 204481
+[2021-03-18 20:50:48,955] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 202541
+[2021-03-18 20:50:48,956] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 198881
+[2021-03-18 20:50:48,956] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 203681
+[2021-03-18 20:50:48,956] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 200881
+[2021-03-18 20:50:48,957] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 204101
+[2021-03-18 20:50:48,957] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 201701
+[2021-03-18 20:50:48,957] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 201281
+[2021-03-18 20:50:48,958] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 204201
+[2021-03-18 20:50:48,958] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 204121
+[2021-03-18 20:50:48,959] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 202561
+[2021-03-18 20:50:48,959] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 199281
+[2021-03-18 20:50:48,959] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 200081
+[2021-03-18 20:50:48,960] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 204601
+[2021-03-18 20:50:48,960] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 5161
+[2021-03-18 20:50:48,960] [ Implementations.common_functions_progress    :   154] [INFO] -- Count for the ID does not Match. Seems Records are Purged for LAUNCH_STATE table
+[2021-03-18 20:50:48,960] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 203301
+[2021-03-18 20:50:48,961] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 202881
+[2021-03-18 20:50:48,961] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 202481
+[2021-03-18 20:50:48,962] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 204561
+[2021-03-18 20:50:48,962] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 203281
+[2021-03-18 20:50:48,962] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 199681
+[2021-03-18 20:50:48,963] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 202901
+[2021-03-18 20:50:48,963] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 200481
+[2021-03-18 20:50:48,963] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 198901
+[2021-03-18 20:50:48,964] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 202081
+[2021-03-18 20:50:48,964] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 204881
+[2021-03-18 20:50:48,964] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 200901
+[2021-03-18 20:50:48,965] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 200820201
+[2021-03-18 20:50:48,965] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 204181
+[2021-03-18 20:50:48,965] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 202521
+[2021-03-18 20:50:48,966] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 204581
+[2021-03-18 20:50:48,966] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 10781
+[2021-03-18 20:50:48,966] [ Implementations.common_functions_progress    :   154] [INFO] -- Count for the ID does not Match. Seems Records are Purged for LAUNCH_STATE table
+[2021-03-18 20:50:48,967] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 201681
+[2021-03-18 20:50:48,967] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 202501
+[2021-03-18 20:50:48,967] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 204081
+[2021-03-18 20:50:48,967] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 199701
+[2021-03-18 20:50:48,968] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 204501
+[2021-03-18 20:50:48,992] [ Implementations.ced_functions                :   136] [INFO] -- There are 3 records in file 30336_PUSH_OPENED_20210317_091648.txt & the Unique LAUNCH_ID are :: 1
+[2021-03-18 20:50:49,975] [ Implementations.common_functions_progress    :   124] [INFO] -- Validating count for ID :: 200820203

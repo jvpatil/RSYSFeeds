@@ -3,7 +3,7 @@ from __future__ import print_function
 import csv
 
 from Implementations.setup import Setup
-from Implementations.common_functions_progress import CommonFunctions
+from Implementations.common_functions import CommonFunctions
 
 import sys
 import os

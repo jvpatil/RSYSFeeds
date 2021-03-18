@@ -5,7 +5,7 @@ from ConfigFiles import logger_util
 from Implementations import generate_html_report
 
 
-class ValidateCount(CEDFunctions,DBFunctions, CommonFunctions):
+class ValidateCount(CEDFunctions,DBFunctions):
     def __init__(self):
         self.test_class_name = __class__.__name__
         super().__init__(self.test_class_name)
@@ -25,31 +25,25 @@ class ValidateCount(CEDFunctions,DBFunctions, CommonFunctions):
         else:
             account_name = input("\n***PLEASE PROVIDE THE ACCOUNT NAME  :: ")
 
-        ced_files = CommonFunctions.find_files(self)
-        # syslocalEvent_curs = CEDFunctions.init_db_connection(self, "syslocalEvent")
-        syslocalEvent_curs = CEDFunctions.start_db_connection(self,paths.pod, "syslocalEvent")
+        ced_files = self.find_files()
+        # syslocalEvent_curs = self.init_db_connection(self, "syslocalEvent")
+        syslocalEvent_curs = self.start_db_connection(paths.pod, "syslocalEvent")
 
         status_report = defaultdict(list)
         empty_files = []
         iteration = 0
         for file in ced_files:
-            barStatus, fileStatus = CommonFunctions.status_progress(iteration + 1, len(ced_files), file)
-            CommonFunctions.clear(self)
-            CommonFunctions.print_status(barStatus, fileStatus)
-            if not CommonFunctions.is_file_empty(self, file):
-                delimiter, qoutechar = CommonFunctions.get_file_info(self, file)
-                IDs, luniqueIDs, dEventStoredDateFromCED, searchColumn, eventType = CEDFunctions.get_ids_from_ced(self, file,delimiter, qoutechar )
-                dCountFromCED = CEDFunctions.get_count_from_ced(self, IDs, luniqueIDs)
-                dCountFromDB, dEventDatesFromDB = DBFunctions.get_count_from_db(self, syslocalEvent_curs, account_name,
-                                                                                      self.eventSchema,
-                                                                                      eventType, searchColumn, luniqueIDs,
-                                                                                      dEventStoredDateFromCED)
-                dEventsProcessed, dEventsToProcess = DBFunctions.get_missing_events(self, syslocalEvent_curs, account_name,
-                                                                                      self.eventSchema,searchColumn, eventType,
-                                                                                  dEventStoredDateFromCED, dEventDatesFromDB,
-                                                                                  dCountFromDB, self.CEDDatesInAccountTZ)
-                report = CommonFunctions.compare_counts(self, file, searchColumn, dCountFromCED, dCountFromDB,
-                                                                dEventsToProcess, dEventsProcessed)
+            barStatus, fileStatus = self.status_progress(iteration + 1, len(ced_files), file)
+            self.clear()
+            self.print_status(barStatus, fileStatus)
+            if not self.is_file_empty(file):
+                delimiter, qoutechar = self.get_file_info(file)
+                IDs, luniqueIDs, dEventStoredDateFromCED, searchColumn, eventType = self.get_ids_from_ced(file,delimiter, qoutechar )
+                dCountFromCED = self.get_count_from_ced(IDs, luniqueIDs)
+                dCountFromDB, dEventDatesFromDB = self.get_count_from_db(syslocalEvent_curs, account_name,self.eventSchema,eventType, searchColumn, luniqueIDs,dEventStoredDateFromCED)
+                dEventsProcessed, dEventsToProcess = self.get_missing_events(syslocalEvent_curs, account_name,self.eventSchema,searchColumn, eventType,
+                                                                            dEventStoredDateFromCED, dEventDatesFromDB,dCountFromDB, self.CEDDatesInAccountTZ)
+                report = self.compare_counts(file, searchColumn, dCountFromCED, dCountFromDB,dEventsToProcess, dEventsProcessed)
                 status_report[file] = report
             else:
                 empty_files.append(file)
@@ -57,12 +51,12 @@ class ValidateCount(CEDFunctions,DBFunctions, CommonFunctions):
         if not syslocalEvent_curs.close():
             print("\nClosed the connection to ", syslocalEvent_curs)
 
-        CommonFunctions.clear(self)
+        self.clear()
         end_time = datetime.now()
-        CommonFunctions.print_status(barStatus)
+        self.print_status(barStatus)
         timeTaken = (end_time - start_time).total_seconds()
-        total_time = Setup.get_run_time(self, timeTaken)
-        CommonFunctions.print_results_of_count_validation(self, status_report, total_time, len(ced_files), empty_files)
+        total_time = self.get_run_time(timeTaken)
+        self.print_results_of_count_validation(status_report, total_time, len(ced_files), empty_files)
         # generate_html_report.print_header()
         generate_html_report.generate_report(status_report, total_time, len(ced_files), empty_files,"validate_count")
 
