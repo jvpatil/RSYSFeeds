@@ -11,12 +11,6 @@
     <content url="file://$MODULE_DIR$/venv/bin" />
     <orderEntry type="jdk" jdkName="Python 3.8" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="GenerateDataWithPython" />
-    <orderEntry type="module" module-name="Interact" />
-    <orderEntry type="module" module-name="PyProject" />
-    <orderEntry type="module" module-name="FilterConditions" />
-    <orderEntry type="module" module-name="TestProject" />
-    <orderEntry type="module" module-name="ResponsysFeeds" />
   </component>
   <component name="PackageRequirementsSettings">
     <option name="requirementsPath" value="" />

@@ -28,7 +28,7 @@ class ValidateColumns(DBFunctions,CommonFunctions,DeviceDetails):
         ced_files = CEDFunctions.find_files(self)
         account_id = self.get_account_id(ced_files[0])
         # curs = self.init_db_connection("sysAdmin")
-        curs = self.start_db_connection(paths.pod,"sysAdmin")
+        curs = self.init_db_connection("sysAdmin")
         ced_columns_from_db,built_in_headers_from_db = self.get_headers_from_db(curs, account_id)
         result_file=self.write_headers_to_file(account_id, ced_columns_from_db, "ced_columns_from_db")
         self.close_db_connection( curs)
@@ -37,7 +37,7 @@ class ValidateColumns(DBFunctions,CommonFunctions,DeviceDetails):
         result_file= self.write_headers_to_file(account_id, ced_columns_from_podconfig, "ced_columns_from_podconfig")
 
         # syslocalCust_curs = Setup.init_db_connection( "syslocalCust")
-        syslocalCust_curs = self.start_db_connection(paths.pod,"syslocalCust")
+        syslocalCust_curs = self.init_db_connection("syslocalCust")
         email_columns_by_id, email_custom_columns, sms_columns_by_id, sms_custom_columns = self.get_custom_columns(syslocalCust_curs, account_name)
         self.close_db_connection( syslocalCust_curs)
 

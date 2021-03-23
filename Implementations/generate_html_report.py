@@ -19,7 +19,7 @@ def generate_report(status_report, total_time, ced_files, empty_files, test_name
     f,t1 = None,None
 
     if test_name.lower() == "validate_count":
-        HTMLFILE = '../HTML_Reports/CountValidationReport.html'
+        HTMLFILE = '../HTMLReports/CountValidationReport.html'
         with open(HTMLFILE, 'w') as f:
 
             header_cols = ['Sl.No', 'File Name', 'Total Unique IDs', 'Passed', 'Failed', 'Skipped']
@@ -53,7 +53,7 @@ def generate_report(status_report, total_time, ced_files, empty_files, test_name
 
 
     elif test_name == "validate_columns":
-        HTMLFILE = '../HTML_Reports/ColumnValidationReport.html'
+        HTMLFILE = '../HTMLReports/ColumnValidationReport.html'
         with open(HTMLFILE, 'w') as f:
 
             # header_1 = ["Sl.No", "File Name", "Total Unique IDs", "Column Name Validation", "Column Order Validation"]
@@ -88,7 +88,7 @@ def generate_report(status_report, total_time, ced_files, empty_files, test_name
             f.write('<p>')
 
     elif test_name.lower() == "validate_data":
-        HTMLFILE = '../HTML_Reports/DataValidationReport.html'
+        HTMLFILE = '../HTMLReports/DataValidationReport.html'
         # with open(HTMLFILE, 'w') as f:
         with open(HTMLFILE, 'w') as f:
 

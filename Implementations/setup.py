@@ -7,6 +7,7 @@ from __future__ import print_function
 import logging
 import configparser
 import os
+from ConfigFiles import paths
 import sys
 from configparser import SafeConfigParser, DuplicateOptionError, DuplicateSectionError
 # from ConfigParser import SafeConfigParser
@@ -20,11 +21,12 @@ class Setup():
     def __init__(self, test_class_name):
         self.curs = None
         self.update_os()
+        self.pod = paths.pod
         # self.delete_files()
         # logging.basicConfig(filename='Feeds.log', filemode='w', format='%(process)d-%(levelname)s-%(message)s',level=logging.DEBUG)
         # logging.basicConfig(format='%(funcName)s.%(levelname)s : %(message)s',level=logging.INFO)
         # logging.basicConfig(format='%(process)d-%(levelname)s-%(message)s')
-
+    
     ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     print("Root Directory :", ROOT_DIR)
     propertyFile = ROOT_DIR + "/python.properties"
@@ -63,26 +65,27 @@ class Setup():
 
     prop = load_properties(propertyFile, '=', '#')
 
-    def init_db_connection(self,accountName): #Make sure acccount details are provided in properties file.
-        # account_id = self.prop[accountName+"AccID"]
-        # print("\nConnecting to ...",(self.prop[accountName+"User"]).upper() +"( Account ID :",self.prop[accountName+"AccID"],") --- " + accountName )
-        connection_details = self.prop[accountName + "User"] + "/" + self.prop[accountName + "Pass"] + "@" + self.prop[accountName + "URL"]
-        # self.dbcon = cx_Oracle.connect(self.prop[accountName+"User"] + "/" + self.prop[accountName+"Pass"] + "@" + self.prop[accountName+"URL"])
-        try:
-            # with cx_Oracle.connect(connection_details) as dbcon:
-            #     self.curs = dbcon.cursor()
-            #     return self.curs
-            dbcon =  cx_Oracle.connect(connection_details)
-            curs = dbcon.cursor()
-            return curs
+    # def init_db_connection(self,accountName): #Make sure acccount details are provided in properties file.
+    #     # account_id = self.prop[accountName+"AccID"]
+    #     # print("\nConnecting to ...",(self.prop[accountName+"User"]).upper() +"( Account ID :",self.prop[accountName+"AccID"],") --- " + accountName )
+    #     connection_details = self.prop[accountName + "User"] + "/" + self.prop[accountName + "Pass"] + "@" + self.prop[accountName + "URL"]
+    #     # self.dbcon = cx_Oracle.connect(self.prop[accountName+"User"] + "/" + self.prop[accountName+"Pass"] + "@" + self.prop[accountName+"URL"])
+    #     try:
+    #         # with cx_Oracle.connect(connection_details) as dbcon:
+    #         #     self.curs = dbcon.cursor()
+    #         #     return self.curs
+    #         dbcon =  cx_Oracle.connect(connection_details)
+    #         curs = dbcon.cursor()
+    #         return curs
+    #
+    #     except Exception as e:
+    #         print("\nError in Connecting to DB using ",accountName.upper())
+    #         print("Error Type : " ,type(e).__name__)
+    #         print("Error : " ,e , "\nExiting the execution")
+    #         exit(1)
 
-        except Exception as e:
-            print("\nError in Connecting to DB using ",accountName.upper())
-            print("Error Type : " ,type(e).__name__)
-            print("Error : " ,e , "\nExiting the execution")
-            exit(1)
-
-    def start_db_connection(self,pod, accountSchema):
+    def init_db_connection(self, accountSchema):
+        pod = self.pod
         shema_details = self.get_db_connection_details(pod,accountSchema)
         try:
             dbcon =  cx_Oracle.connect(shema_details)

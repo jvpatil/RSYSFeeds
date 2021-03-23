@@ -27,7 +27,7 @@ class ValidateCount(CEDFunctions,DBFunctions):
 
         ced_files = self.find_files()
         # syslocalEvent_curs = self.init_db_connection(self, "syslocalEvent")
-        syslocalEvent_curs = self.start_db_connection(paths.pod, "syslocalEvent")
+        syslocalEvent_curs = self.init_db_connection("syslocalEvent")
 
         status_report = defaultdict(list)
         empty_files = []

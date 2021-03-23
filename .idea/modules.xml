@@ -4,9 +4,10 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/../FilterConditions/.idea/FilterConditions.iml" filepath="$PROJECT_DIR$/../FilterConditions/.idea/FilterConditions.iml" />
       <module fileurl="file://$PROJECT_DIR$/../GenerateDataWithPython/.idea/GenerateDataWithPython.iml" filepath="$PROJECT_DIR$/../GenerateDataWithPython/.idea/GenerateDataWithPython.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../ResponsysInteract/.idea/Interact.iml" filepath="$PROJECT_DIR$/../ResponsysInteract/.idea/Interact.iml" />
       <module fileurl="file://$PROJECT_DIR$/../PyProject/.idea/PyProject.iml" filepath="$PROJECT_DIR$/../PyProject/.idea/PyProject.iml" />
-      <module fileurl="file://$USER_HOME$/WorkSpace/ResponsysFeeds/.idea/ResponsysFeeds.iml" filepath="$USER_HOME$/WorkSpace/ResponsysFeeds/.idea/ResponsysFeeds.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/RSYSFeeds.iml" filepath="$PROJECT_DIR$/.idea/RSYSFeeds.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../ResponsysFeeds/.idea/ResponsysFeeds.iml" filepath="$PROJECT_DIR$/../ResponsysFeeds/.idea/ResponsysFeeds.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../ResponsysInteract/.idea/ResponsysInteract.iml" filepath="$PROJECT_DIR$/../ResponsysInteract/.idea/ResponsysInteract.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/TestFeeds.iml" filepath="$PROJECT_DIR$/.idea/TestFeeds.iml" />
       <module fileurl="file://$PROJECT_DIR$/../TestProject/.idea/TestProject.iml" filepath="$PROJECT_DIR$/../TestProject/.idea/TestProject.iml" />
     </modules>

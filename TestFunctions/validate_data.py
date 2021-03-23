@@ -35,19 +35,19 @@ class TestValidateData(ValidateDataImpl,CEDFunctions,DeviceDetails):
 
         if self.CEDDatesInAccountTZ:
             # sysadmin_curs = self.init_db_connection(self, "sysAdmin")
-            sysadmin_curs = self.start_db_connection(paths.pod, "sysAdmin")
+            sysadmin_curs = self.init_db_connection("sysAdmin")
             acc_timezone = self.get_account_timezone_info(sysadmin_curs, account_name)
             self.close_db_connection(sysadmin_curs)
         else:
             acc_timezone = paths.accountTimeZone
 
         # syslocalCust_curs = self.init_db_connection(self, "syslocalCust")
-        syslocalCust_curs = self.start_db_connection(paths.pod, "syslocalCust")
+        syslocalCust_curs = self.init_db_connection("syslocalCust")
         email_columns_by_id, email_custom_columns, sms_columns_by_id, sms_custom_columns = self.get_custom_columns(syslocalCust_curs, account_name)
         self.close_db_connection(syslocalCust_curs)
 
         # syslocalEvent_curs = self.init_db_connection(self, "syslocalEvent")
-        syslocalEvent_curs = self.start_db_connection(paths.pod, "syslocalEvent")
+        syslocalEvent_curs = self.init_db_connection("syslocalEvent")
         ced_files = CEDFunctions.find_files(self)
         status_report = defaultdict(list)
         empty_files=[]
@@ -61,9 +61,10 @@ class TestValidateData(ValidateDataImpl,CEDFunctions,DeviceDetails):
                 ced_columns_from_file = self.get_headers_from_ced(file,delimiter, qoutechar)
                 IDs, unique_IDs, event_stored_date, search_column, event_type = self.get_ids_from_ced(file,delimiter,qoutechar)
                 ced_data, index_Of_stored_date = self.read_ced_data_for_validation(file, unique_IDs, search_column,delimiter,qoutechar)
-                report = self.validate_data_from_ced_progress(barStatus, fileStatus,syslocalEvent_curs, file, search_column, ced_data,
-                                                             index_Of_stored_date,
-                                                       ced_columns_from_file, event_stored_date, event_type,account_name,email_custom_columns,sms_custom_columns,self.CEDDatesInAccountTZ,acc_timezone)
+                report = self.validate_data_from_ced_progress(barStatus, fileStatus,syslocalEvent_curs, file, search_column, ced_data, index_Of_stored_date,
+                                                             ced_columns_from_file, event_stored_date, event_type,account_name,email_custom_columns,
+                                                              sms_custom_columns,
+                                                              self.CEDDatesInAccountTZ,acc_timezone)
                 status_report[file]=report
             else:
                 empty_files.append(file)
